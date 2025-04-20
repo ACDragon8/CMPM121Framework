@@ -21,7 +21,6 @@ public class ReversePolishCalc
             if (Int32.TryParse(token, out int val))
             {
                 numbers.Push(val);
-                Debug.Log("RPN recieved the value " + val);
             }
             else 
             {

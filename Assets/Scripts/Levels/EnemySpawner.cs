@@ -91,7 +91,14 @@ public class EnemySpawner : MonoBehaviour
             //Enemy, count, hp and location are always there but delay & sequence might not be
             //The catch portions show the default values if missing
             try { delay = Int32.Parse(spawn.delay); } catch { delay = 1; }
-            try { sequence = spawn.sequence; } catch { sequence = new int[1]; }
+            if (!(spawn.sequence != null))
+            {
+                Debug.Log(spawn.enemy + " is missing a sequence order. Setting to default");
+                sequence[0] = 1;
+            }
+            else {
+                sequence = spawn.sequence;
+            } 
 
             //Convert words into (string) digits for RPN calc
             //This is for the new base hp
@@ -130,8 +137,6 @@ public class EnemySpawner : MonoBehaviour
                 has_sequence = true;
             }
             int sequence_index = 0;
-            Debug.Log("Total to be spawned spawned is " + total_count);
-            Debug.Log("Current amount spawned is " + curr_spawned);
             while (total_count > curr_spawned)
             {
                 GameManager.Instance.state = GameManager.GameState.COUNTDOWN;
