@@ -5,7 +5,7 @@ using System.IO;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using System.Collections;
-using System.Linq;
+using System;
 
 //test
 
@@ -67,36 +67,98 @@ public class EnemySpawner : MonoBehaviour
     public void StartLevel(string levelname)
     {
         level_selector.gameObject.SetActive(false);
-        Debug.Log(levelname);
+        //Debug.Log(levelname);
         // this is not nice: we should not have to be required to tell the player directly that the level is starting
         GameManager.Instance.player.GetComponent<PlayerController>().StartLevel();
-        StartCoroutine(SpawnWave());
+        StartCoroutine(SpawnWave(levelname));
     }
 
-    public void NextWave()
+    public void NextWave(string levelname)
     {
-        StartCoroutine(SpawnWave());
+        StartCoroutine(SpawnWave(levelname));
     }
 
-    //TODO have the spawnwave function below read from the JSON file for time delay?
-    IEnumerator SpawnWave()
+    //TODO implement the info from the json here
+    IEnumerator SpawnWave(string levelname)
     {
-        GameManager.Instance.state = GameManager.GameState.COUNTDOWN;
-        GameManager.Instance.countdown = 3;
-        for (int i = 3; i > 0; i--)
-        {
-            yield return new WaitForSeconds(1);
-            GameManager.Instance.countdown--;
+        Debug.Log("In the spawnWave func now");
+        LevelData lvl = level_list[levelname];
+        ReversePolishCalc RPN = new ReversePolishCalc();
+        int delay = 0;
+        int[] sequence = new int[1];
+        //This step parses the info in the JSON
+        foreach (var spawn in lvl.spawns) {
+            //Enemy, count, hp and location are always there but delay & sequence might not be
+            //The catch portions show the default values if missing
+            try { delay = Int32.Parse(spawn.delay); } catch { delay = 1; }
+            try { sequence = spawn.sequence; } catch { sequence = new int[1]; }
+
+            //Convert words into (string) digits for RPN calc
+            //This is for the new base hp
+            string[] hp_split = spawn.hp.Split(' ');
+            int index = 0;
+            foreach (var item in hp_split)
+            {
+                if (item == "base")
+                {
+                    
+                    hp_split[index] = enemy_list[spawn.enemy].hp.ToString();
+                }
+                else if (item == "wave")
+                {
+                    
+                    hp_split[index] = lvl.waves.ToString();
+                }
+                index++;
+            }
+            int new_hp = RPN.Calculate(hp_split);
+
+            //This is for total amount of enemies to spawn
+            string[] count_split = spawn.count.Split(' ');
+            index = 0;
+            foreach (var item in count_split) {
+                if (item == "wave")
+                {
+                    count_split[index] = lvl.waves.ToString();
+                }
+                index++;
+            }
+            int total_count = RPN.Calculate(count_split);
+            int curr_spawned = 0;
+            bool has_sequence = false;
+            if (sequence.Length > 1) {
+                has_sequence = true;
+            }
+            int sequence_index = 0;
+            Debug.Log("Total to be spawned spawned is " + total_count);
+            Debug.Log("Current amount spawned is " + curr_spawned);
+            while (total_count > curr_spawned)
+            {
+                GameManager.Instance.state = GameManager.GameState.COUNTDOWN;
+                GameManager.Instance.countdown = delay;
+                for (int i = delay; i > 0; i--) {
+                    yield return new WaitForSeconds(1);
+                    GameManager.Instance.countdown--;
+                }
+
+                GameManager.Instance.state = GameManager.GameState.INWAVE;
+                for (int i = 0; i < sequence[sequence_index]; i++) {
+                    //TODO modify Spawn() to work w/ new base hp
+                    yield return Spawn(spawn.enemy);
+                    curr_spawned++;
+                    if (curr_spawned == total_count) { break; }
+                }
+                if (has_sequence)
+                {
+                    sequence_index++;
+                    sequence_index = sequence_index % sequence.Length;
+                }
+            }
         }
-        GameManager.Instance.state = GameManager.GameState.INWAVE;
-        for (int i = 0; i < 10; ++i)
-        {
-            yield return Spawn("skeleton");
-        }
+        Debug.Log("Done spawning wave!");
         yield return new WaitWhile(() => GameManager.Instance.enemy_count > 0);
         GameManager.Instance.state = GameManager.GameState.WAVEEND;
     }
-    //TODO modify both functions below to read from the JSON file
     /*IEnumerator SpawnZombie()
     {
         SpawnPoint spawn_point = SpawnPoints[Random.Range(0, SpawnPoints.Length)];
@@ -113,13 +175,14 @@ public class EnemySpawner : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
     }*/
 
+    //TODO modify Spawn() to take into account new base HP
     IEnumerator Spawn(string enemy_name)
     {
         //pick enemey type
         EnemyType enemy_type = enemy_list[enemy_name];
         //pick spawnpoint
-        SpawnPoint spawn_point = SpawnPoints[Random.Range(0, SpawnPoints.Length)];
-        Vector2 offset = Random.insideUnitCircle * 1.8f;
+        SpawnPoint spawn_point = SpawnPoints[UnityEngine.Random.Range(0, SpawnPoints.Length)];
+        Vector2 offset = UnityEngine.Random.insideUnitCircle * 1.8f;
                 
         Vector3 initial_position = spawn_point.transform.position + new Vector3(offset.x, offset.y, 0);
         GameObject new_enemy = Instantiate(enemy, initial_position, Quaternion.identity);
@@ -145,8 +208,8 @@ public class EnemyType {
 public class LevelData {
     public string name;
     public int waves;
-    public string[] spawns;
-    public SpawnData[] spawn_data;
+    //public string[] spawns;
+    public SpawnData[] spawns;
     //TODO: parse jsson object of spawns to turn into wavee spawning info
     public bool process_spawn_data() {
         return true;
@@ -155,9 +218,9 @@ public class LevelData {
 
 public class SpawnData {
     public string enemy;
-    public int count;
+    public string count;
     public string hp;
-    public int delay;
+    public string delay;
     public int[] sequence;
     public string location;
 }
