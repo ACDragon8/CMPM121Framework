@@ -139,13 +139,15 @@ public class EnemySpawner : MonoBehaviour
             int sequence_index = 0;
             while (total_count > curr_spawned)
             {
+                /*
                 GameManager.Instance.state = GameManager.GameState.COUNTDOWN;
                 GameManager.Instance.countdown = delay;
                 for (int i = delay; i > 0; i--) {
                     yield return new WaitForSeconds(1);
                     GameManager.Instance.countdown--;
-                }
+                }*/
 
+                yield return new WaitForSeconds(delay);
                 GameManager.Instance.state = GameManager.GameState.INWAVE;
                 for (int i = 0; i < sequence[sequence_index]; i++) {
                     //TODO modify Spawn() to work w/ new base hp
