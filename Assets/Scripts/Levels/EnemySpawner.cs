@@ -17,6 +17,7 @@ public class EnemySpawner : MonoBehaviour
     public GameObject enemy;
     public Dictionary<string, EnemyType> enemy_list;
     public Dictionary<string, LevelData> level_list;
+    public string level;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -66,23 +67,24 @@ public class EnemySpawner : MonoBehaviour
 
     public void StartLevel(string levelname)
     {
+        level = levelname;
         level_selector.gameObject.SetActive(false);
         //Debug.Log(levelname);
         // this is not nice: we should not have to be required to tell the player directly that the level is starting
         GameManager.Instance.player.GetComponent<PlayerController>().StartLevel();
-        StartCoroutine(SpawnWave(levelname));
+        StartCoroutine(SpawnWave());
     }
 
-    public void NextWave(string levelname)
+    public void NextWave()
     {
-        StartCoroutine(SpawnWave(levelname));
+        StartCoroutine(SpawnWave());
     }
 
     //TODO implement the info from the json here
-    IEnumerator SpawnWave(string levelname)
+    IEnumerator SpawnWave()
     {
         Debug.Log("In the spawnWave func now");
-        LevelData lvl = level_list[levelname];
+        LevelData lvl = level_list[level];
         ReversePolishCalc RPN = new ReversePolishCalc();
         int delay = 0;
         int[] sequence = new int[1];
