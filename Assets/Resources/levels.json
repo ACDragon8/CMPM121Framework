@@ -7,7 +7,7 @@
                 "enemy": "zombie",
                 "count": "5 wave +",
                 "hp": "base 5 wave * +",
-                "delay": "5",
+                "delay": "1",
                 "sequence": [1,2,3],
                 "location": "random"
             },
@@ -34,7 +34,7 @@
                 "enemy": "zombie",
                 "count": "5 wave 2 * +",
                 "hp": "25 wave *",
-                "delay": "5",
+                "delay": "1",
                 "sequence": [1,2,3],
                 "location": "random"
             },

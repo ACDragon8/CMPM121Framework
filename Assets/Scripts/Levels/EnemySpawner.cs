@@ -34,7 +34,7 @@ public class EnemySpawner : MonoBehaviour
         GameObject selector_har = Instantiate(button, level_selector.transform);
         selector_har.transform.localPosition = new Vector3(0, 0);
         selector_har.GetComponent<MenuSelectorController>().spawner = this;
-        selector_har.GetComponent<MenuSelectorController>().SetLevel("Hard");
+        selector_har.GetComponent<MenuSelectorController>().SetLevel("Endless");
         
         //setup enemy types
         enemy_list = new Dictionary<string, EnemyType>();
@@ -88,6 +88,16 @@ public class EnemySpawner : MonoBehaviour
         ReversePolishCalc RPN = new ReversePolishCalc();
         int delay = 0;
         int[] sequence = new int[1];
+
+        GameManager.Instance.state = GameManager.GameState.COUNTDOWN;
+            GameManager.Instance.countdown = 3;
+            for (int i = 3; i > 0; i--)
+            {
+                yield return new WaitForSeconds(1);
+                GameManager.Instance.countdown--;
+            }
+            GameManager.Instance.state = GameManager.GameState.INWAVE;
+
         //This step parses the info in the JSON
         foreach (var spawn in lvl.spawns) {
             //Enemy, count, hp and location are always there but delay & sequence might not be
@@ -139,6 +149,7 @@ public class EnemySpawner : MonoBehaviour
                 has_sequence = true;
             }
             int sequence_index = 0;
+
             while (total_count > curr_spawned)
             {
                 /*
@@ -149,8 +160,7 @@ public class EnemySpawner : MonoBehaviour
                     GameManager.Instance.countdown--;
                 }*/
 
-                yield return new WaitForSeconds(delay);
-                GameManager.Instance.state = GameManager.GameState.INWAVE;
+                
                 for (int i = 0; i < sequence[sequence_index]; i++) {
                     //TODO modify Spawn() to work w/ new base hp
                     yield return Spawn(spawn.enemy);
@@ -162,6 +172,7 @@ public class EnemySpawner : MonoBehaviour
                     sequence_index++;
                     sequence_index = sequence_index % sequence.Length;
                 }
+                yield return new WaitForSeconds(delay);
             }
         }
         Debug.Log("Done spawning wave!");
