@@ -85,6 +85,7 @@ public class EnemySpawner : MonoBehaviour
     {
         level = levelname;
         WaveCount = 0;
+        cancel = false;
         level_selector.gameObject.SetActive(false);
         //Debug.Log(levelname);
         // this is not nice: we should not have to be required to tell the player directly that the level is starting
@@ -173,7 +174,6 @@ public class EnemySpawner : MonoBehaviour
             {
                 
                 for (int i = 0; i < sequence[sequence_index]; i++) {
-                    //TODO modify Spawn() to work w/ new base hp
                     yield return Spawn(spawn.enemy, new_hp);
                     if (cancel) { break; }
                     curr_spawned++;
@@ -194,7 +194,6 @@ public class EnemySpawner : MonoBehaviour
         if (GameManager.Instance.state != GameManager.GameState.GAMEOVER) {
             GameManager.Instance.state = GameManager.GameState.WAVEEND;
         }
-        cancel = false;
     }
     /*IEnumerator SpawnZombie()
     {

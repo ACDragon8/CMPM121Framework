@@ -3,7 +3,8 @@ using UnityEngine;
 public class GameOverMan : MonoBehaviour
     
 {
-    public GameObject GameStart;
+    public GameObject GameOver;
+    public GameObject StartGame;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -15,15 +16,21 @@ public class GameOverMan : MonoBehaviour
     {
         if (GameManager.Instance.state == GameManager.GameState.GAMEOVER)
         {
-            GameStart.SetActive(true);
+            GameOver.SetActive(true);
+            StartGame.SetActive(false);
+        }
+        else if (GameManager.Instance.state == GameManager.GameState.PREGAME) {
+            StartGame.SetActive(true);
+            GameOver.SetActive(false);
         }
         else
         {
-            GameStart.SetActive(false);
+            GameOver.SetActive(false);
+            StartGame.SetActive(false);
         }
     }
 
-    void Restart() {
+    public void Restart() {
         GameManager.Instance.state = GameManager.GameState.PREGAME;
     }
 }
