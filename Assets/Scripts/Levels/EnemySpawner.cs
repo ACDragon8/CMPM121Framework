@@ -67,7 +67,11 @@ public class EnemySpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (GameManager.Instance.state == GameManager.GameState.GAMEOVER) {
+            this.Cancel();
+            WaveCount = 0;
+            //TODO remove any existing enemies after wave has been cancelled
+        }
     }
     public void Cancel()
     {
