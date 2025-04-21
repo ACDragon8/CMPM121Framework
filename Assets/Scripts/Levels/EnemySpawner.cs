@@ -19,6 +19,7 @@ public class EnemySpawner : MonoBehaviour
     public Dictionary<string, LevelData> level_list;
     public string level;
     public int WaveCount;
+    public bool cancel;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -36,6 +37,9 @@ public class EnemySpawner : MonoBehaviour
         selector_har.transform.localPosition = new Vector3(0, 0);
         selector_har.GetComponent<MenuSelectorController>().spawner = this;
         selector_har.GetComponent<MenuSelectorController>().SetLevel("Endless");
+
+        WaveCount = 0;
+        cancel = false;
         
         //setup enemy types
         enemy_list = new Dictionary<string, EnemyType>();
@@ -65,7 +69,13 @@ public class EnemySpawner : MonoBehaviour
     {
         
     }
-
+    public void Cancel()
+    {
+        cancel = true;
+        /* The way the code is set up, it will either cancel the current wave being spawned by SpawnWave()
+         * or if there is no ongoing waves, it will cancel the next wave created by SpawnWave()
+         */
+    }
     public void StartLevel(string levelname)
     {
         level = levelname;
@@ -155,21 +165,15 @@ public class EnemySpawner : MonoBehaviour
 
             while (total_count > curr_spawned)
             {
-                /*
-                GameManager.Instance.state = GameManager.GameState.COUNTDOWN;
-                GameManager.Instance.countdown = delay;
-                for (int i = delay; i > 0; i--) {
-                    yield return new WaitForSeconds(1);
-                    GameManager.Instance.countdown--;
-                }*/
-
                 
                 for (int i = 0; i < sequence[sequence_index]; i++) {
                     //TODO modify Spawn() to work w/ new base hp
                     yield return Spawn(spawn.enemy, new_hp);
+                    if (cancel) { break; }
                     curr_spawned++;
                     if (curr_spawned == total_count) { break; }
                 }
+                if (cancel) { break; }
                 if (has_sequence)
                 {
                     sequence_index++;
@@ -179,8 +183,10 @@ public class EnemySpawner : MonoBehaviour
             }
         }
         Debug.Log("Done spawning wave!");
+        if (cancel) { Debug.Log("Wave got cancelled."); }
         yield return new WaitWhile(() => GameManager.Instance.enemy_count > 0);
         GameManager.Instance.state = GameManager.GameState.WAVEEND;
+        cancel = false;
     }
     /*IEnumerator SpawnZombie()
     {
