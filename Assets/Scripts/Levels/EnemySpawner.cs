@@ -18,6 +18,7 @@ public class EnemySpawner : MonoBehaviour
     public Dictionary<string, EnemyType> enemy_list;
     public Dictionary<string, LevelData> level_list;
     public string level;
+    public int WaveCount;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -35,6 +36,8 @@ public class EnemySpawner : MonoBehaviour
         selector_har.transform.localPosition = new Vector3(0, 0);
         selector_har.GetComponent<MenuSelectorController>().spawner = this;
         selector_har.GetComponent<MenuSelectorController>().SetLevel("Endless");
+
+        WaveCount = 0;
         
         //setup enemy types
         enemy_list = new Dictionary<string, EnemyType>();
@@ -83,6 +86,7 @@ public class EnemySpawner : MonoBehaviour
     //TODO implement the info from the json here
     IEnumerator SpawnWave()
     {
+        WaveCount++;
         Debug.Log("In the spawnWave func now");
         LevelData lvl = level_list[level];
         ReversePolishCalc RPN = new ReversePolishCalc();
@@ -126,7 +130,7 @@ public class EnemySpawner : MonoBehaviour
                 else if (item == "wave")
                 {
                     
-                    hp_split[index] = lvl.waves.ToString();
+                    hp_split[index] = WaveCount.ToString();
                 }
                 index++;
             }
@@ -138,7 +142,7 @@ public class EnemySpawner : MonoBehaviour
             foreach (var item in count_split) {
                 if (item == "wave")
                 {
-                    count_split[index] = lvl.waves.ToString();
+                    count_split[index] = WaveCount.ToString();
                 }
                 index++;
             }
@@ -163,7 +167,7 @@ public class EnemySpawner : MonoBehaviour
                 
                 for (int i = 0; i < sequence[sequence_index]; i++) {
                     //TODO modify Spawn() to work w/ new base hp
-                    yield return Spawn(spawn.enemy);
+                    yield return Spawn(spawn.enemy, new_hp);
                     curr_spawned++;
                     if (curr_spawned == total_count) { break; }
                 }
@@ -196,7 +200,7 @@ public class EnemySpawner : MonoBehaviour
     }*/
 
     //TODO modify Spawn() to take into account new base HP
-    IEnumerator Spawn(string enemy_name)
+    IEnumerator Spawn(string enemy_name, int new_hp)
     {
         //pick enemey type
         EnemyType enemy_type = enemy_list[enemy_name];
@@ -209,7 +213,7 @@ public class EnemySpawner : MonoBehaviour
 
         new_enemy.GetComponent<SpriteRenderer>().sprite = GameManager.Instance.enemySpriteManager.Get(enemy_type.sprite);
         EnemyController en = new_enemy.GetComponent<EnemyController>();
-        en.hp = new Hittable(enemy_type.hp, Hittable.Team.MONSTERS, new_enemy);
+        en.hp = new Hittable(new_hp, Hittable.Team.MONSTERS, new_enemy);
         en.speed = enemy_type.speed;
         en.damage = enemy_type.damage;
         GameManager.Instance.AddEnemy(new_enemy);
@@ -230,7 +234,7 @@ public class LevelData {
     public int waves;
     //public string[] spawns;
     public SpawnData[] spawns;
-    //TODO: parse jsson object of spawns to turn into wavee spawning info
+    //TODO: parse jsson object of spawns to turn into wave spawning info
     public bool process_spawn_data() {
         return true;
     }
