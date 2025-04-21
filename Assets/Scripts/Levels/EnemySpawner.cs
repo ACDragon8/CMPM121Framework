@@ -23,6 +23,7 @@ public class EnemySpawner : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        Debug.Log(GameManager.Instance.state);
         GameObject selector_eas = Instantiate(button, level_selector.transform);
         selector_eas.transform.localPosition = new Vector3(0, 110);
         selector_eas.GetComponent<MenuSelectorController>().spawner = this;
@@ -113,7 +114,8 @@ public class EnemySpawner : MonoBehaviour
                 yield return new WaitForSeconds(1);
                 GameManager.Instance.countdown--;
             }
-            GameManager.Instance.state = GameManager.GameState.INWAVE;
+            
+                GameManager.Instance.state = GameManager.GameState.INWAVE;
 
         //This step parses the info in the JSON
         foreach (var spawn in lvl.spawns) {
@@ -189,7 +191,9 @@ public class EnemySpawner : MonoBehaviour
         Debug.Log("Done spawning wave!");
         if (cancel) { Debug.Log("Wave got cancelled."); }
         yield return new WaitWhile(() => GameManager.Instance.enemy_count > 0);
-        GameManager.Instance.state = GameManager.GameState.WAVEEND;
+        if (GameManager.Instance.state != GameManager.GameState.GAMEOVER) {
+            GameManager.Instance.state = GameManager.GameState.WAVEEND;
+        }
         cancel = false;
     }
     /*IEnumerator SpawnZombie()
