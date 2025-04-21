@@ -23,7 +23,13 @@
                 "count": "wave 5 / 1 wave 5 % - *",
                 "hp": "100 25 wave *",
                 "location": "random bone"
-            }       
+            },
+            {
+                "enemy": "reindeer",
+                "count": "wave 5 /",
+                "hp": "25 wave * 100 +",
+                "location": "random"
+            }
         ]
    },
    {   
@@ -50,8 +56,14 @@
                 "count": "wave 5 / 1 wave 5 % - *",
                 "hp": "75 50 wave *",
                 "damage": "base 10 +",
+                "location": "random"
+            },
+            {
+                "enemy": "reindeer",
+                "count": "wave 4 / ",
+                "hp": "40 wave * 150 +",
                 "location": "random bone"
-            }       
+            }
         ]
    },
    {   
@@ -77,6 +89,12 @@
                 "count": "wave 10 / 1 wave 10 % - *",
                 "hp": "75 15 wave *",
                 "damage": "base 5 -",
+                "location": "random bone"
+            },
+            {
+                "enemy": "reindeer",
+                "count": "wave",
+                "hp": "50 wave * 200 +",
                 "location": "random bone"
             }       
         ]

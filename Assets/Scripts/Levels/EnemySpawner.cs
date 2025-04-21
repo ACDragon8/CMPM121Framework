@@ -36,8 +36,6 @@ public class EnemySpawner : MonoBehaviour
         selector_har.transform.localPosition = new Vector3(0, 0);
         selector_har.GetComponent<MenuSelectorController>().spawner = this;
         selector_har.GetComponent<MenuSelectorController>().SetLevel("Endless");
-
-        WaveCount = 0;
         
         //setup enemy types
         enemy_list = new Dictionary<string, EnemyType>();
@@ -71,6 +69,7 @@ public class EnemySpawner : MonoBehaviour
     public void StartLevel(string levelname)
     {
         level = levelname;
+        WaveCount = 0;
         level_selector.gameObject.SetActive(false);
         //Debug.Log(levelname);
         // this is not nice: we should not have to be required to tell the player directly that the level is starting

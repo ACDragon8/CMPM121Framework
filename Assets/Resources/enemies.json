@@ -21,7 +21,7 @@
        "damage": 10
    },
    {
-    "name": "Reindeer",
+    "name": "reindeer",
     "sprite": 15,
     "hp": 60,
     "speed": 4,
