@@ -23,6 +23,7 @@ public class EnemySpawner : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        //Maybe put buttons into an array so update can reference them later?
         Debug.Log(GameManager.Instance.state);
         GameObject selector_eas = Instantiate(button, level_selector.transform);
         selector_eas.transform.localPosition = new Vector3(0, 110);
@@ -71,8 +72,11 @@ public class EnemySpawner : MonoBehaviour
         if (GameManager.Instance.state == GameManager.GameState.GAMEOVER) {
             this.Cancel();
             WaveCount = 0;
-            //TODO remove any existing enemies after wave has been cancelled
         }
+    }
+    public void Restart()
+    {
+        level_selector.gameObject.SetActive(true);
     }
     public void Cancel()
     {
@@ -87,7 +91,7 @@ public class EnemySpawner : MonoBehaviour
         WaveCount = 0;
         cancel = false;
         level_selector.gameObject.SetActive(false);
-        //Debug.Log(levelname);
+        StatsManager.Instance.SetLevelName(levelname);
         // this is not nice: we should not have to be required to tell the player directly that the level is starting
         GameManager.Instance.player.GetComponent<PlayerController>().StartLevel();
         StartCoroutine(SpawnWave());
@@ -98,11 +102,10 @@ public class EnemySpawner : MonoBehaviour
         StartCoroutine(SpawnWave());
     }
 
-    //TODO implement the info from the json here
     IEnumerator SpawnWave()
     {
         WaveCount++;
-        Debug.Log("In the spawnWave func now");
+        StatsManager.Instance.UpdateWaveNum(WaveCount);
         LevelData lvl = level_list[level];
         ReversePolishCalc RPN = new ReversePolishCalc();
         int delay = 0;
@@ -211,7 +214,6 @@ public class EnemySpawner : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
     }*/
 
-    //TODO modify Spawn() to take into account new base HP
     IEnumerator Spawn(string enemy_name, int new_hp)
     {
         //pick enemey type
