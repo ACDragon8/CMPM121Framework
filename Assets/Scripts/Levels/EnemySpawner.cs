@@ -20,25 +20,10 @@ public class EnemySpawner : MonoBehaviour
     public string level;
     public int WaveCount;
     public bool cancel;
+    public Dictionary<string, GameObject> level_buttons;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        //Maybe put buttons into an array so update can reference them later?
-        Debug.Log(GameManager.Instance.state);
-        GameObject selector_eas = Instantiate(button, level_selector.transform);
-        selector_eas.transform.localPosition = new Vector3(0, 110);
-        selector_eas.GetComponent<MenuSelectorController>().spawner = this;
-        selector_eas.GetComponent<MenuSelectorController>().SetLevel("Easy");
-
-        GameObject selector_med = Instantiate(button, level_selector.transform);
-        selector_med.transform.localPosition = new Vector3(0, 60);
-        selector_med.GetComponent<MenuSelectorController>().spawner = this;
-        selector_med.GetComponent<MenuSelectorController>().SetLevel("Medium");
-
-        GameObject selector_har = Instantiate(button, level_selector.transform);
-        selector_har.transform.localPosition = new Vector3(0, 0);
-        selector_har.GetComponent<MenuSelectorController>().spawner = this;
-        selector_har.GetComponent<MenuSelectorController>().SetLevel("Endless");
 
         WaveCount = 0;
         cancel = false;
@@ -63,7 +48,20 @@ public class EnemySpawner : MonoBehaviour
             LevelData lv = l.ToObject<LevelData>();
             level_list[lv.name] = lv;
         }
-
+        //TODO figure out how to get the height of the menu and maybe create a separate class
+        //for these UI things
+        int spacing = 120/level_list.Count;
+        int i = level_list.Count;
+        level_buttons = new Dictionary<string, GameObject>();
+        foreach (var difficulty in level_list) {
+            GameObject b = Instantiate(button, level_selector.transform);
+            b.transform.localPosition = new Vector3(0, spacing*i);
+            b.GetComponent<MenuSelectorController>().spawner = this;
+            b.GetComponent<MenuSelectorController>().SetLevel(difficulty.Key);
+            level_buttons[difficulty.Key] = b;
+            i--;
+            Debug.Log("Created button for " + difficulty.Key);
+        }
     }
 
     // Update is called once per frame
@@ -74,6 +72,7 @@ public class EnemySpawner : MonoBehaviour
             WaveCount = 0;
         }
     }
+
     public void Restart()
     {
         level_selector.gameObject.SetActive(true);
