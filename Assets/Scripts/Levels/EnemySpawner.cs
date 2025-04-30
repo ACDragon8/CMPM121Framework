@@ -53,9 +53,9 @@ public class EnemySpawner : MonoBehaviour
         int spacing = 120/level_list.Count;
         int i = level_list.Count;
         level_buttons = new Dictionary<string, GameObject>();
-        foreach (var difficulty in level_list) {
+        foreach (var difficulty in level_list) { 
             GameObject b = Instantiate(button, level_selector.transform);
-            b.transform.localPosition = new Vector3(0, spacing*i);
+            b.transform.localPosition = new Vector3(0, spacing*i - 50);
             b.GetComponent<MenuSelectorController>().spawner = this;
             b.GetComponent<MenuSelectorController>().SetLevel(difficulty.Key);
             level_buttons[difficulty.Key] = b;
