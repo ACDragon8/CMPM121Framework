@@ -7,36 +7,46 @@ public class Spell
 {
     public float last_cast;
     public SpellCaster owner;
+    public int manaCost;
+    public string name;
+    public int damage;
+    public float cooldown;
+    public int icon;
     public Hittable.Team team;
 
     public Spell(SpellCaster owner)
     {
         this.owner = owner;
+        this.name = "Bolt";
+        this.damage = 100;
+        this.cooldown = 0.75f;
+        this.icon = 0;
+        this.manaCost = 10;
     }
 
     public string GetName()
     {
-        return "Bolt";
+        return name;
     }
 
     public int GetManaCost()
     {
-        return 10;
+        return manaCost;
     }
 
     public int GetDamage()
     {
-        return 100;
+        return damage;
     }
 
     public float GetCooldown()
     {
-        return 0.75f;
+        return cooldown;
     }
 
     public virtual int GetIcon()
     {
-        return 0;
+        return icon;
     }
 
     public bool IsReady()
