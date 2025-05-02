@@ -5,10 +5,11 @@ public class StatsManager
 {
     /* Supposedly good practice to keep field values private
      * and have methods to access and modify them.
+     * Can use get/set properties instead of all these methods?
     */
-    private int waveNum;
-    private int totalWaves; //This one is only applicable if not endless
-    private string levelName;
+    public int waveNum { get; set; }
+    public int totalWaves { get; set; } //This one is only applicable if not endless
+    public string levelName { get; set; }
     private Dictionary<string, int> enemyKills;
     private static StatsManager theInstance;
     public static StatsManager Instance
@@ -26,29 +27,14 @@ public class StatsManager
         totalWaves = 0;
         enemyKills = new Dictionary<string, int>();
     }
-    public void UpdateWaveNum(int newNum)
-    {
-        waveNum = newNum;
-    }
-    public int GetWaveNum()
-    {
-        return waveNum;
-    }
     public void ResetWaveNum()
     {
         waveNum = 0;
     }
+    //This function below only should be used if not endless
     public void UpdateTotalWaves(int newTotalWaves)
     {
         totalWaves = newTotalWaves;
-    }
-    public void SetLevelName(string name)
-    {
-        levelName = name;
-    }
-    public string getLevelName() 
-    {
-        return levelName;
     }
     public void ResetEnemyKills() 
     {

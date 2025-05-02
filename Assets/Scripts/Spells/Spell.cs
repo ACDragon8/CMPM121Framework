@@ -2,41 +2,71 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
+using System;
 
 public class Spell 
 {
     public float last_cast;
     public SpellCaster owner;
+    public string name;
+    public string description;
+    public int manaCost;
+    public int dmg;
+    public Damage.Type dmgType;
+    public int cooldown;
+    public int icon;
     public Hittable.Team team;
+    public bool valueSet;
 
     public Spell(SpellCaster owner)
     {
         this.owner = owner;
+        valueSet = false;
     }
-
+    public virtual void SetProperties(JObject spellAttributes) 
+    {
+        ReversePolishCalc rpn = new ReversePolishCalc();
+        icon = spellAttributes["icon"].ToObject<int>();
+        string d = spellAttributes["damage"]["amount"].ToString();
+        string[] dmg_split = d.Split(' ');
+        foreach (string s in dmg_split) 
+        {
+            //TODO
+        }
+        dmg = rpn.Calculate(dmg_split);
+        valueSet = true; 
+    }
     public string GetName()
     {
-        return "Bolt";
+        if (valueSet) { return name; } else { return "Bolt"; }  
+    }
+    public string Description() 
+    {
+        if (valueSet) { return description; } else { return "NONE"; }
     }
 
     public int GetManaCost()
     {
-        return 10;
+        if (valueSet) { return manaCost; } else { return 10; }
     }
 
     public int GetDamage()
     {
-        return 100;
+        if (valueSet) { return dmg; } 
+        else { return 100; }
     }
-
+    public Damage.Type GetDamageType()
+    {
+        if (valueSet) { return dmgType; } else { return Damage.Type.ARCANE; }
+    }
     public float GetCooldown()
     {
-        return 0.75f;
+        if (valueSet) { return cooldown; } else { return 0.75f; }
     }
 
     public virtual int GetIcon()
     {
-        return 0;
+        if (valueSet) { return icon; } else { return 0; }
     }
 
     public bool IsReady()
@@ -55,7 +85,7 @@ public class Spell
     {
         if (other.team != team)
         {
-            other.Damage(new Damage(GetDamage(), Damage.Type.ARCANE));
+            other.Damage(new Damage(GetDamage(), GetDamageType()));
         }
 
     }
