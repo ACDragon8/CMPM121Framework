@@ -8,13 +8,9 @@ using System;
 */
 public class ReversePolishCalc
 {
-    Stack numbers;
-    public ReversePolishCalc() {
-        numbers = new Stack();
-    }
-    public int Calculate(string[] sequence)
+    public static int Calculate(string[] sequence)
     {
-        EmptyStack();
+        Stack numbers = new();
         for (int i = 0; i < sequence.Length; i++)
         {
             string token = sequence[i];
@@ -51,13 +47,10 @@ public class ReversePolishCalc
         }
         return (int) numbers.Pop();
     }
-    private void EmptyStack() 
+    
+    public static float CalculateFloat(string[] sequence) 
     {
-        while (numbers.Count > 0) { numbers.Pop(); }
-    }
-    public float CalculateFloat(string[] sequence) 
-    {
-        EmptyStack();
+        Stack numbers = new();
         for (int i = 0; i < sequence.Length; i++)
         {
             string token = sequence[i];

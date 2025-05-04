@@ -106,7 +106,6 @@ public class EnemySpawner : MonoBehaviour
         WaveCount++;
         StatsManager.Instance.waveNum = WaveCount;
         LevelData lvl = level_list[level];
-        ReversePolishCalc RPN = new ReversePolishCalc();
         int delay = 0;
         int[] sequence = new int[1];
 
@@ -152,7 +151,7 @@ public class EnemySpawner : MonoBehaviour
                 }
                 index++;
             }
-            int new_hp = RPN.Calculate(hp_split);
+            int new_hp = ReversePolishCalc.Calculate(hp_split);
 
             //This is for total amount of enemies to spawn
             string[] count_split = spawn.count.Split(' ');
@@ -164,7 +163,7 @@ public class EnemySpawner : MonoBehaviour
                 }
                 index++;
             }
-            int total_count = RPN.Calculate(count_split);
+            int total_count = ReversePolishCalc.Calculate(count_split);
             int curr_spawned = 0;
             bool has_sequence = false;
             if (sequence.Length > 1) {

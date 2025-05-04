@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using System;
+using UnityEngine.Rendering;
 
 public class Spell 
 {
@@ -13,7 +14,7 @@ public class Spell
     public int manaCost;
     public int dmg;
     public Damage.Type dmgType;
-    public int cooldown;
+    public float cooldown;
     public int icon;
     public Hittable.Team team;
     public bool valueSet;
@@ -25,16 +26,40 @@ public class Spell
     }
     public virtual void SetProperties(JObject spellAttributes) 
     {
-        ReversePolishCalc rpn = new ReversePolishCalc();
         icon = spellAttributes["icon"].ToObject<int>();
         string d = spellAttributes["damage"]["amount"].ToString();
-        string[] dmg_split = d.Split(' ');
-        foreach (string s in dmg_split) 
-        {
-            //TODO
+        string[] s = ReplaceWithDigits(d);
+        dmg = ReversePolishCalc.Calculate(s);
+        dmgType = Damage.TypeFromString(spellAttributes["damage"]["type"].ToString());
+        string m = spellAttributes["mana_cost"].ToString();
+        if (!Int32.TryParse(m, out manaCost)) {
+            //If parsing fails, this is the default value
+            manaCost = 10;
         }
-        dmg = rpn.Calculate(dmg_split);
+        string c = spellAttributes["cooldown"].ToString();
+        if (!float.TryParse(c, out cooldown)) {
+            cooldown = 0.75f;
+        }
         valueSet = true; 
+    }
+    private string[] ReplaceWithDigits(string sequence) 
+    {
+        string[] s = sequence.Split(' ');
+        int index = 0;
+        foreach (string token in s) 
+        {
+            if (token == "wave")
+            {
+                s[index] = StatsManager.Instance.waveNum.ToString();
+            }
+            else if (token == "power") 
+            {
+                //We get the power value from the owner (spellcaster class passed in)
+                s[index] = owner.power.ToString();
+            }
+            index++;
+        }
+        return s;
     }
     public string GetName()
     {
