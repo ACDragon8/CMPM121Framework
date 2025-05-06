@@ -80,7 +80,7 @@ public class ArcaneBlast : Spell
         }
         float degree_gap = 360f / n;
         for (int i = 0; i < (int) n; i++) {
-            Vector3 direction = vector + new Vector3(Mathf.Sin(degree_gap * i * Mathf.PI/180), Mathf.Cos(degree_gap * i * Mathf.PI / 180), 0);
+            Vector3 direction = new Vector3(Mathf.Sin(degree_gap * i), Mathf.Cos(degree_gap * i), 0);
             GameManager.Instance.projectileManager.CreateProjectile(
                 secondary_projectile_icon, secondary_projectile_path, 
                 vector, direction, secondary_projectile_speed, OnSecondHit, GetLifeTime());
