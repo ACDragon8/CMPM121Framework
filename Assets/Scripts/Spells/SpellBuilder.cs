@@ -8,7 +8,7 @@ using System.Collections.Generic;
 public class SpellBuilder 
 {
     JObject spellList;
-    public Spell Build(SpellCaster owner, string spellName= "arcane_blast")
+    public Spell Build(SpellCaster owner, string spellName= "arcane_spray")
     {
         //TODO figure out how to incorporate modifiers into this
         Spell s;
@@ -23,6 +23,8 @@ public class SpellBuilder
                 s = new ArcaneBlast(owner);
                 break;
             case "arcane_spray":
+                s = new ArcaneSpray(owner);
+                break;
             default:
                 s = new ArcaneBolt(owner);
                 break;

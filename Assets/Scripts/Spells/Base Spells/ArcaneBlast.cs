@@ -3,7 +3,6 @@ using System;
 using System.Collections;
 using UnityEditor.Search;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class ArcaneBlast : Spell
 {
