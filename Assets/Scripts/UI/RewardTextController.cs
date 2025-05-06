@@ -15,7 +15,7 @@ public class RewardTextController : MonoBehaviour
     {
         if (GameManager.Instance.state == GameManager.GameState.WAVEEND)
         {
-            tmp.text = "Waves survived: " + StatsManager.Instance.GetWaveNum() + "\n";
+            tmp.text = "Waves survived: " + StatsManager.Instance.waveNum + "\n";
         }
     }
 }

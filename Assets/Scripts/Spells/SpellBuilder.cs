@@ -7,15 +7,52 @@ using System.Collections.Generic;
 
 public class SpellBuilder 
 {
+    JObject spellList;
+    public Spell Build(SpellCaster owner, string spellName= "arcane_spray")
+    {
+        //TODO figure out how to incorporate modifiers into this
+        Spell s;
+        switch (spellName) {
+            case "arcane_bolt":
+                s = new ArcaneBolt(owner);
+                break;
+            case "magic_missile":
+                s = new MagicMissile(owner);
+                break;
+            case "arcane_blast":
+                s = new ArcaneBlast(owner);
+                break;
+            case "arcane_spray":
+                s = new ArcaneSpray(owner);
+                break;
+            default:
+                s = new ArcaneBolt(owner);
+                break;
+        }
+        s.SetProperties((JObject)spellList[spellName]);
+        return s;
+    }
 
-    public Spell Build(SpellCaster owner)
+    public Spell RandomBuild(SpellCaster owner)
     {
         return new Spell(owner);
     }
 
-   
+   //So this function below is the creation function for object spell builder
+   //This might be a good place to put the Json reading.
+   //Dunno if we want it to be singleton or not
     public SpellBuilder()
-    {        
+    {
+        var spelltext = Resources.Load<TextAsset>("spells");
+        JObject jo = JObject.Parse(spelltext.text);
+        if (jo != null)
+        {
+            spellList = jo;
+        }
+        else 
+        {
+            Debug.Log("Missing spells.json");
+        }
     }
 
 }
