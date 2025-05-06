@@ -36,24 +36,28 @@ public class SpellCaster
         this.selectedSpell = 0;
         this.maxSpells = 4;
         this.spell[0] = new SpellBuilder().Build(this);
+        this.spell[1] = new SpellBuilder().Build(this,"arcane_bolt");
     }
 
     public IEnumerator Cast(Vector3 where, Vector3 target)
     {        
-        if (mana >= spell[0].GetManaCost() && spell[0].IsReady())
+        if (mana >= spell[selectedSpell].GetManaCost() && spell[selectedSpell].IsReady())
         {
-            mana -= spell[0].GetManaCost();
-            yield return spell[0].Cast(where, target, team);
+            mana -= spell[selectedSpell].GetManaCost();
+            yield return spell[selectedSpell].Cast(where, target, team);
         }
         yield break;
     }
 
     public Spell getSpell() {
-        return spell[0];
+        return spell[selectedSpell];
     }
 
     public void nextSpell() {
         this.selectedSpell = (this.selectedSpell + 1 ) % this.maxSpells;
+        if(this.spell[selectedSpell] == null) {
+            nextSpell();
+        }
     }
 
 }

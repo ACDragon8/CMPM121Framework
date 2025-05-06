@@ -64,7 +64,8 @@ public class PlayerController : MonoBehaviour
 
     void OnChangeSpell()
     {
-        spellcaster.nextSpell()
+        spellcaster.nextSpell();
+        spellui.SetSpell(spellcaster.getSpell());
     }
 
     void Die()
