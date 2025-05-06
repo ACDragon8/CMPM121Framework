@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
         // tell UI elements what to show
         healthui.SetHealth(hp);
         manaui.SetSpellCaster(spellcaster);
-        spellui.SetSpell(spellcaster.spell);
+        spellui.SetSpell(spellcaster.getSpell());
     }
 
     // Update is called once per frame
@@ -59,6 +59,11 @@ public class PlayerController : MonoBehaviour
     {
         if (GameManager.Instance.state == GameManager.GameState.PREGAME || GameManager.Instance.state == GameManager.GameState.GAMEOVER) return;
         unit.movement = value.Get<Vector2>()*speed;
+    }
+
+    void OnChangeSpell()
+    {
+        spellcaster.nextSpell()
     }
 
     void Die()
