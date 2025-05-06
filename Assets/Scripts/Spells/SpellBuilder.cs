@@ -7,10 +7,28 @@ using System.Collections.Generic;
 
 public class SpellBuilder 
 {
-
-    public Spell Build(SpellCaster owner, string spellName="bolt")
+    JObject spellList;
+    public Spell Build(SpellCaster owner, string spellName= "arcane_blast")
     {
-        return new Spell(owner);
+        //TODO figure out how to incorporate modifiers into this
+        Spell s;
+        switch (spellName) {
+            case "arcane_bolt":
+                s = new ArcaneBolt(owner);
+                break;
+            case "magic_missile":
+                s = new MagicMissile(owner);
+                break;
+            case "arcane_blast":
+                s = new ArcaneBlast(owner);
+                break;
+            case "arcane_spray":
+            default:
+                s = new ArcaneBolt(owner);
+                break;
+        }
+        s.SetProperties((JObject)spellList[spellName]);
+        return s;
     }
 
     public Spell RandomBuild(SpellCaster owner)
@@ -24,11 +42,10 @@ public class SpellBuilder
     public SpellBuilder()
     {
         var spelltext = Resources.Load<TextAsset>("spells");
-        JToken jo = JToken.Parse(spelltext.text);
+        JObject jo = JObject.Parse(spelltext.text);
         if (jo != null)
-        { 
-            //I dunno, do some parsing here???
-            //Maybe instantiate all the spell objects here?
+        {
+            spellList = jo;
         }
         else 
         {

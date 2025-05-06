@@ -29,6 +29,7 @@ public class SpellCaster
         this.team = team;
         this.power = power;
         spell = new SpellBuilder().Build(this);
+        
     }
 
     public IEnumerator Cast(Vector3 where, Vector3 target)

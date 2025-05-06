@@ -42,7 +42,7 @@ public class Spell
         }
         valueSet = true; 
     }
-    private string[] ReplaceWithDigits(string sequence) 
+    protected string[] ReplaceWithDigits(string sequence) 
     {
         string[] s = sequence.Split(' ');
         int index = 0;
@@ -106,13 +106,12 @@ public class Spell
         yield return new WaitForEndOfFrame();
     }
 
-    void OnHit(Hittable other, Vector3 impact)
+    private void OnHit(Hittable other, Vector3 impact)
     {
         if (other.team != team)
         {
             other.Damage(new Damage(GetDamage(), GetDamageType()));
         }
-
     }
 
 }

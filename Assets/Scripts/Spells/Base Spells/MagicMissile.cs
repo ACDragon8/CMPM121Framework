@@ -3,12 +3,12 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class ArcaneBolt : Spell
+public class MagicMissile : Spell
 {
     public string projectile_path;
     public float projectile_speed;
     public int projectile_icon;
-    public ArcaneBolt(SpellCaster owner) : base(owner)
+    public MagicMissile(SpellCaster owner) : base(owner)
     {
         this.owner = owner;
         valueSet = false;
@@ -19,20 +19,15 @@ public class ArcaneBolt : Spell
         //Read and parse extra fields Json object here
         projectile_path = spellAttributes["projectile"]["trajectory"].ToString();
         string spd = spellAttributes["projectile"]["speed"].ToString();
-        projectile_speed = ReversePolishCalc.CalculateFloat(ReplaceWithDigits(spd));
-        
+        if (!float.TryParse(spd, out projectile_speed)) {
+            projectile_speed = 10;
+        }
         string proj_icon = spellAttributes["projectile"]["sprite"].ToString();
         if (!Int32.TryParse(proj_icon, out projectile_icon))
         {
             projectile_icon = 0;
         }
         base.SetProperties(spellAttributes);
-    }
-    public float GetProjectileSpeed() {
-        if (valueSet) { 
-            return projectile_speed;
-        }
-        return 15f;
     }
     public override IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team)
     {
