@@ -82,7 +82,7 @@ public class ArcaneBlast : Spell
             Vector3 direction = new Vector3(Mathf.Sin(degree_gap * i), Mathf.Cos(degree_gap * i), 0);
             GameManager.Instance.projectileManager.CreateProjectile(
                 secondary_projectile_icon, secondary_projectile_path, 
-                vector, direction, secondary_projectile_speed, OnSecondHit, GetLifeTime());
+                vector, direction, secondary_projectile_speed, OnHit, GetLifeTime());
         }
     }
 
