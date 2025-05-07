@@ -1,9 +1,7 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
-using UnityEditor.Search;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class ArcaneSpray : Spell
 {
@@ -20,6 +18,11 @@ public class ArcaneSpray : Spell
         //Read and parse extra fields Json object here
         string N = spellAttributes["N"].ToString();
         n = ReversePolishCalc.CalculateFloat(ReplaceWithDigits(N));
+        string spry = spellAttributes["spray"].ToString();
+        if (!float.TryParse(spry, out spray))
+        {
+            spray = 0.5f;
+        }
 
         projectile_path = spellAttributes["projectile"]["trajectory"].ToString();
         string spd = spellAttributes["projectile"]["speed"].ToString();
@@ -47,10 +50,12 @@ public class ArcaneSpray : Spell
     public override IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team)
     {
         this.team = team;
-        float degree_gap = 360f * spray;
+        float degree_gap = spray/2;
+        Debug.Log(spray);
         for (int i = 0; i < (int)n; i++)
         {
-            Vector3 direction = (target - where) + new Vector3(Mathf.Sin(degree_gap*i), Mathf.Cos(degree_gap*i), 0);
+            float offset = UnityEngine.Random.Range(-degree_gap, degree_gap);
+            Vector3 direction = Quaternion.Euler(offset*360, offset*360, 0) * (target - where);
             GameManager.Instance.projectileManager.CreateProjectile(
                 projectile_icon, projectile_path, 
                 where, direction, projectile_speed, 
@@ -59,7 +64,7 @@ public class ArcaneSpray : Spell
         yield return new WaitForEndOfFrame();
     }
 
-    private void OnHit(Hittable other, Vector3 vector)
+    public override void OnHit(Hittable other, Vector3 vector)
     {
         if (other.team != team)
         {

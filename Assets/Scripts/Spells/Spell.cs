@@ -106,7 +106,7 @@ public class Spell
         yield return new WaitForEndOfFrame();
     }
 
-    public void OnHit(Hittable other, Vector3 impact)
+    public virtual void OnHit(Hittable other, Vector3 impact)
 
     {
         if (other.team != team)

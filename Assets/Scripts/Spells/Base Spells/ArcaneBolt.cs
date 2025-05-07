@@ -41,7 +41,7 @@ public class ArcaneBolt : Spell
         yield return new WaitForEndOfFrame();
     }
 
-    private void OnHit(Hittable other, Vector3 vector)
+    public override void OnHit(Hittable other, Vector3 vector)
     {
         //It seems like this would be modified by modifier spells.
         if (other.team != team)
