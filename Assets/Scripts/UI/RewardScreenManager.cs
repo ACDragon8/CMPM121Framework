@@ -46,7 +46,7 @@ public class RewardScreenManager : MonoBehaviour
     }
 
     public void DestroyButtons() {
-        for(int i = 0; i < rewardNumber;i++) {s
+        for(int i = 0; i < rewardNumber;i++) {
             if(spellButtons[i] != null) {
                 Destroy(spellButtons[i]);
                 spellButtons[i] = null;
