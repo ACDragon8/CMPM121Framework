@@ -8,6 +8,7 @@ using System.Collections.Generic;
 public class SpellBuilder 
 {
     JObject spellList;
+    public string[] spellTypes;
     public Spell Build(SpellCaster owner, string spellName= "arcane_spray")
     {
         //TODO figure out how to incorporate modifiers into this
@@ -43,6 +44,9 @@ public class SpellBuilder
    //Dunno if we want it to be singleton or not
     public SpellBuilder()
     {
+        string[] a = {"arcane_bolt", "magic_missile", "arcane_blast", "arcane_spray"};
+        spellTypes = a;
+
         var spelltext = Resources.Load<TextAsset>("spells");
         JObject jo = JObject.Parse(spelltext.text);
         if (jo != null)

@@ -13,6 +13,8 @@ public class SpellCaster
     public int selectedSpell;
     private int maxSpells;
 
+    public SpellBuilder sb;
+
 
     public IEnumerator ManaRegeneration()
     {
@@ -35,8 +37,9 @@ public class SpellCaster
         this.spell = new Spell[4];
         this.selectedSpell = 0;
         this.maxSpells = 4;
-        this.spell[0] = new SpellBuilder().Build(this);
-        this.spell[1] = new SpellBuilder().Build(this,"arcane_bolt");
+        this.sb = new SpellBuilder();
+        this.spell[0] = sb.Build(this);
+        this.spell[1] = sb.Build(this,"arcane_bolt");
     }
 
     public IEnumerator Cast(Vector3 where, Vector3 target)
@@ -60,4 +63,13 @@ public class SpellCaster
         }
     }
 
+    public bool addSpell(string spellName = "arcane_bolt") {
+        for(int i = 0; i < this.maxSpells;i++) {
+            if(spell[i] == null) {
+                this.spell[i] = sb.Build(this,spellName);
+                return true;
+            }
+        }
+        return false;
+    }
 }
