@@ -26,11 +26,14 @@ public class Doubler : ModifierSpell
     }
     public override void ModifySpell()
     {
-        baseSpell.projectile_speed = (int)(baseSpell.GetProjectileSpeed() * speed_multiplier);
+        baseSpell.manaCost = (int)(baseSpell.GetManaCost() * mana_multiplier);
+        baseSpell.cooldown = (int)(baseSpell.GetCooldown() * cooldown_multiplier);
     }
     public override IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team)
     {
         //TODO modify this to cast twice.
-        return base.Cast(where, target, team);
+        yield return base.Cast(where, target, team);
+        yield return new WaitForSeconds(delay);
+        yield return base.Cast(where, target, team);
     }
 }
