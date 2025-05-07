@@ -60,14 +60,14 @@ public class ArcaneBlast : Spell
     {
         if (other.team != team)
         {
-            other.Damage(new Damage(GetDamage(), GetDamageType()));
+            other.Damage(new Damage(dmg, dmgType));
         }
         float degree_gap = 360f / n;
         for (int i = 0; i < (int) n; i++) {
             Vector3 direction = new Vector3(Mathf.Sin(degree_gap * i), Mathf.Cos(degree_gap * i), 0);
             GameManager.Instance.projectileManager.CreateProjectile(
                 secondary_projectile_icon, secondary_projectile_path, 
-                vector, direction, secondary_projectile_speed, OnHit, GetSecondaryLifetime());
+                vector, direction, secondary_projectile_speed, OnHit, projectile_lifetime);
         }
     }
 
@@ -75,7 +75,7 @@ public class ArcaneBlast : Spell
     {
         if (other.team != team)
         {
-            other.Damage(new Damage(GetDamage(), GetDamageType()));
+            other.Damage(new Damage(dmg, dmgType));
         }
     }
 }

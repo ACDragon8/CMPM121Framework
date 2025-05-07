@@ -9,7 +9,7 @@ public class SpellBuilder
 {
     JObject spellList;
     public string[] spellTypes;
-    public Spell Build(SpellCaster owner, string spellName= "arcane_spray")
+    public Spell Build(SpellCaster owner, string spellName= "arcane_bolt")
     {
         //TODO figure out how to incorporate modifiers into this
         Spell s;
@@ -31,7 +31,11 @@ public class SpellBuilder
                 break;
         }
         s.SetProperties((JObject)spellList[spellName]);
-        return s;
+        //Cynthia screwing around here and figuring things out
+        ModifierSpell mod = new SpeedAmp(owner);
+        mod.SetProperties((JObject) spellList["speed_amp"]);
+        mod.SetBaseSpell(s);
+        return mod;
     }
 
     public Spell RandomBuild(SpellCaster owner)

@@ -44,7 +44,7 @@ public class ArcaneSpray : Spell
             GameManager.Instance.projectileManager.CreateProjectile(
                 projectile_icon, projectile_path, 
                 where, direction, projectile_speed, 
-                OnHit, GetProjectileLifetime());
+                OnHit, projectile_lifetime);
         }
         yield return new WaitForEndOfFrame();
     }
@@ -53,7 +53,7 @@ public class ArcaneSpray : Spell
     {
         if (other.team != team)
         {
-            other.Damage(new Damage(GetDamage(), GetDamageType()));
+            other.Damage(new Damage(dmg, dmgType));
         }
     }
 }
