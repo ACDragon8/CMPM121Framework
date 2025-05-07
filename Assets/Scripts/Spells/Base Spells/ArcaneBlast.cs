@@ -19,12 +19,12 @@ public class ArcaneBlast : Spell
 
         projectile_path = spellAttributes["projectile"]["trajectory"].ToString();
         string spd = spellAttributes["projectile"]["speed"].ToString();
-        if (!Int32.TryParse(spd, out projectile_speed))
+        if (!int.TryParse(spd, out projectile_speed))
         {
             projectile_speed = 10;
         }
         string proj_icon = spellAttributes["projectile"]["sprite"].ToString();
-        if (!Int32.TryParse(proj_icon, out projectile_icon))
+        if (!int.TryParse(proj_icon, out projectile_icon))
         {
             projectile_icon = 0;
         }
@@ -60,14 +60,14 @@ public class ArcaneBlast : Spell
     {
         if (other.team != team)
         {
-            other.Damage(new Damage(GetDamage(), GetDamageType()));
+            other.Damage(new Damage(dmg, dmgType));
         }
         float degree_gap = 360f / n;
         for (int i = 0; i < (int) n; i++) {
             Vector3 direction = new Vector3(Mathf.Sin(degree_gap * i), Mathf.Cos(degree_gap * i), 0);
             GameManager.Instance.projectileManager.CreateProjectile(
                 secondary_projectile_icon, secondary_projectile_path, 
-                vector, direction, secondary_projectile_speed, OnHit, GetSecondaryLifetime());
+                vector, direction, secondary_projectile_speed, OnHit, projectile_lifetime);
         }
     }
 
@@ -75,7 +75,7 @@ public class ArcaneBlast : Spell
     {
         if (other.team != team)
         {
-            other.Damage(new Damage(GetDamage(), GetDamageType()));
+            other.Damage(new Damage(dmg, dmgType));
         }
     }
 }

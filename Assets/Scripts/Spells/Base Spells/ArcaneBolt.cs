@@ -5,9 +5,6 @@ using UnityEngine;
 
 public class ArcaneBolt : Spell
 {
-    public string projectile_path;
-    public float projectile_speed;
-    public int projectile_icon;
     public ArcaneBolt(SpellCaster owner) : base(owner) { }
 
     public override void SetProperties(JObject spellAttributes)
@@ -15,7 +12,7 @@ public class ArcaneBolt : Spell
         //Read and parse extra fields Json object here
         projectile_path = spellAttributes["projectile"]["trajectory"].ToString();
         string spd = spellAttributes["projectile"]["speed"].ToString();
-        projectile_speed = ReversePolishCalc.CalculateFloat(ReplaceWithDigits(spd));
+        projectile_speed = (int) ReversePolishCalc.CalculateFloat(ReplaceWithDigits(spd));
         
         string proj_icon = spellAttributes["projectile"]["sprite"].ToString();
         if (!Int32.TryParse(proj_icon, out projectile_icon))
@@ -37,7 +34,7 @@ public class ArcaneBolt : Spell
         //It seems like this would be modified by modifier spells.
         if (other.team != team)
         {
-            other.Damage(new Damage(GetDamage(), GetDamageType()));
+            other.Damage(new Damage(dmg, dmgType));
         }
     }
 }

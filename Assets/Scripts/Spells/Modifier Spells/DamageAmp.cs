@@ -27,10 +27,10 @@ public class DamageAmp : Spell
     public override void ModifySpell() {
         baseSpell.dmg = (int) (baseSpell.GetDamage() * damage_multiplier);
         baseSpell.manaCost = (int)(baseSpell.GetManaCost() * mana_multiplier);
-    }*/
-    public virtual IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team) {
-        Debug.Log("Hello World!");
-        inner.Cast(where,target,team);
-    } 
-    
+    }
+    */
+    public override IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team)
+    {
+        return baseSpell.Cast(where, target, team);
+    }
 }

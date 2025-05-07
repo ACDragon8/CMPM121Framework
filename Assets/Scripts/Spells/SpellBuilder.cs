@@ -9,7 +9,7 @@ public class SpellBuilder
 {
     JObject spellList;
     public string[] spellTypes;
-    public Spell Build(SpellCaster owner, string spellName= "damage_amp arcane_bolt")
+    public Spell Build(SpellCaster owner, string spellName= "arcane_bolt")
     {
         //TODO figure out how to incorporate modifiers into this
         int count = 0;
@@ -38,7 +38,7 @@ public class SpellBuilder
                 s = new ArcaneBolt(owner);
                 break;
         }
-        s.SetProperties((JObject)spellList[keywords[count -1]]);
+        /*s.SetProperties((JObject)spellList[keywords[count -1]]);
         for (int i = 0; i < count -1; i++) {
             switch (keywords[count-1]) {
                 case "damage_amp":
@@ -54,6 +54,13 @@ public class SpellBuilder
         }
 
         return s;
+*/
+        s.SetProperties((JObject)spellList[spellName]);
+        //Cynthia screwing around here and figuring things out
+        ModifierSpell mod = new SpeedAmp(owner);
+        mod.SetProperties((JObject) spellList["speed_amp"]);
+        mod.SetBaseSpell(s);
+        return mod;
     }
 
     public Spell RandomBuild(SpellCaster owner)

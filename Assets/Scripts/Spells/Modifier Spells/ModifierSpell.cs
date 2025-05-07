@@ -34,16 +34,24 @@ public class ModifierSpell : Spell
         modifier_Description = spellAttributes["description"].ToString();
 
     }
-    public string GetModifierName() { return modifier_Name; }
-    public string GetModifierDescription() { return modifier_Description; }
-    public float GetDamageMult() { return damage_multiplier; }
-    public float GetManaMult() { return mana_multiplier; }
-    public float GetSpeedMult() { return speed_multiplier; }
-    public float GetDelay() { return delay; }
-    public float GetCoolDownMult() { return cooldown_multiplier; }
-    public int GetAngle() { return angle; }
-    public string GetModifiedProjectilePath() { return modified_projectile_trajectory; }
-    public int GetManaAdder() { return mana_adder; }
+    public override string GetName() { return baseSpell.name; }
+    public override string Description() { return baseSpell.description; }
+    public override int GetIcon() { return baseSpell.icon; }
+    public override int GetManaCost() { return baseSpell.manaCost; }
+    public override int GetDamage() { return baseSpell.dmg; }
+    public override Damage.Type GetDamageType() { return baseSpell.dmgType; }
+    public override float GetCooldown() { return baseSpell.cooldown; }
+    public override string GetProjectilePath() { return baseSpell.projectile_path; }
+    public override int GetProjectileSpeed() { return baseSpell.projectile_speed; }
+    public override int GetProjectileIcon() { return baseSpell.projectile_icon; }
+    public override float GetProjectileLifetime() { return baseSpell.projectile_lifetime; }
+    public override float GetSpray() { return baseSpell.spray; }
+    public override float Getn() { return baseSpell.n; }
+    public override int GetSecondaryDamage() { return baseSpell.secondary_damage; }
+    public override string GetSecondaryPath() { return baseSpell.secondary_projectile_path; }
+    public override int GetSecondarySpeed() { return baseSpell.secondary_projectile_speed; }
+    public override int GetSecondaryIcon() { return baseSpell.secondary_projectile_icon; }
+    public override float GetSecondaryLifetime() { return baseSpell.secondary_projectile_lifetime; }
     public void SetBaseSpell(Spell spell)
     {
         baseSpell = spell;

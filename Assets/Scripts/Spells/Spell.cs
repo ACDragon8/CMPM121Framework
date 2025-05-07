@@ -93,27 +93,27 @@ public class Spell
         }
         return s;
     }
-    public string GetName() { return name; }
-    public string Description() { return description; }
+    public virtual string GetName() { return name; }
+    public virtual string Description() { return description; }
     public virtual int GetIcon() { return icon; }
-    public int GetManaCost() { return manaCost; }
-    public int GetDamage() { return dmg; }
-    public Damage.Type GetDamageType() { return dmgType; }
-    public float GetCooldown() { return cooldown; }
-    public string GetProjectilePath() { return projectile_path; }
-    public int GetProjectileSpeed() { return projectile_speed; }
-    public int GetProjectileIcon() { return projectile_icon; }
-    public float GetProjectileLifetime() { return projectile_lifetime; }
-    public float GetSpray() { return spray; }
-    public float Getn() { return n; }
-    public int GetSecondaryDamage() { return secondary_damage; }
-    public string GetSecondaryPath() { return secondary_projectile_path; }
-    public int GetSecondarySpeed() { return secondary_projectile_speed; }
-    public int GetSecondaryIcon() { return secondary_projectile_icon; }
-    public float GetSecondaryLifetime() { return secondary_projectile_lifetime; }
+    public virtual int GetManaCost() { return manaCost; }
+    public virtual int GetDamage() { return dmg; }
+    public virtual Damage.Type GetDamageType() { return dmgType; }
+    public virtual float GetCooldown() { return cooldown; }
+    public virtual string GetProjectilePath() { return projectile_path; }
+    public virtual int GetProjectileSpeed() { return projectile_speed; }
+    public virtual int GetProjectileIcon() { return projectile_icon; }
+    public virtual float GetProjectileLifetime() { return projectile_lifetime; }
+    public virtual float GetSpray() { return spray; }
+    public virtual float Getn() { return n; }
+    public virtual int GetSecondaryDamage() { return secondary_damage; }
+    public virtual string GetSecondaryPath() { return secondary_projectile_path; }
+    public virtual int GetSecondarySpeed() { return secondary_projectile_speed; }
+    public virtual int GetSecondaryIcon() { return secondary_projectile_icon; }
+    public virtual float GetSecondaryLifetime() { return secondary_projectile_lifetime; }
     public bool IsReady()
     {
-        return (last_cast + GetCooldown() < Time.time);
+        return (last_cast + cooldown < Time.time);
     }
 
     public virtual IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team)
