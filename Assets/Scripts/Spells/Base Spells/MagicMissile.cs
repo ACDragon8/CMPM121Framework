@@ -11,7 +11,6 @@ public class MagicMissile : Spell
     public MagicMissile(SpellCaster owner) : base(owner)
     {
         this.owner = owner;
-        valueSet = false;
     }
 
     public override void SetProperties(JObject spellAttributes)

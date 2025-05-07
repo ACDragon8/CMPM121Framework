@@ -25,6 +25,7 @@ public class RewardScreenManager : MonoBehaviour
             if(!gamelock) {
             gamelock = true;
             rewardUI.SetActive(true);
+            DestroyButtons();
             
             for(int i = 0; i < rewardNumber;i++) {
                 spellButtons[i] = Instantiate(SpellSelector, rewardUI.transform);
@@ -45,7 +46,7 @@ public class RewardScreenManager : MonoBehaviour
     }
 
     public void DestroyButtons() {
-        for(int i = 0; i < rewardNumber;i++) {
+        for(int i = 0; i < rewardNumber;i++) {s
             if(spellButtons[i] != null) {
                 Destroy(spellButtons[i]);
                 spellButtons[i] = null;
