@@ -68,6 +68,12 @@ public class PlayerController : MonoBehaviour
         spellui.SetSpell(spellcaster.getSpell());
     }
 
+    public void DropSpell()
+    {
+        spellcaster.DropSpell();
+        OnChangeSpell();
+    }
+
     void Die()
     {
         GameManager.Instance.state = GameManager.GameState.GAMEOVER;
