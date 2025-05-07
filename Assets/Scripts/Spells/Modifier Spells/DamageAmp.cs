@@ -2,15 +2,12 @@ using Newtonsoft.Json.Linq;
 using System.Collections;
 using UnityEngine;
 
-public class DamageAmp : Spell
+public class DamageAmp : ModifierSpell
 {
     public Spell inner;
     public DamageAmp(SpellCaster owner, Spell inner) : base(owner) {
         this.inner = inner; 
      }
-
-    
-    /*
     public override void SetProperties(JObject spellAttributes)
     {
         string dmg_mult = spellAttributes["damage_multiplier"].ToString();
@@ -28,7 +25,7 @@ public class DamageAmp : Spell
         baseSpell.dmg = (int) (baseSpell.GetDamage() * damage_multiplier);
         baseSpell.manaCost = (int)(baseSpell.GetManaCost() * mana_multiplier);
     }
-    */
+
     public override IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team)
     {
         return baseSpell.Cast(where, target, team);
