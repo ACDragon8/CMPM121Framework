@@ -74,6 +74,9 @@ public class PlayerController : MonoBehaviour
         OnChangeSpell();
     }
 
+    public void SetSpeed(int val) {
+        this.speed = val;
+    }
     void Die()
     {
         GameManager.Instance.state = GameManager.GameState.GAMEOVER;
