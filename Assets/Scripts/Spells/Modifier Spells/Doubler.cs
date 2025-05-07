@@ -26,8 +26,8 @@ public class Doubler : ModifierSpell
     }
     public override void ModifySpell()
     {
-        baseSpell.manaCost = (int)(baseSpell.GetManaCost() * mana_multiplier);
-        baseSpell.cooldown = (int)(baseSpell.GetCooldown() * cooldown_multiplier);
+        baseSpell.SetManaCost((int)(baseSpell.GetManaCost() * mana_multiplier));
+        baseSpell.SetCooldown((int)(baseSpell.GetCooldown() * cooldown_multiplier));
     }
     public override IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team)
     {

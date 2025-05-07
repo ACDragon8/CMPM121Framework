@@ -3,6 +3,7 @@ using System.IO;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 
 public class SpellBuilder 
@@ -58,9 +59,14 @@ public class SpellBuilder
         */
         s.SetProperties((JObject)spellList[keywords[count - 1]]);
         //Cynthia screwing around here and figuring things out
-        ModifierSpell mod = new SpeedAmp(owner);
-        mod.SetProperties((JObject) spellList["speed_amp"]);
+        ModifierSpell mod = new Splitter(owner);
+        mod.SetProperties((JObject) spellList["splitter"]);
         mod.SetBaseSpell(s);
+        /*
+        ModifierSpell mod2 = new Splitter(owner);
+        mod2.SetProperties((JObject)spellList["splitter"]);
+        mod2.SetBaseSpell(mod);
+        */
         return mod;
     }
 

@@ -22,8 +22,8 @@ public class DamageAmp : ModifierSpell
         base.SetProperties(spellAttributes);
     }
     public override void ModifySpell() {
-        baseSpell.dmg = (int) (baseSpell.GetDamage() * damage_multiplier);
-        baseSpell.manaCost = (int)(baseSpell.GetManaCost() * mana_multiplier);
+        baseSpell.SetDamage((int) (baseSpell.GetDamage() * damage_multiplier));
+        baseSpell.SetManaCost((int)(baseSpell.GetManaCost() * mana_multiplier));
     }
 
     public override IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team)

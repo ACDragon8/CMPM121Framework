@@ -21,14 +21,14 @@ public class Splitter : ModifierSpell
     }
     public override void ModifySpell()
     {
-        baseSpell.manaCost = (int)(baseSpell.GetManaCost() * mana_multiplier);
+        baseSpell.SetManaCost((int)(baseSpell.GetManaCost() * mana_multiplier));
     }
     public override IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team)
     {
         Vector3 direction = target - where;
         float original_angle = Mathf.Atan2(direction.x, direction.y);
-        CoroutineManager.Instance.StartCoroutine(baseSpell.Cast(where, where + new Vector3(Mathf.Sin(original_angle + angle), Mathf.Cos(original_angle + angle), 0), team));
-        CoroutineManager.Instance.StartCoroutine(baseSpell.Cast(where, where + new Vector3(Mathf.Sin(original_angle - angle), Mathf.Cos(original_angle - angle), 0), team));
+        CoroutineManager.Instance.StartCoroutine(baseSpell.Cast(where, where + new Vector3(Mathf.Cos(original_angle + (angle * Mathf.Deg2Rad)), Mathf.Sin(original_angle + (angle * Mathf.Deg2Rad)), 0), team));
+        CoroutineManager.Instance.StartCoroutine(baseSpell.Cast(where, where + new Vector3(Mathf.Cos(original_angle - (angle * Mathf.Deg2Rad)), Mathf.Sin(original_angle - (angle * Mathf.Deg2Rad)), 0), team));
         yield return new WaitForEndOfFrame();
     }
 }

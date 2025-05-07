@@ -13,8 +13,11 @@ public class Chaos : ModifierSpell
         base.SetProperties(spellAttributes);
     }
     public override void ModifySpell() {
-        baseSpell.dmg = (int) (baseSpell.GetDamage() * damage_multiplier);
-        baseSpell.projectile_path = modified_projectile_trajectory;
+        if (!(baseSpell.GetProjectilePath() == modified_projectile_trajectory))
+        {
+            baseSpell.SetDamage((int)(baseSpell.GetDamage() * damage_multiplier));
+            baseSpell.SetProjectilePath(modified_projectile_trajectory);
+        }
     }
     public override IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team)
     {

@@ -94,26 +94,56 @@ public class Spell
         return s;
     }
     public virtual string GetName() { return name; }
-    public virtual string Description() { return description; }
+    public virtual string GetDescription() { return description; }
     public virtual int GetIcon() { return icon; }
+
     public virtual int GetManaCost() { return manaCost; }
+    public virtual void SetManaCost(int newManaCost) { manaCost = newManaCost; }
+
     public virtual int GetDamage() { return dmg; }
+    public virtual void SetDamage(int newDMG) { dmg = newDMG; }
+
     public virtual Damage.Type GetDamageType() { return dmgType; }
+    public virtual void SetDamageType(Damage.Type newType) { dmgType = newType; }
+
     public virtual float GetCooldown() { return cooldown; }
+    public virtual void SetCooldown(float newCooldown) { cooldown = newCooldown; }
+
     public virtual string GetProjectilePath() { return projectile_path; }
+    public virtual void SetProjectilePath(string newPath) { projectile_path = newPath; }
+
     public virtual int GetProjectileSpeed() { return projectile_speed; }
+    public virtual void SetProjectileSpeed(int newProjSpd) { projectile_speed = newProjSpd; }
+
     public virtual int GetProjectileIcon() { return projectile_icon; }
+    public virtual void SetProjectileIcon(int newProjIcon) { projectile_icon = newProjIcon; }
+
     public virtual float GetProjectileLifetime() { return projectile_lifetime; }
+    public virtual void SetProjectileLifetime(float newProjLife) { projectile_lifetime = newProjLife; }
+
     public virtual float GetSpray() { return spray; }
+    public virtual void SetSpray(float newSpray) { spray = newSpray; }
+
     public virtual float Getn() { return n; }
+    public virtual void Setn(float newN) { n = newN; }
+
     public virtual int GetSecondaryDamage() { return secondary_damage; }
+    public virtual void SetSecondaryDamage(int newSecondDMG) { secondary_damage = newSecondDMG; }
+
     public virtual string GetSecondaryPath() { return secondary_projectile_path; }
+    public virtual void SetSecondaryPath(string newSecondPath) { secondary_projectile_path = newSecondPath; }
+
     public virtual int GetSecondarySpeed() { return secondary_projectile_speed; }
+    public virtual void SetSecondarySpeed(int newSecondSpeed) { secondary_projectile_speed = newSecondSpeed; }
+
     public virtual int GetSecondaryIcon() { return secondary_projectile_icon; }
+    public virtual void SetSecondaryIcon(int newSecondIcon) { secondary_projectile_icon = newSecondIcon; }
+
     public virtual float GetSecondaryLifetime() { return secondary_projectile_lifetime; }
+    public virtual void SetSecondaryLifetime(float newSecondLifetime) { secondary_projectile_lifetime = newSecondLifetime; }
     public bool IsReady()
     {
-        return (last_cast + cooldown < Time.time);
+        return (last_cast + GetCooldown() < Time.time);
     }
 
     public virtual IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team)
