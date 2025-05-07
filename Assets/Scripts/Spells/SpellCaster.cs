@@ -13,6 +13,8 @@ public class SpellCaster
     public int selectedSpell;
     private int maxSpells;
 
+    public int spellCount;
+
     public SpellBuilder sb;
 
 
@@ -40,6 +42,7 @@ public class SpellCaster
         this.sb = new SpellBuilder();
         this.spell[0] = sb.Build(this);
         this.spell[1] = sb.Build(this,"arcane_bolt");
+        this.spellCount = 2;
     }
 
     public IEnumerator Cast(Vector3 where, Vector3 target)
@@ -67,9 +70,20 @@ public class SpellCaster
         for(int i = 0; i < this.maxSpells;i++) {
             if(spell[i] == null) {
                 this.spell[i] = sb.Build(this,spellName);
+                this.spellCount+= 1;
                 return true;
             }
         }
         return false;
+    }
+
+    public void DropSpell() {
+        if(this.spellCount <= 1) {
+            return;
+        }
+        else {
+        this.spell[selectedSpell] = null;
+        this.spellCount--;
+        }
     }
 }
