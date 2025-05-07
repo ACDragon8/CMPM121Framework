@@ -9,11 +9,19 @@ public class SpellBuilder
 {
     JObject spellList;
     public string[] spellTypes;
-    public Spell Build(SpellCaster owner, string spellName= "arcane_spray")
+    public Spell Build(SpellCaster owner, string spellName= "damage_amp arcane_bolt")
     {
         //TODO figure out how to incorporate modifiers into this
+        int count = 0;
+        
+        string[] keywords = spellName.Split();
+        foreach(var word in keywords) {
+            Debug.Log(word);
+            count++;
+        } 
+
         Spell s;
-        switch (spellName) {
+        switch (keywords[count -1]) {
             case "arcane_bolt":
                 s = new ArcaneBolt(owner);
                 break;
@@ -30,7 +38,21 @@ public class SpellBuilder
                 s = new ArcaneBolt(owner);
                 break;
         }
-        s.SetProperties((JObject)spellList[spellName]);
+        s.SetProperties((JObject)spellList[keywords[count -1]]);
+        for (int i = 0; i < count -1; i++) {
+            switch (keywords[count-1]) {
+                case "damage_amp":
+                Spell a = s;
+                s = new DamageAmp();
+                s.inner = a;
+                    break;
+                default:
+
+                    break;
+
+            }
+        }
+
         return s;
     }
 
