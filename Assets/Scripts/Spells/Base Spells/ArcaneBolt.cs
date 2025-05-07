@@ -8,11 +8,7 @@ public class ArcaneBolt : Spell
     public string projectile_path;
     public float projectile_speed;
     public int projectile_icon;
-    public ArcaneBolt(SpellCaster owner) : base(owner)
-    {
-        this.owner = owner;
-        valueSet = false;
-    }
+    public ArcaneBolt(SpellCaster owner) : base(owner) { }
 
     public override void SetProperties(JObject spellAttributes)
     {
@@ -28,12 +24,7 @@ public class ArcaneBolt : Spell
         }
         base.SetProperties(spellAttributes);
     }
-    public float GetProjectileSpeed() {
-        if (valueSet) { 
-            return projectile_speed;
-        }
-        return 15f;
-    }
+    
     public override IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team)
     {
         this.team = team;
