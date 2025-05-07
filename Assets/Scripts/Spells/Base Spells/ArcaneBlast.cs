@@ -19,12 +19,12 @@ public class ArcaneBlast : Spell
 
         projectile_path = spellAttributes["projectile"]["trajectory"].ToString();
         string spd = spellAttributes["projectile"]["speed"].ToString();
-        if (!Int32.TryParse(spd, out projectile_speed))
+        if (!int.TryParse(spd, out projectile_speed))
         {
             projectile_speed = 10;
         }
         string proj_icon = spellAttributes["projectile"]["sprite"].ToString();
-        if (!Int32.TryParse(proj_icon, out projectile_icon))
+        if (!int.TryParse(proj_icon, out projectile_icon))
         {
             projectile_icon = 0;
         }

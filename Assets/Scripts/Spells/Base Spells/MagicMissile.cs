@@ -15,7 +15,7 @@ public class MagicMissile : Spell
         //Read and parse extra fields Json object here
         projectile_path = spellAttributes["projectile"]["trajectory"].ToString();
         string spd = spellAttributes["projectile"]["speed"].ToString();
-        if (!float.TryParse(spd, out projectile_speed)) {
+        if (!int.TryParse(spd, out projectile_speed)) {
             projectile_speed = 10;
         }
         string proj_icon = spellAttributes["projectile"]["sprite"].ToString();

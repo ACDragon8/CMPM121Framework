@@ -31,7 +31,6 @@ public class Doubler : ModifierSpell
     }
     public override IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team)
     {
-        //TODO modify this to cast twice.
         yield return base.Cast(where, target, team);
         yield return new WaitForSeconds(delay);
         yield return base.Cast(where, target, team);
