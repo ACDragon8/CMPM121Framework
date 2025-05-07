@@ -24,9 +24,9 @@ public class Homing : ModifierSpell
         //This way it doesn't scam folks who already have magic missile
         if (!(baseSpell.GetProjectilePath() == modified_projectile_trajectory))
         {
-            baseSpell.dmg = (int)(baseSpell.GetDamage() * damage_multiplier);
-            baseSpell.projectile_path = modified_projectile_trajectory;
-            baseSpell.manaCost = baseSpell.GetManaCost() + mana_adder;
+            baseSpell.SetDamage((int)(baseSpell.GetDamage() * damage_multiplier));
+            baseSpell.SetProjectilePath(modified_projectile_trajectory);
+            baseSpell.SetManaCost(baseSpell.GetManaCost() + mana_adder);
         }
     }
     public override IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team)

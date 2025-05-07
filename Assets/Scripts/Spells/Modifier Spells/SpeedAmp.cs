@@ -14,7 +14,7 @@ public class SpeedAmp : ModifierSpell
         base.SetProperties(spellAttributes);
     }
     public override void ModifySpell() {
-        baseSpell.projectile_speed = (int) (baseSpell.GetProjectileSpeed() * speed_multiplier);
+        baseSpell.SetProjectileSpeed((int) (baseSpell.GetProjectileSpeed() * speed_multiplier));
     }
     public override IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team)
     {
