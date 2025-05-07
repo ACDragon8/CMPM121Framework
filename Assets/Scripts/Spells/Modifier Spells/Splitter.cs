@@ -27,8 +27,8 @@ public class Splitter : ModifierSpell
     {
         Vector3 direction = target - where;
         float original_angle = Mathf.Atan2(direction.x, direction.y);
-        CoroutineManager.Instance.StartCoroutine(base.Cast(where, where + new Vector3(Mathf.Sin(original_angle + angle), Mathf.Cos(original_angle + angle), 0), team));
-        CoroutineManager.Instance.StartCoroutine(base.Cast(where, where + new Vector3(Mathf.Sin(original_angle - angle), Mathf.Cos(original_angle - angle), 0), team));
+        CoroutineManager.Instance.StartCoroutine(baseSpell.Cast(where, where + new Vector3(Mathf.Sin(original_angle + angle), Mathf.Cos(original_angle + angle), 0), team));
+        CoroutineManager.Instance.StartCoroutine(baseSpell.Cast(where, where + new Vector3(Mathf.Sin(original_angle - angle), Mathf.Cos(original_angle - angle), 0), team));
         yield return new WaitForEndOfFrame();
     }
 }

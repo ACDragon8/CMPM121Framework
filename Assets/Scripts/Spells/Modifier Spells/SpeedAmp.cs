@@ -18,6 +18,6 @@ public class SpeedAmp : ModifierSpell
     }
     public override IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team)
     {
-        return base.Cast(where, target, team);
+        return baseSpell.Cast(where, target, team);
     }
 }
