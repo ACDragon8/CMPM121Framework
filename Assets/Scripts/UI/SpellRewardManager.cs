@@ -7,10 +7,12 @@ public class SpellRewardManager : MonoBehaviour
     public SpellCaster player;
     public string spell;
     public RewardScreenManager rsw;
+
+    const int modifierRange = 2;
     
 
     
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    // Start is called once before the first exeution of Update after the MonoBehaviour is created
     void Start()
     {
         
@@ -24,8 +26,17 @@ public class SpellRewardManager : MonoBehaviour
 
     public void pickSpell() {
         var sb =  new SpellBuilder();
-        int rnd = (int) Mathf.Floor(Random.value* sb.spellTypes.Length);
-        spell = sb.spellTypes[rnd];
+        spell = "";
+        //choose number of mods
+        int mods = (int) Mathf.Floor(Random.value * modifierRange);
+        //for every modifier, pick a random one and concat it to spell
+        for(int i = 0; i < mods; i++) {
+            int rnd = (int) Mathf.Floor(Random.value * sb.modifierTypes.Length);
+            spell = spell + sb.modifierTypes[rnd] + " ";
+        }
+        //concat spell type to spell
+        int s = (int) Mathf.Floor(Random.value* sb.spellTypes.Length);
+        spell = spell + sb.spellTypes[s];
         label.text = spell;
     }
 

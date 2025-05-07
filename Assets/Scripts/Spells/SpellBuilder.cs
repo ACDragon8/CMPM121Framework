@@ -9,6 +9,7 @@ public class SpellBuilder
 {
     JObject spellList;
     public string[] spellTypes;
+    public string[] modifierTypes;
     public Spell Build(SpellCaster owner, string spellName= "arcane_bolt")
     {
         //TODO figure out how to incorporate modifiers into this
@@ -55,7 +56,7 @@ public class SpellBuilder
 
         return s;
         */
-        s.SetProperties((JObject)spellList[spellName]);
+        s.SetProperties((JObject)spellList[keywords[count - 1]]);
         //Cynthia screwing around here and figuring things out
         ModifierSpell mod = new SpeedAmp(owner);
         mod.SetProperties((JObject) spellList["speed_amp"]);
@@ -75,6 +76,8 @@ public class SpellBuilder
     {
         string[] a = {"arcane_bolt", "magic_missile", "arcane_blast", "arcane_spray"};
         spellTypes = a;
+        string[] b = {"a", "b"};
+        modifierTypes = b;
 
         var spelltext = Resources.Load<TextAsset>("spells");
         JObject jo = JObject.Parse(spelltext.text);

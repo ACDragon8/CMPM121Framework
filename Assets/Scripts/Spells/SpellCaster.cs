@@ -81,7 +81,7 @@ public class SpellCaster
     public bool addSpell(string spellName = "arcane_bolt") {
         for(int i = 0; i < this.maxSpells;i++) {
             if(spell[i] == null) {
-                this.spell[i] = sb.Build(this,spellName);
+                this.spell[i] = sb.Build(this, spellName);
                 this.spellCount+= 1;
                 return true;
             }
