@@ -54,7 +54,7 @@ public class SpellBuilder
         }
 
         return s;
-*/
+        */
         s.SetProperties((JObject)spellList[spellName]);
         //Cynthia screwing around here and figuring things out
         ModifierSpell mod = new SpeedAmp(owner);

@@ -98,6 +98,58 @@ public class EnemySpawner : MonoBehaviour
 
     public void NextWave()
     {
+        //this sucks but deadlines are deadlines
+        ReversePolishCalc calc = new ReversePolishCalc();
+        string a = "95 wave 5 * +";
+        string[] b = a.Split(' ');
+        int index = 0;
+        foreach (var item in b) {
+            if (item == "wave")
+            {
+                b[index] = WaveCount.ToString();
+            }
+            index++;
+        }
+        int c = ReversePolishCalc.Calculate(b);
+        GameManager.Instance.player.GetComponent<PlayerController>().hp.SetMaxHP(c);
+        a = "90 wave 10 * +";
+        b = a.Split();
+        index = 0;
+        foreach (var item in b) {
+            if (item == "wave")
+            {
+                b[index] = WaveCount.ToString();
+            }
+            index++;
+        }
+        c = ReversePolishCalc.Calculate(b);
+        GameManager.Instance.player.GetComponent<PlayerController>().spellcaster.SetMaxMana(c);
+        a = "10 wave +";
+        b = a.Split();
+        index = 0;
+        foreach (var item in b) {
+            if (item == "wave")
+            {
+                b[index] = WaveCount.ToString();
+            }
+            index++;
+        }
+        c = ReversePolishCalc.Calculate(b);
+        GameManager.Instance.player.GetComponent<PlayerController>().spellcaster.SetManaRegen(c);
+        a = "wave 10 *";
+        b = a.Split();
+        index = 0;
+        foreach (var item in b) {
+            if (item == "wave")
+            {
+                b[index] = WaveCount.ToString();
+            }
+            index++;
+        }
+        c = ReversePolishCalc.Calculate(b);
+        GameManager.Instance.player.GetComponent<PlayerController>().spellcaster.SetSpellPower(c);
+        GameManager.Instance.player.GetComponent<PlayerController>().SetSpeed(5);
+       
         StartCoroutine(SpawnWave());
     }
 

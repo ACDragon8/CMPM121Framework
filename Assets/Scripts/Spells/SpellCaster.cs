@@ -59,6 +59,18 @@ public class SpellCaster
         return spell[selectedSpell];
     }
 
+    public void SetMaxMana(int val) {
+        this.max_mana = val;
+    }
+    public void SetManaRegen(int val) {
+        this.mana_reg = val;
+    }
+
+    public void SetSpellPower(int val) {
+        this.power = val;
+    }
+
+
     public void nextSpell() {
         this.selectedSpell = (this.selectedSpell + 1 ) % this.maxSpells;
         if(this.spell[selectedSpell] == null) {
