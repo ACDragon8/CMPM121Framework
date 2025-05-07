@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ModifierSpell : Spell
 {
-    Spell baseSpell;
+    public Spell baseSpell;
     public string modifier_Name;
     public string modifier_Description;
     public float damage_multiplier;
@@ -47,5 +47,7 @@ public class ModifierSpell : Spell
     public void SetBaseSpell(Spell spell)
     {
         baseSpell = spell;
+        ModifySpell();
     }
+    public virtual void ModifySpell() { }
 }

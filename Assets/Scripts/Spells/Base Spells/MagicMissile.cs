@@ -5,9 +5,6 @@ using UnityEngine;
 
 public class MagicMissile : Spell
 {
-    public string projectile_path;
-    public float projectile_speed;
-    public int projectile_icon;
     public MagicMissile(SpellCaster owner) : base(owner)
     {
         this.owner = owner;
