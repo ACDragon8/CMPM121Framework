@@ -40,6 +40,16 @@
        "cooldown": "0.5",
        "projectile": {"trajectory": "straight", "speed": "8", "sprite": 0, "lifetime": "0.1 power 100 / +"}
    },
+   "straight_slice":  {
+       "name": "Straight Slice",
+       "description": "A piercing shot.",
+       "icon": 2,
+       "damage": {"amount": "10 power 3 / +", "type": "arcane"},
+       "mana_cost": "20",
+       "cooldown": "3",
+       "pierce" : "1",
+       "projectile": {"trajectory": "homing", "speed": "10", "sprite": 0}
+   },
    "damage_amp": {
        "name": "damage-amplified",
        "description": "Increased damage and increased mana cost.",
