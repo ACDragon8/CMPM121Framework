@@ -25,7 +25,7 @@ public class ArcaneBolt : Spell
     public override IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team)
     {
         this.team = team;
-        GameManager.Instance.projectileManager.CreateProjectile(projectile_icon, projectile_path, where, target - where, projectile_speed, OnHit);
+        GameManager.Instance.projectileManager.CreateProjectile(projectile_icon, projectile_path, where, target - where, projectile_speed, OnHit, pierce, knockback);
         yield return new WaitForEndOfFrame();
     }
 

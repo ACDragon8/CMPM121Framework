@@ -44,7 +44,7 @@ public class ArcaneSpray : Spell
             GameManager.Instance.projectileManager.CreateProjectile(
                 projectile_icon, projectile_path, 
                 where, direction, projectile_speed, 
-                OnHit, projectile_lifetime);
+                OnHit, pierce, knockback, projectile_lifetime);
         }
         yield return new WaitForEndOfFrame();
     }

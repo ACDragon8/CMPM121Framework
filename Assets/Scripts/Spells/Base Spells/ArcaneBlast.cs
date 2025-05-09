@@ -45,14 +45,14 @@ public class ArcaneBlast : Spell
         {
             secondary_projectile_icon = 0;
         }
-
+        OnHitMethod = OnFirstHit;
         base.SetProperties(spellAttributes);
     }
     
     public override IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team)
     {
         this.team = team;
-        GameManager.Instance.projectileManager.CreateProjectile(projectile_icon, projectile_path, where, target - where, projectile_speed, OnFirstHit);
+        GameManager.Instance.projectileManager.CreateProjectile(projectile_icon, projectile_path, where, target - where, projectile_speed, OnFirstHit, pierce, knockback);
         yield return new WaitForEndOfFrame();
     }
 
@@ -67,15 +67,8 @@ public class ArcaneBlast : Spell
             Vector3 direction = new Vector3(Mathf.Sin(degree_gap * i), Mathf.Cos(degree_gap * i), 0);
             GameManager.Instance.projectileManager.CreateProjectile(
                 secondary_projectile_icon, secondary_projectile_path, 
-                vector, direction, secondary_projectile_speed, OnHit, projectile_lifetime);
+                vector, direction, secondary_projectile_speed, base.OnHit, pierce, knockback, projectile_lifetime);
         }
     }
 
-    private void OnSecondHit(Hittable other, Vector3 vector) 
-    {
-        if (other.team != team)
-        {
-            other.Damage(new Damage(dmg, dmgType));
-        }
-    }
 }

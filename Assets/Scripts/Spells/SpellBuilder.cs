@@ -57,10 +57,11 @@ public class SpellBuilder
 
         return s;
         */
+        
         s.SetProperties((JObject)spellList[keywords[count - 1]]);
         //Cynthia screwing around here and figuring things out
-        ModifierSpell mod = new Splitter(owner);
-        mod.SetProperties((JObject) spellList["splitter"]);
+        ModifierSpell mod = new Knockback(owner);
+        mod.SetProperties((JObject) spellList["knockback"]);
         mod.SetBaseSpell(s);
         /*
         ModifierSpell mod2 = new Splitter(owner);

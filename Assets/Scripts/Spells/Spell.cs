@@ -30,12 +30,14 @@ public class Spell
     public int secondary_projectile_speed;
     public int secondary_projectile_icon;
     public float secondary_projectile_lifetime;
+    public bool knockback;
+    public bool pierce;
+    public Action<Hittable, Vector3> OnHitMethod;
 
     public Spell(SpellCaster owner)
     {
-        //These are the default values if set attribute didn't set them
-        //Debating removing this and having functions crash so it easier to find problem
         this.owner = owner;
+        
         name = "Name not set";
         description = "Description not set";
         icon = 0;
@@ -54,6 +56,8 @@ public class Spell
         secondary_projectile_speed = 10;
         secondary_projectile_icon = 0;
         secondary_projectile_lifetime = 0.1f;
+        pierce = false;
+        knockback = false;
     }
     public virtual void SetProperties(JObject spellAttributes) 
     {
@@ -141,6 +145,13 @@ public class Spell
 
     public virtual float GetSecondaryLifetime() { return secondary_projectile_lifetime; }
     public virtual void SetSecondaryLifetime(float newSecondLifetime) { secondary_projectile_lifetime = newSecondLifetime; }
+
+    public virtual bool GetPierce() { return pierce; }
+    public virtual void SetPierce(bool newPierce) { pierce = newPierce; }
+
+    public virtual bool GetKnockback() { return knockback; }
+    public virtual void SetKnockback(bool newKnockback) { knockback = newKnockback; }
+
     public bool IsReady()
     {
         return (last_cast + GetCooldown() < Time.time);

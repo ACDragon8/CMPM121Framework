@@ -76,6 +76,16 @@
        "damage_multiplier": "0.75",
        "mana_adder": "10",
        "projectile_trajectory": "homing"
+   },
+   "knockback": {
+       "name": "knockback",
+       "description": "Allows main projectile to deal knockback, with increased mana cost.",
+       "mana_adder": "10"
+   },
+   "piercing": {
+       "name": "piercing",
+       "description": "Piercing projectile that goes through enemies with increased mana cost",
+       "mana_multiplier": "1.75"
    }
 
 }

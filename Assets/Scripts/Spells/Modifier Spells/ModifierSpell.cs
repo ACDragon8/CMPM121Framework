@@ -1,4 +1,5 @@
 using Newtonsoft.Json.Linq;
+using System;
 using UnityEngine;
 
 public class ModifierSpell : Spell
@@ -14,6 +15,8 @@ public class ModifierSpell : Spell
     public int angle;
     public string modified_projectile_trajectory;
     public int mana_adder;
+    public float knockback_distance;
+    public Action<Hittable, Vector3> oldOnHitMethod;
     public ModifierSpell(SpellCaster owner) : base(owner)
     {
         modifier_Name = "Modifier Name not set";
@@ -26,13 +29,13 @@ public class ModifierSpell : Spell
         angle = 10;
         modified_projectile_trajectory = "straight";
         mana_adder = 1;
+        knockback_distance = 0f;
     }
     //So maybe have set attributes set what is being modified?
     public override void SetProperties(JObject spellAttributes)
     {
         modifier_Name = spellAttributes["name"].ToString();
         modifier_Description = spellAttributes["description"].ToString();
-
     }
     public override string GetName() { return baseSpell.GetName(); }
     public override string GetDescription() { return baseSpell.GetDescription(); }
@@ -82,6 +85,12 @@ public class ModifierSpell : Spell
 
     public override float GetSecondaryLifetime() { return baseSpell.GetSecondaryLifetime(); }
     public override void SetSecondaryLifetime(float newSecondLifetime) { baseSpell.SetSecondaryLifetime(newSecondLifetime); }
+
+    public override bool GetPierce() { return baseSpell.GetPierce(); }
+    public override void SetPierce(bool newPierce) { baseSpell.SetPierce(newPierce); }
+
+    public override bool GetKnockback() { return baseSpell.GetKnockback(); }
+    public override void SetKnockback(bool newKnockback) { baseSpell.SetKnockback(newKnockback); }
 
     public void SetBaseSpell(Spell spell)
     {
