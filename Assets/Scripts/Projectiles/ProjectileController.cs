@@ -12,7 +12,7 @@ public class ProjectileController : MonoBehaviour
     public Vector3 moveDir;
     public bool knockback;
     public bool pierce;
-    public Collision2D[] past_hits;
+    public Queue past_hits;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -23,7 +23,7 @@ public class ProjectileController : MonoBehaviour
             SampleDirection();
         }
         if (pierce) {
-            past_hits = new Collision2D[10];
+            past_hits = new Queue();
         }
     }
 
@@ -61,7 +61,7 @@ public class ProjectileController : MonoBehaviour
             if (knockback) { collision.gameObject.transform.Translate(moveDir); }
             if (pierce)
             {
-                past_hits[past_hits.Length] = collision;
+                past_hits.Enqueue(collision);
                 StartCoroutine(HitImmunity());
             }
         }
@@ -73,19 +73,11 @@ public class ProjectileController : MonoBehaviour
         }
         return false;
     }
-    public void RemovePastHit() {
-        int i = 0;
-        foreach (var hit in past_hits) {
-            if (i != 0) {
-                past_hits[i-1] = hit;
-            }
-            i++;
-        }
-    }
+    
     IEnumerator HitImmunity() 
     {
         yield return new WaitForSeconds(0.2f);
-        RemovePastHit();
+        past_hits.Dequeue();
     }
     public void SetLifetime(float lifetime)
     {
