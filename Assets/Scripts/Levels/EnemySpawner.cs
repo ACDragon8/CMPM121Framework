@@ -73,18 +73,18 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    public void Restart()
+    public void Restart() //turn to event -------------------------------------------------------------------
     {
         level_selector.gameObject.SetActive(true);
     }
-    public void Cancel()
+    public void Cancel() //turn to event??
     {
         cancel = true;
         /* The way the code is set up, it will either cancel the current wave being spawned by SpawnWave()
          * or if there is no ongoing waves, it will cancel the next wave created by SpawnWave()
          */
     }
-    public void StartLevel(string levelname)
+    public void StartLevel(string levelname) // definitely turn to event ----------------------------------
     {
         level = levelname;
         WaveCount = 0;
@@ -96,7 +96,7 @@ public class EnemySpawner : MonoBehaviour
         StartCoroutine(SpawnWave());
     }
 
-    public void NextWave()
+    public void NextWave() // absolutely turn to event ------------------------------
     {
         //this sucks but deadlines are deadlines
         ReversePolishCalc calc = new ReversePolishCalc();
@@ -242,7 +242,7 @@ public class EnemySpawner : MonoBehaviour
             }
         }
         Debug.Log("Done spawning wave!");
-        if (cancel) { Debug.Log("Wave got cancelled."); }
+        if (cancel) { Debug.Log("Wave got cancelled."); } //turn game over into an event --------------------------------
         yield return new WaitWhile(() => GameManager.Instance.enemy_count > 0);
         if (GameManager.Instance.state != GameManager.GameState.GAMEOVER) {
             GameManager.Instance.state = GameManager.GameState.WAVEEND;

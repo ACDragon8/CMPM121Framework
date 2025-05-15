@@ -36,6 +36,13 @@ public class GameManager
     private List<GameObject> enemies;
     public int enemy_count { get { return enemies.Count; } }
 
+    public event Action<GameState> StartPregame;
+
+    public void ShiftPregame() {
+        this.state = GameState.PREGAME;
+        StartPregame?.Invoke(this.state);
+    }
+
     public void AddEnemy(GameObject enemy)
     {
         enemies.Add(enemy);
