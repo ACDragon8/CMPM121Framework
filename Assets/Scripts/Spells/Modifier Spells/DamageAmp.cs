@@ -5,8 +5,7 @@ using UnityEngine;
 public class DamageAmp : ModifierSpell
 {
     public Spell inner;
-    public DamageAmp(SpellCaster owner, Spell inner) : base(owner) {
-        this.inner = inner; 
+    public DamageAmp(SpellCaster owner) : base(owner) {
      }
     public override void SetProperties(JObject spellAttributes)
     {
