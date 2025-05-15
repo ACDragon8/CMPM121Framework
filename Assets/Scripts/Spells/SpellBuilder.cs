@@ -52,22 +52,22 @@ public class SpellBuilder
                     m = new DamageAmp(owner);
                     break;
                 case "speed_amp":
-                    s = new SpeedAmp(owner);
+                    m = new SpeedAmp(owner);
                     break;
                 case "doubler":
-                    s = new Doubler(owner);
+                    m = new Doubler(owner);
                     break;
                 case "splitter":
-                    s = new Splitter(owner);
+                    m = new Splitter(owner);
                     break;
                 case "chaos":
-                    s = new Chaos(owner);
+                    m = new Chaos(owner);
                     break;
                 case "homing":
-                    s = new Homing(owner);
+                    m = new Homing(owner);
                     break;
                 case "knockback":
-                    s = new Knockback(owner);
+                    m = new Knockback(owner);
                     break;
                 default:
                     break;
