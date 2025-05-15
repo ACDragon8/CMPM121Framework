@@ -36,6 +36,9 @@ public class SpellBuilder
             case "arcane_spray":
                 s = new ArcaneSpray(owner);
                 break;
+            case "straight_slice":
+                s = new StraightSlice(owner);
+                break;
             default:
                 s = new ArcaneBolt(owner);
                 break;
@@ -57,18 +60,38 @@ public class SpellBuilder
 
         return s;
         */
-        
-        s.SetProperties((JObject)spellList[keywords[count - 1]]);
-        //Cynthia screwing around here and figuring things out
-        ModifierSpell mod = new Knockback(owner);
-        mod.SetProperties((JObject) spellList["knockback"]);
-        mod.SetBaseSpell(s);
-        /*
-        ModifierSpell mod2 = new Splitter(owner);
-        mod2.SetProperties((JObject)spellList["splitter"]);
-        mod2.SetBaseSpell(mod);
-        */
-        return mod;
+        for(int i = 0; i < count-1; i++) {
+            ModifierSpell m = null;
+            switch (keywords[i]) {
+                case "damage_amp":
+                    m = new DamageAmp(owner);
+                    break;
+                case "speed_amp":
+                    s = new SpeedAmp(owner);
+                    break;
+                case "doubler":
+                    s = new Doubler(owner);
+                    break;
+                case "splitter":
+                    s = new Splitter(owner);
+                    break;
+                case "chaos":
+                    s = new Chaos(owner);
+                    break;
+                case "homing":
+                    s = new Homing(owner);
+                    break;
+                case "knockback":
+                    s = new Knockback(owner);
+                    break;
+                default:
+                    break;
+            }
+            m.SetProperties((JObject) spellList[keywords[i]]);
+            m.SetBaseSpell(s);
+            s = m;
+        }
+        return s;
     }
 
     public Spell RandomBuild(SpellCaster owner)
@@ -81,9 +104,9 @@ public class SpellBuilder
    //Dunno if we want it to be singleton or not
     public SpellBuilder()
     {
-        string[] a = {"arcane_bolt", "magic_missile", "arcane_blast", "arcane_spray"};
+        string[] a = {"arcane_bolt", "magic_missile", "arcane_blast", "arcane_spray", "straight_slice"};
         spellTypes = a;
-        string[] b = {"a", "b"};
+        string[] b = {"damage_amp","speed_amp","doubler","splitter","chaos","homing","knockback",};
         modifierTypes = b;
 
         var spelltext = Resources.Load<TextAsset>("spells");

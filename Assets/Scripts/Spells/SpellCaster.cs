@@ -41,7 +41,7 @@ public class SpellCaster
         this.maxSpells = 4;
         this.sb = new SpellBuilder();
         this.spell[0] = sb.Build(this);
-        this.spell[1] = sb.Build(this,"arcane_bolt");
+        this.spell[1] = sb.Build(this,"magic_missile");
         this.spellCount = 2;
     }
 
