@@ -11,7 +11,7 @@ public class SpellBuilder
     JObject spellList;
     public string[] spellTypes;
     public string[] modifierTypes;
-    public Spell Build(SpellCaster owner, string spellName= "arcane_bolt")
+    public Spell Build(SpellCaster owner, string spellName= "splitter arcane_bolt")
     {
         //TODO figure out how to incorporate modifiers into this
         int count = 0;
@@ -21,8 +21,9 @@ public class SpellBuilder
             Debug.Log(word);
             count++;
         } 
-
+        
         Spell s;
+        
         switch (keywords[count -1]) {
             case "arcane_bolt":
                 s = new ArcaneBolt(owner);
@@ -43,23 +44,7 @@ public class SpellBuilder
                 s = new ArcaneBolt(owner);
                 break;
         }
-        /*s.SetProperties((JObject)spellList[keywords[count -1]]);
-        for (int i = 0; i < count -1; i++) {
-            switch (keywords[count-1]) {
-                case "damage_amp":
-                Spell a = s;
-                s = new DamageAmp();
-                s.inner = a;
-                    break;
-                default:
-
-                    break;
-
-            }
-        }
-
-        return s;
-        */
+        s.SetProperties((JObject) spellList[keywords[count - 1]]);
         for(int i = 0; i < count-1; i++) {
             ModifierSpell m = null;
             switch (keywords[i]) {
@@ -87,6 +72,7 @@ public class SpellBuilder
                 default:
                     break;
             }
+            Debug.Log(keywords[i]);
             m.SetProperties((JObject) spellList[keywords[i]]);
             m.SetBaseSpell(s);
             s = m;
