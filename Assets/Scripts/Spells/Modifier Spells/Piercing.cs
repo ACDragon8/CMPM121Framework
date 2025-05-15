@@ -22,7 +22,13 @@ public class Piercing : ModifierSpell
     }
     public override void ModifySpell()
     {
-        baseSpell.SetPierce(true);
-        baseSpell.SetManaCost((int)(baseSpell.GetManaCost() * mana_multiplier));
+        if (!baseSpell.GetPierce())
+        {
+            baseSpell.SetPierce(true);
+            baseSpell.SetManaCost((int)(baseSpell.GetManaCost() * mana_multiplier));
+        }
+        else {
+            Debug.Log("Can't add pierce modifier because spell already pierces");
+        }
     }
 }

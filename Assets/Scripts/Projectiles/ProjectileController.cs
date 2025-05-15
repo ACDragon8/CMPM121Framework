@@ -1,7 +1,6 @@
 using UnityEngine;
 using System;
 using System.Collections;
-using System.Linq;
 
 public class ProjectileController : MonoBehaviour
 {
@@ -20,7 +19,7 @@ public class ProjectileController : MonoBehaviour
         if (knockback)
         {
             prevPos = transform.position;
-            SampleDirection();
+            StartCoroutine(SampleDirection());
         }
         if (pierce) {
             past_hits = new Queue();

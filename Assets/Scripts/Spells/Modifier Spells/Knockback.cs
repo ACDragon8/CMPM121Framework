@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class Knockback : ModifierSpell
 {
-    //Maybe keep an array of projectiles + their direction?
+    //TODO figure out how to overload onhit method
+    //Have the knockback amount increase when this modifier is attached more than once
     public Knockback(SpellCaster owner) : base(owner) { }
     public override void SetProperties(JObject spellAttributes)
     {

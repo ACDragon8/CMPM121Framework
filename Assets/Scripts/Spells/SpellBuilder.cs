@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using System.Linq;
 
 
 public class SpellBuilder 
@@ -13,7 +14,7 @@ public class SpellBuilder
     public string[] modifierTypes;
     public Spell Build(SpellCaster owner, string spellName= "arcane_bolt")
     {
-        //TODO figure out how to incorporate modifiers into this
+        
         int count = 0;
         
         string[] keywords = spellName.Split();
@@ -40,23 +41,7 @@ public class SpellBuilder
                 s = new ArcaneBolt(owner);
                 break;
         }
-        /*s.SetProperties((JObject)spellList[keywords[count -1]]);
-        for (int i = 0; i < count -1; i++) {
-            switch (keywords[count-1]) {
-                case "damage_amp":
-                Spell a = s;
-                s = new DamageAmp();
-                s.inner = a;
-                    break;
-                default:
-
-                    break;
-
-            }
-        }
-
-        return s;
-        */
+        
         
         s.SetProperties((JObject)spellList[keywords[count - 1]]);
         //Cynthia screwing around here and figuring things out
@@ -71,19 +56,29 @@ public class SpellBuilder
         return mod;
     }
 
-    public Spell RandomBuild(SpellCaster owner)
+    public string GetRandomBuild()
     {
-        return new Spell(owner);
+        string s = "";
+        string pick;
+        IList<string> keys = spellList.Properties().Select(p => p.Name).ToList();
+        int spell = Random.Range(0, (keys.Count-1));
+        do {
+            pick = keys[spell];
+            s += pick + " " + s;
+            if (spellTypes.Contains(pick)) {
+                break;
+            }
+        } while (true);
+        return s;
     }
 
-   //So this function below is the creation function for object spell builder
-   //This might be a good place to put the Json reading.
-   //Dunno if we want it to be singleton or not
     public SpellBuilder()
     {
-        string[] a = {"arcane_bolt", "magic_missile", "arcane_blast", "arcane_spray"};
+        //Ideally we'd split the json into 2 files, 1 for base spells and 1 for modifiers
+        //and use the keys instead of writing out the spells here
+        string[] a = {"arcane_bolt", "magic_missile", "arcane_blast", "arcane_spray", "straight_slice"};
         spellTypes = a;
-        string[] b = {"a", "b"};
+        string[] b = {"damage_amp", "speed_amp", "doubler", "splitter", "chaos", "homing", "knockback", "piercing"};
         modifierTypes = b;
 
         var spelltext = Resources.Load<TextAsset>("spells");

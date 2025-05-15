@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public ManaBar manaui;
 
     public SpellCaster spellcaster;
+    //TODO change this into an array of spell UIs?
     public SpellUI spellui;
 
     public int speed;
@@ -46,7 +47,7 @@ public class PlayerController : MonoBehaviour
     {
         
     }
-
+    
     void OnAttack(InputValue value)
     {
         if (GameManager.Instance.state == GameManager.GameState.PREGAME || GameManager.Instance.state == GameManager.GameState.GAMEOVER) return;
@@ -55,7 +56,7 @@ public class PlayerController : MonoBehaviour
         mouseWorld.z = 0;
         StartCoroutine(spellcaster.Cast(transform.position, mouseWorld));
     }
-
+ 
     void OnMove(InputValue value)
     {
         if (GameManager.Instance.state == GameManager.GameState.PREGAME || GameManager.Instance.state == GameManager.GameState.GAMEOVER) return;
