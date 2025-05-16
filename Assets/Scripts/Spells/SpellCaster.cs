@@ -43,6 +43,8 @@ public class SpellCaster
         this.spell[0] = sb.Build(this);
         this.spell[1] = sb.Build(this,"magic_missile");
         this.spellCount = 2;
+        //Small proof of concept that observers kinda work
+        //EventBus.Instance.OnDeath += RegenMana;
     }
 
     public IEnumerator Cast(Vector3 where, Vector3 target)
@@ -98,4 +100,12 @@ public class SpellCaster
         this.spellCount--;
         }
     }
+    /*
+    void RegenMana(Vector3 pos, Hittable target)
+    {
+        if (target.team != this.team) {
+            Debug.Log("Regenning mana through kill!");
+            this.mana += 10;
+        }
+    }*/
 }

@@ -20,6 +20,7 @@ public class Hittable
         {
             hp = 0;
             OnDeath();
+            EventBus.Instance.OnDeathEffect(owner.transform.position, this);
         }
     }
 
@@ -39,4 +40,7 @@ public class Hittable
         this.max_hp = max_hp;
         this.hp = Mathf.RoundToInt(perc * max_hp);
     }
+    /*public void OnDeathEffect() {
+        OnDeath?.Invoke();
+    }*/
 }
