@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     {
         unit = GetComponent<Unit>();
         GameManager.Instance.player = gameObject;
+        //EventBus.Instance.OnDamage += Test;
     }
 
     public void StartLevel()
@@ -82,5 +83,9 @@ public class PlayerController : MonoBehaviour
         GameManager.Instance.state = GameManager.GameState.GAMEOVER;
         Debug.Log("You Lost");
     }
-
+    /*
+    void Test(Vector3 where, Damage how, Hittable who) {
+        Debug.Log("Player now knows that " + who.team + " was hit for " + how.amount + " damage.");
+    }*/
+    
 }

@@ -15,10 +15,13 @@ public class EventBus
     }
 
     public event Action<Vector3, Damage, Hittable> OnDamage;
+    public event Action<Vector3, Hittable> OnDeath;
     
     public void DoDamage(Vector3 where, Damage dmg, Hittable target)
     {
         OnDamage?.Invoke(where, dmg, target);
     }
-
+    public void OnDeathEffect(Vector3 where, Hittable target) {
+        OnDeath?.Invoke(where, target);
+    }
 }

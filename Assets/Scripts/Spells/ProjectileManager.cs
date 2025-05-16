@@ -27,7 +27,7 @@ public class ProjectileManager : MonoBehaviour
         new_projectile.GetComponent<ProjectileController>().knockback = knockback;
         if (lifetime != 0.0f) { new_projectile.GetComponent<ProjectileController>().SetLifetime(lifetime); }
     }
-
+    
     public ProjectileMovement MakeMovement(string name, float speed)
     {
         if (name == "straight")
