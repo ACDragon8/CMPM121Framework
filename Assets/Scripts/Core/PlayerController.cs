@@ -4,10 +4,12 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System.IO;
 using System.Collections.Generic;
+using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
     public Hittable hp;
+    public ArrayList relics;
     public HealthBar healthui;
     public ManaBar manaui;
 
@@ -21,8 +23,10 @@ public class PlayerController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        relics = new ArrayList();
         unit = GetComponent<Unit>();
         GameManager.Instance.player = gameObject;
+        relics.Add(new GreenGem());
     }
 
     public void StartLevel()
