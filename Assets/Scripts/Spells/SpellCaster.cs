@@ -45,6 +45,7 @@ public class SpellCaster
         this.spellCount = 2;
         //Small proof of concept that observers kinda work
         //EventBus.Instance.OnDeath += RegenMana;
+        EventBus.Instance.OnSpellRemove += DropSpell;
     }
 
     public IEnumerator Cast(Vector3 where, Vector3 target)
@@ -54,7 +55,7 @@ public class SpellCaster
             mana -= spell[selectedSpell].GetManaCost();
             yield return spell[selectedSpell].Cast(where, target, team);
         }
-        yield break;
+            yield break;
     }
 
     public Spell getSpell() {
@@ -86,6 +87,7 @@ public class SpellCaster
                 this.spell[i] = sb.Build(this, spellName);
                 this.spellCount+= 1;
                 EventBus.Instance.OnSpellPickupEffect(this.spell[i], i);
+                if (spellCount > 1) { EventBus.Instance.OnSpellMultipleEffect(spellCount); }
                 return true;
             }
         }
@@ -93,13 +95,21 @@ public class SpellCaster
         return false;
     }
 
-    public void DropSpell() {
-        if(this.spellCount <= 1) {
+    public void DropSpell(Spell spell, int index) {
+        if(this.spellCount <= 1) 
+        {
             return;
         }
-        else {
-        this.spell[selectedSpell] = null;
-        this.spellCount--;
+        else 
+        {
+            this.spell[index] = null;
+            this.spellCount--;
+            if (spellCount == 1) {
+                EventBus.Instance.OnSpellSoloEffect(this);
+            }
+            if (selectedSpell == index) {
+                nextSpell();
+            }
         }
     }
     /*

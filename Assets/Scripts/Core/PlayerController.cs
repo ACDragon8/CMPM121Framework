@@ -75,11 +75,6 @@ public class PlayerController : MonoBehaviour
         spelluicontainer.HighlightCurrSpell(spellcaster.selectedSpell);
     }
 
-    public void DropSpell()
-    {
-        spellcaster.DropSpell();
-        OnChangeSpell();
-    }
 
     public void SetSpeed(int val) {
         this.speed = val;
