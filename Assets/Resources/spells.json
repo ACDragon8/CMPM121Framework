@@ -43,7 +43,7 @@
    "straight_slice":  {
        "name": "Straight Slice",
        "description": "A piercing shot.",
-       "icon": 2,
+       "icon": 5,
        "damage": {"amount": "10 power 3 / +", "type": "arcane"},
        "mana_cost": "20",
        "cooldown": "3",

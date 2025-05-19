@@ -24,4 +24,26 @@ public class EventBus
     public void OnDeathEffect(Vector3 where, Hittable target) {
         OnDeath?.Invoke(where, target);
     }
+    /*
+     * Everything below was just to help Cynthia
+     * coordinate the spell UI because UI sucks
+     */
+    //Index just tells it which slot it should be when looking at SpellCaster
+    public event Action<Spell, int> OnSpellPickup;
+    public event Action<Spell, int> OnSpellRemove;
+    public event Action<SpellCaster> OnSpellSolo;
+    public event Action<int> OnSpellMultiple;
+    public void OnSpellPickupEffect(Spell spell, int index) {
+        OnSpellPickup?.Invoke(spell, index);
+    }
+
+    public void OnSpellRemoveEffect(Spell spell, int index) {
+        OnSpellRemove?.Invoke(spell, index);
+    }
+    public void OnSpellSoloEffect(SpellCaster singleSpell) {
+        OnSpellSolo?.Invoke(singleSpell);
+    }
+    public void OnSpellMultipleEffect(int amount) {
+        OnSpellMultiple?.Invoke(amount);
+    }
 }

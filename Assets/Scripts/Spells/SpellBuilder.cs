@@ -13,7 +13,6 @@ public class SpellBuilder
     public string[] modifierTypes;
     public Spell Build(SpellCaster owner, string spellName= "splitter arcane_bolt")
     {
-        //TODO figure out how to incorporate modifiers into this
         int count = 0;
         
         string[] keywords = spellName.Split();
@@ -72,7 +71,6 @@ public class SpellBuilder
                 default:
                     break;
             }
-            Debug.Log(keywords[i]);
             m.SetProperties((JObject) spellList[keywords[i]]);
             m.SetBaseSpell(s);
             s = m;

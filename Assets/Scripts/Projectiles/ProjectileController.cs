@@ -20,7 +20,7 @@ public class ProjectileController : MonoBehaviour
         if (knockback)
         {
             prevPos = transform.position;
-            SampleDirection();
+            StartCoroutine(SampleDirection());
         }
         if (pierce) {
             past_hits = new Queue();
