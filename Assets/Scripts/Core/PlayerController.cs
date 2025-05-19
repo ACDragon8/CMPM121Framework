@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     public ManaBar manaui;
 
     public SpellCaster spellcaster;
-    public SpellUI spellui;
+    public SpellUIContainer spelluicontainer;
 
     public int speed;
 
@@ -23,7 +23,6 @@ public class PlayerController : MonoBehaviour
     {
         unit = GetComponent<Unit>();
         GameManager.Instance.player = gameObject;
-        //EventBus.Instance.OnDamage += Test;
     }
 
     public void StartLevel()
@@ -39,7 +38,14 @@ public class PlayerController : MonoBehaviour
         // tell UI elements what to show
         healthui.SetHealth(hp);
         manaui.SetSpellCaster(spellcaster);
-        spellui.SetSpell(spellcaster.getSpell());
+        for (int i = 0; i < spellcaster.spellCount; i++)
+        {
+            if (spellcaster.spell[i] != null)
+            {
+                spelluicontainer.DisplayNewSpell(spellcaster.spell[i], i);
+            }
+        }
+        spelluicontainer.HighlightCurrSpell(spellcaster.selectedSpell);
     }
 
     // Update is called once per frame
@@ -66,7 +72,7 @@ public class PlayerController : MonoBehaviour
     void OnChangeSpell()
     {
         spellcaster.nextSpell();
-        spellui.SetSpell(spellcaster.getSpell());
+        spelluicontainer.HighlightCurrSpell(spellcaster.selectedSpell);
     }
 
     public void DropSpell()
@@ -83,9 +89,5 @@ public class PlayerController : MonoBehaviour
         GameManager.Instance.state = GameManager.GameState.GAMEOVER;
         Debug.Log("You Lost");
     }
-    /*
-    void Test(Vector3 where, Damage how, Hittable who) {
-        Debug.Log("Player now knows that " + who.team + " was hit for " + how.amount + " damage.");
-    }*/
     
 }

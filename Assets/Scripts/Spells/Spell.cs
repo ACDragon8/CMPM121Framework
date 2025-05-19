@@ -9,6 +9,7 @@ public class Spell
 {
     public float last_cast;
     public Hittable.Team team;
+    public JObject spellInfo;
     //These are the spell fields below
     //This info can be found in the JSON
     public SpellCaster owner;
@@ -61,6 +62,7 @@ public class Spell
     }
     public virtual void SetProperties(JObject spellAttributes) 
     {
+        spellInfo = spellAttributes;
         name = spellAttributes["name"].ToString();
         description = spellAttributes["description"].ToString();
 
@@ -104,7 +106,12 @@ public class Spell
     public virtual int GetManaCost() { return manaCost; }
     public virtual void SetManaCost(int newManaCost) { manaCost = newManaCost; }
 
-    public virtual int GetDamage() { return dmg; }
+    public virtual int GetDamage()
+    { //This is here so the damage numbers can update itself with the increased waves (power)
+        string d = spellInfo["damage"]["amount"].ToString();
+        dmg = ReversePolishCalc.Calculate(ReplaceWithDigits(d));
+        return dmg;
+     }
     public virtual void SetDamage(int newDMG) { dmg = newDMG; }
 
     public virtual Damage.Type GetDamageType() { return dmgType; }

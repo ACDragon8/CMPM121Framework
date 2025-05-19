@@ -24,8 +24,17 @@ public class SpellUI : MonoBehaviour
     {
         this.spell = spell;
         GameManager.Instance.spellIconManager.PlaceSprite(spell.GetIcon(), icon.GetComponent<Image>());
+        Debug.Log("Setting spell: " + spell.GetName());
     }
-
+    public void RemoveSpell() {
+        this.spell = null;
+    }
+    public void Highlight() {
+        highlight.SetActive(true);
+    }
+    public void UnHighlight() {
+        highlight.SetActive(false);
+    }
     // Update is called once per frame
     void Update()
     {

@@ -85,9 +85,11 @@ public class SpellCaster
             if(spell[i] == null) {
                 this.spell[i] = sb.Build(this, spellName);
                 this.spellCount+= 1;
+                EventBus.Instance.OnSpellPickupEffect(this.spell[i], i);
                 return true;
             }
         }
+        Debug.Log("Unable to add spell, all spell inventory slots full");
         return false;
     }
 
