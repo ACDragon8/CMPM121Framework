@@ -32,7 +32,7 @@ public class JadeElephant : Relic
             }
             index++;
         }
-        var value = this.RPN.Calculate(s);
+        var value = ReversePolishCalc.Calculate(s);
         owner.modifyPower(this.name, value);
     }
 
