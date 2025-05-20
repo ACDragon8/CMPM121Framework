@@ -63,8 +63,19 @@ public class SpellCaster
         return spell[selectedSpell];
     }
 
-    public void modifyPower(string s, int val) {
-        this.powerModifiers[s] = val;
+    public void modifyPower(string s, int val)
+    {
+        if (this.powerModifiers.TryGetValue(s, out int a))
+        {
+            Debug.Log("access");
+            this.powerModifiers[s] = val;
+        }
+        else
+        {
+            Debug.Log("denied");
+            this.powerModifiers.Add(s, val);
+        }
+        
     }
 
     public int getPower()

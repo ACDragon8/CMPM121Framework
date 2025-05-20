@@ -5,11 +5,8 @@ using UnityEngine;
 public class JadeElephant : Relic
 {
 
-    private ReversePolishCalc RPN;
-
     public JadeElephant(SpellCaster owner) : base(owner, "Jade Elephant")
     {
-        this.RPN = new ReversePolishCalc();
         //on stand still
         EventBus.Instance.Idle += onTrigger;
         EventBus.Instance.Move += onReset;
@@ -32,13 +29,11 @@ public class JadeElephant : Relic
             }
             index++;
         }
-        var value = ReversePolishCalc.Calculate(s);
-        owner.modifyPower(this.name, value);
+        int value = ReversePolishCalc.Calculate(s);
+        this.owner.modifyPower(this.name, value);
     }
-
     public void onReset()
     {
-GameManager.Instance.player.GetComponent<PlayerController>(). spellcaster.modifyPower(this.name,0);
-
+        this.owner.modifyPower(this.name,0);
     }
 }

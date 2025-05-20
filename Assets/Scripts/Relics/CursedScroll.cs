@@ -10,7 +10,7 @@ public class CursedScroll : Relic
 
     public void onTrigger(Vector3 where, Hittable target)
     {
-        GameManager.Instance.player.GetComponent<PlayerController>().spellcaster.gainMana(25);
+        owner.gainMana(25);
         //Debug.Log("gain mana 25");
     }
 

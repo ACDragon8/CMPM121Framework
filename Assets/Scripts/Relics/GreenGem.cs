@@ -13,7 +13,7 @@ public class GreenGem : Relic
 
     public void onTrigger(Vector3 where, Damage damage, Hittable target)
     {
-        GameManager.Instance.player.GetComponent<PlayerController>().spellcaster.gainMana(5);
+       owner.gainMana(25);
         //Debug.Log("Gain mana");
     }
 }

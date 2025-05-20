@@ -34,8 +34,6 @@ public class PlayerController : MonoBehaviour
         unit = GetComponent<Unit>();
         GameManager.Instance.player = gameObject;
         EventBus.Instance.OnSpellRemove += DropSpell;
-        //testing relics
-        relics.Add(new CursedScroll(this.spellcaster));
         //EventBus.Instance.OnDamage += Test;
     }
 
@@ -48,6 +46,9 @@ public class PlayerController : MonoBehaviour
         hp = new Hittable(100, Hittable.Team.PLAYER, gameObject);
         hp.OnDeath += Die;
         hp.team = Hittable.Team.PLAYER;
+
+        //testing relics
+        relics.Add(new GoldenMask(this.spellcaster));
 
         // tell UI elements what to show
         healthui.SetHealth(hp);

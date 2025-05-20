@@ -23,7 +23,7 @@ public class Relic
         this.name = name;
         this.sprite = RelicAttributes[name]["sprite"].ToObject<int>();
         this.trigger = RelicAttributes[name]["trigger"].ToObject<JObject>();
-        this.effect = RelicAttributes[name]["sprite"].ToObject<JObject>();
+        this.effect = RelicAttributes[name]["effect"].ToObject<JObject>();
     }
 
 
