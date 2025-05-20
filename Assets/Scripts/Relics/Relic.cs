@@ -9,19 +9,21 @@ public class Relic
     public string name;
     public int sprite;
 
-    public string trigger;
-    public string effect;
+    public JObject trigger;
+    public JObject effect;
+    public SpellCaster owner;
 
 
 
 
 
-    public Relic(string name)
+    public Relic(SpellCaster owner,string name)
     {
+        this.owner = owner;
         this.name = name;
         this.sprite = RelicAttributes[name]["sprite"].ToObject<int>();
-        this.trigger = RelicAttributes[name]["trigger"].ToString();
-        this.effect = RelicAttributes[name]["sprite"].ToString();
+        this.trigger = RelicAttributes[name]["trigger"].ToObject<JObject>();
+        this.effect = RelicAttributes[name]["sprite"].ToObject<JObject>();
     }
 
 

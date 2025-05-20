@@ -7,6 +7,7 @@ public class SpellCaster
     public int mana;
     public int max_mana;
     public int mana_reg;
+    public int basePower;
     public int power;
     public Hittable.Team team;
     public Spell[] spell;
@@ -16,6 +17,7 @@ public class SpellCaster
     public int spellCount;
 
     public SpellBuilder sb;
+    public Dictionary<string, int> powerModifiers;
 
 
     public IEnumerator ManaRegeneration()
@@ -41,12 +43,14 @@ public class SpellCaster
         this.maxSpells = 4;
         this.sb = new SpellBuilder();
         this.spell[0] = sb.Build(this);
-        this.spell[1] = sb.Build(this,"magic_missile");
+        this.spell[1] = sb.Build(this, "magic_missile");
         this.spellCount = 2;
+        this.powerModifiers = new Dictionary<string, int>();
     }
 
     public IEnumerator Cast(Vector3 where, Vector3 target)
-    {        
+    {
+        getPower();
         if (mana >= spell[selectedSpell].GetManaCost() && spell[selectedSpell].IsReady())
         {
             mana -= spell[selectedSpell].GetManaCost();
@@ -59,7 +63,22 @@ public class SpellCaster
         return spell[selectedSpell];
     }
 
-    public void SetMaxMana(int val) {
+    public void modifyPower(string s, int val) {
+        this.powerModifiers[s] = val;
+    }
+
+    public int getPower()
+    {
+        this.power = this.basePower;
+        foreach(var (key,value) in this.powerModifiers)
+        {
+            this.power += value;
+        }
+        return this.power;
+    }
+
+    public void SetMaxMana(int val)
+    {
         this.max_mana = val;
     }
     public void SetManaRegen(int val) {
@@ -67,7 +86,7 @@ public class SpellCaster
     }
 
     public void SetSpellPower(int val) {
-        this.power = val;
+        this.basePower = val;
     }
 
 

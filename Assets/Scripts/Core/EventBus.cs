@@ -16,6 +16,7 @@ public class EventBus
 
     public event Action<Vector3, Damage, Hittable> OnDamage;
     public event Action<Vector3, Hittable> OnDeath;
+    public event Action Cast;
     public event Action Idle;
     public event Action Move;
     
@@ -37,6 +38,11 @@ public class EventBus
     public void OnMove()
     {
         Move?.Invoke();
+    }
+
+    public void OnCast()
+    {
+        Cast?.Invoke();
     }
 
     /*

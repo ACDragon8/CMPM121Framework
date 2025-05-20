@@ -6,7 +6,7 @@ public class GreenGem : Relic
 {
 
 
-    public GreenGem() : base("Green Gem")
+    public GreenGem(SpellCaster owner) : base(owner, "Green Gem")
     {
         EventBus.Instance.OnDamage += onTrigger;
     }

@@ -23,8 +23,6 @@ public class PlayerController : MonoBehaviour
 
     public float lastMoved;
 
-    public event Action Idle;
-
     public bool idleLock;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -37,7 +35,7 @@ public class PlayerController : MonoBehaviour
         GameManager.Instance.player = gameObject;
         EventBus.Instance.OnSpellRemove += DropSpell;
         //testing relics
-        relics.Add(new CursedScroll());
+        relics.Add(new CursedScroll(this.spellcaster));
         //EventBus.Instance.OnDamage += Test;
     }
 
@@ -85,6 +83,7 @@ public class PlayerController : MonoBehaviour
         Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(mouseScreen);
         mouseWorld.z = 0;
         StartCoroutine(spellcaster.Cast(transform.position, mouseWorld));
+        EventBus.Instance.OnCast();
     }
 
     void OnMove(InputValue value)

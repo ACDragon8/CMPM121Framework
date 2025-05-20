@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 public class CursedScroll : Relic
 {
-    public CursedScroll() : base("Cursed Scroll")
+    public CursedScroll(SpellCaster owner) : base(owner, "Cursed Scroll")
     {
         EventBus.Instance.OnDeath += onTrigger;
     }
@@ -11,7 +11,7 @@ public class CursedScroll : Relic
     public void onTrigger(Vector3 where, Hittable target)
     {
         GameManager.Instance.player.GetComponent<PlayerController>().spellcaster.gainMana(25);
-        Debug.Log("gain mana 25");
+        //Debug.Log("gain mana 25");
     }
 
 }
