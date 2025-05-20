@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using System.IO;
 using System.Collections.Generic;
 using System.Collections;
+using System;
 
 public class PlayerController : MonoBehaviour
 {
@@ -20,13 +21,22 @@ public class PlayerController : MonoBehaviour
 
     public Unit unit;
 
+    public float lastMoved;
+
+    public event Action Idle;
+
+    public bool idleLock;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        this.idleLock = false;
+        lastMoved = Time.time;
         relics = new ArrayList();
         unit = GetComponent<Unit>();
         GameManager.Instance.player = gameObject;
-        relics.Add(new GreenGem());
+        //testing relics
+        relics.Add(new CursedScroll());
         //EventBus.Instance.OnDamage += Test;
     }
 
@@ -56,7 +66,15 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (!this.idleLock)
+        {
+            if (this.lastMoved + 3.0 <= Time.time )
+            {
+                this.idleLock = true;
+                EventBus.Instance.OnIdle();
+                Debug.Log("player idle");
+            }
+        }
     }
 
     void OnAttack(InputValue value)
@@ -71,7 +89,10 @@ public class PlayerController : MonoBehaviour
     void OnMove(InputValue value)
     {
         if (GameManager.Instance.state == GameManager.GameState.PREGAME || GameManager.Instance.state == GameManager.GameState.GAMEOVER) return;
-        unit.movement = value.Get<Vector2>()*speed;
+        unit.movement = value.Get<Vector2>() * speed;
+        lastMoved = Time.time;
+        this.idleLock = false;
+        EventBus.Instance.OnMove();
     }
 
     void OnChangeSpell()

@@ -16,14 +16,29 @@ public class EventBus
 
     public event Action<Vector3, Damage, Hittable> OnDamage;
     public event Action<Vector3, Hittable> OnDeath;
+    public event Action Idle;
+    public event Action Move;
     
     public void DoDamage(Vector3 where, Damage dmg, Hittable target)
     {
         OnDamage?.Invoke(where, dmg, target);
     }
-    public void OnDeathEffect(Vector3 where, Hittable target) {
+    
+    public void OnDeathEffect(Vector3 where, Hittable target)
+    {
         OnDeath?.Invoke(where, target);
     }
+
+    public void OnIdle()
+    {
+        Idle?.Invoke();
+    }
+
+    public void OnMove()
+    {
+        Move?.Invoke();
+    }
+
     /*
      * Everything below was just to help Cynthia
      * coordinate the spell UI because UI sucks

@@ -81,11 +81,19 @@ public class SpellCaster
         }
     }
 
-    public bool addSpell(string spellName = "arcane_bolt") {
-        for(int i = 0; i < this.maxSpells;i++) {
-            if(spell[i] == null) {
+    public void gainMana(int val)
+    {
+        this.mana = Mathf.Min(this.mana + val, this.max_mana);
+    }
+
+    public bool addSpell(string spellName = "arcane_bolt")
+    {
+        for (int i = 0; i < this.maxSpells; i++)
+        {
+            if (spell[i] == null)
+            {
                 this.spell[i] = sb.Build(this, spellName);
-                this.spellCount+= 1;
+                this.spellCount += 1;
                 EventBus.Instance.OnSpellPickupEffect(this.spell[i], i);
                 if (spellCount > 1) { EventBus.Instance.OnSpellMultipleEffect(spellCount); }
                 return true;
