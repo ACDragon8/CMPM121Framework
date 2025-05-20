@@ -1,5 +1,5 @@
-[
-    {
+{
+    "Green Gem": {
         "name": "Green Gem",
         "sprite": 0,
         "trigger": {
@@ -12,7 +12,7 @@
             "amount": "5"
         }
     },
-    {
+    "Jade Elephant": {
         "name": "Jade Elephant",
         "sprite": 1,
         "trigger": {
@@ -27,7 +27,7 @@
             "until": "move"
         }
     },
-    {
+    "Golden Mask": {
         "name": "Golden Mask",
         "sprite": 2,
         "trigger": {
@@ -41,7 +41,7 @@
             "until": "cast-spell"
         }
     },
-    {
+    "Cursed Scroll": {
         "name": "Cursed Scroll",
         "sprite": 3,
         "trigger": {
@@ -53,5 +53,18 @@
             "type": "gain-mana",
             "amount": "25"
         }
+    },
+    "Rabbit Ears": {
+        "name": "Rabbit Ears",
+        "sprite": 4,
+        "trigger": {
+            "description":"When you hit an enemy",
+            "type": "on-hit"
+        },
+        "effect": {
+            "description": "gain 5 movement speed",
+            "type": "gain-speed",
+            "amount": "5"
+        }
     }
-]
+}
