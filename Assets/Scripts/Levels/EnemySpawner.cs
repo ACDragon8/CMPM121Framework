@@ -60,7 +60,6 @@ public class EnemySpawner : MonoBehaviour
             b.GetComponent<MenuSelectorController>().SetLevel(difficulty.Key);
             level_buttons[difficulty.Key] = b;
             i--;
-            Debug.Log("Created button for " + difficulty.Key);
         }
     }
 

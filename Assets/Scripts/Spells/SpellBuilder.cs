@@ -11,16 +11,10 @@ public class SpellBuilder
     JObject spellList;
     public string[] spellTypes;
     public string[] modifierTypes;
-    public Spell Build(SpellCaster owner, string spellName= "splitter arcane_bolt")
-    {
-        int count = 0;
-        
+    public Spell Build(SpellCaster owner, string spellName= "arcane_bolt")
+    { 
         string[] keywords = spellName.Split();
-        foreach(var word in keywords) {
-            Debug.Log(word);
-            count++;
-        } 
-        
+        int count = keywords.Length;
         Spell s;
         
         switch (keywords[count -1]) {

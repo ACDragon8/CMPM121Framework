@@ -27,7 +27,6 @@ public class SpellUI : MonoBehaviour
     {
         this.spell = spell;
         GameManager.Instance.spellIconManager.PlaceSprite(spell.GetIcon(), icon.GetComponent<Image>());
-        Debug.Log("Setting spell: " + spell.GetName());
     }
     public void RemoveSpell() {
         this.spell = null;
@@ -39,7 +38,7 @@ public class SpellUI : MonoBehaviour
     public void UnHighlight() {
         highlight.SetActive(false);
     }
-    public void ShowDropButton(int ahhhh) { dropbutton.SetActive(true); }
+    public void ShowDropButton(int ahhhh) { dropbutton.SetActive(true); Debug.Log("Showing drop button for " + spell.GetName()); }
     public void HideDropButton(SpellCaster single) { dropbutton.SetActive(false); }
     // Update is called once per frame
     void Update()

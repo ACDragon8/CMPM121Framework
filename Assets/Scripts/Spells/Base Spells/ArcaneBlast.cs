@@ -60,7 +60,7 @@ public class ArcaneBlast : Spell
     {
         if (other.team != team)
         {
-            other.Damage(new Damage(dmg, dmgType));
+            other.Damage(new Damage(GetDamage(), dmgType));
         }
         float degree_gap = 360f / n;
         for (int i = 0; i < (int) n; i++) {

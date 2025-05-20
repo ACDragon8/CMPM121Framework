@@ -53,7 +53,7 @@ public class ArcaneSpray : Spell
     {
         if (other.team != team)
         {
-            other.Damage(new Damage(dmg, dmgType));
+            other.Damage(new Damage(GetDamage(), dmgType));
         }
     }
 }

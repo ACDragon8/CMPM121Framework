@@ -34,7 +34,7 @@ public class ArcaneBolt : Spell
         //It seems like this would be modified by modifier spells.
         if (other.team != team)
         {
-            other.Damage(new Damage(dmg, dmgType));
+            other.Damage(new Damage(GetDamage(), dmgType));
         }
     }
 }
