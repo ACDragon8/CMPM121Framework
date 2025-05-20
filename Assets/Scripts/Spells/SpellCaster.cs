@@ -43,9 +43,6 @@ public class SpellCaster
         this.spell[0] = sb.Build(this);
         this.spell[1] = sb.Build(this,"magic_missile");
         this.spellCount = 2;
-        //Small proof of concept that observers kinda work
-        //EventBus.Instance.OnDeath += RegenMana;
-        EventBus.Instance.OnSpellRemove += DropSpell;
     }
 
     public IEnumerator Cast(Vector3 where, Vector3 target)
@@ -95,29 +92,24 @@ public class SpellCaster
         return false;
     }
 
-    public void DropSpell(Spell spell, int index) {
-        if(this.spellCount <= 1) 
+    public void DropSpell(int index)
+    {
+        if (this.spellCount <= 1)
         {
             return;
         }
-        else 
+        else
         {
             this.spell[index] = null;
             this.spellCount--;
-            if (spellCount == 1) {
+            if (spellCount == 1)
+            {
                 EventBus.Instance.OnSpellSoloEffect(this);
             }
-            if (selectedSpell == index) {
+            if (selectedSpell == index)
+            {
                 nextSpell();
             }
         }
     }
-    /*
-    void RegenMana(Vector3 pos, Hittable target)
-    {
-        if (target.team != this.team) {
-            Debug.Log("Regenning mana through kill!");
-            this.mana += 10;
-        }
-    }*/
 }

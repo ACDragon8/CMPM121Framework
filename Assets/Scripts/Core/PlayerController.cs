@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     {
         unit = GetComponent<Unit>();
         GameManager.Instance.player = gameObject;
+        EventBus.Instance.OnSpellRemove += DropSpell;
     }
 
     public void StartLevel()
@@ -74,7 +75,10 @@ public class PlayerController : MonoBehaviour
         spellcaster.nextSpell();
         spelluicontainer.HighlightCurrSpell(spellcaster.selectedSpell);
     }
-
+    public void DropSpell(Spell spell, int index) {
+        spellcaster.DropSpell(index);
+        OnChangeSpell();
+    }
 
     public void SetSpeed(int val) {
         this.speed = val;
