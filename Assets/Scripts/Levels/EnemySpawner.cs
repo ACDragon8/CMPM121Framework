@@ -147,7 +147,7 @@ public class EnemySpawner : MonoBehaviour
         }
         c = ReversePolishCalc.Calculate(b);
         GameManager.Instance.player.GetComponent<PlayerController>().spellcaster.SetSpellPower(c);
-        GameManager.Instance.player.GetComponent<PlayerController>().SetSpeed(5);
+        GameManager.Instance.player.GetComponent<PlayerController>().SetSpeed(10);
        
         StartCoroutine(SpawnWave());
     }

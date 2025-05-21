@@ -54,17 +54,45 @@
             "amount": "25"
         }
     },
-    "Rabbit Ears": {
-        "name": "Rabbit Ears",
-        "sprite": 4,
+    "Bread": {
+        "name": "Bread",
+        "sprite": 5,
         "trigger": {
-            "description":"When you hit an enemy",
-            "type": "on-hit"
+            "description":"When you deal damage",
+            "type": "deal-damage"
         },
         "effect": {
-            "description": "gain 5 movement speed",
+            "description": "gain 10 movement speed for 1 second",
             "type": "gain-speed",
-            "amount": "5"
+            "amount": "10",
+            "duration": "1"
         }
+    },
+    "Cat the Kat": {
+        "name": "Cat the Kat",
+        "sprite": 15,
+        "trigger": {
+            "description":"When you cast a spell",
+            "type": "cast-spell"
+        },
+        "effect": {
+            "description": "0.01 percent chance to give 9999 spell power for that spell cast",
+            "type": "gain-power",
+            "amount": "9999"
+        }
+    },
+    "Mirror": {
+        "name" : "Mirror",
+        "sprite" : 12,
+        "trigger": {
+            "description": "",
+            "type": "something"
+        },
+        "effect": {
+            "description": "",
+            "type": "a",
+            "amount":"100"
+        }
+
     }
 }

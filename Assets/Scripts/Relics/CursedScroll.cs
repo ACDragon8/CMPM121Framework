@@ -10,7 +10,8 @@ public class CursedScroll : Relic
 
     public void onTrigger(Vector3 where, Hittable target)
     {
-        owner.gainMana(25);
+        var value = ReversePolishCalc.Calculate(this.effect["amount"].ToString().Split());
+        owner.gainMana(value);
         //Debug.Log("gain mana 25");
     }
 

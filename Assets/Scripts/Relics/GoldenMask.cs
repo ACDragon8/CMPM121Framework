@@ -14,7 +14,12 @@ public class GoldenMask : Relic
 
     public void onTrigger(Vector3 where, Damage damage, Hittable target)
     {
-        owner.modifyPower(this.name,100);
+        if (target != GameManager.Instance.player.GetComponent<PlayerController>().hp)
+        {
+            return;
+        }
+        var value = ReversePolishCalc.Calculate(this.effect["amount"].ToString().Split());
+        owner.modifyPower(this.name,value);
         Debug.Log("Gain spell power for next spell");
     }
 

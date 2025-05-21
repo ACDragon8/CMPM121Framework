@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour
     public SpellUIContainer spelluicontainer;
 
     public int speed;
+    public int baseSpeed;
+    public Dictionary<string, int> speedModifiers;
 
     public Unit unit;
 
@@ -34,7 +36,8 @@ public class PlayerController : MonoBehaviour
         unit = GetComponent<Unit>();
         GameManager.Instance.player = gameObject;
         EventBus.Instance.OnSpellRemove += DropSpell;
-        //EventBus.Instance.OnDamage += Test;
+        this.speedModifiers = new Dictionary<string, int>();
+        this.baseSpeed = 10;
     }
 
     public void StartLevel()
@@ -48,7 +51,7 @@ public class PlayerController : MonoBehaviour
         hp.team = Hittable.Team.PLAYER;
 
         //testing relics
-        relics.Add(new GoldenMask(this.spellcaster));
+        relics.Add(new Bread(this.spellcaster));
 
         // tell UI elements what to show
         healthui.SetHealth(hp);
@@ -66,9 +69,10 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //check if player has moved in 3 seconds
         if (!this.idleLock)
         {
-            if (this.lastMoved + 3.0 <= Time.time )
+            if (this.lastMoved + 3.0 <= Time.time)
             {
                 this.idleLock = true;
                 EventBus.Instance.OnIdle();
@@ -83,14 +87,38 @@ public class PlayerController : MonoBehaviour
         Vector2 mouseScreen = Mouse.current.position.value;
         Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(mouseScreen);
         mouseWorld.z = 0;
+        EventBus.Instance.BeforeCat();
         StartCoroutine(spellcaster.Cast(transform.position, mouseWorld));
         EventBus.Instance.OnCast();
+    }
+    
+    void getSpeed()
+    {
+        this.speed = this.baseSpeed;
+        foreach(var (key,value) in this.speedModifiers)
+        {
+            this.speed += value;
+        }
+    }
+
+    public void modifySpeed(string s, int val)
+    {
+        if (this.speedModifiers.TryGetValue(s, out int a))
+        {
+            this.speedModifiers[s] = val;
+        }
+        else
+        {
+            this.speedModifiers.Add(s, val);
+        }
+        
     }
 
     void OnMove(InputValue value)
     {
         if (GameManager.Instance.state == GameManager.GameState.PREGAME || GameManager.Instance.state == GameManager.GameState.GAMEOVER) return;
-        unit.movement = value.Get<Vector2>() * speed;
+        getSpeed();
+        unit.movement = value.Get<Vector2>() * this.speed;
         lastMoved = Time.time;
         this.idleLock = false;
         EventBus.Instance.OnMove();
@@ -107,7 +135,7 @@ public class PlayerController : MonoBehaviour
     }
 
     public void SetSpeed(int val) {
-        this.speed = val;
+        this.baseSpeed = val;
     }
     void Die()
     {
