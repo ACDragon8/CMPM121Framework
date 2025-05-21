@@ -24,6 +24,11 @@ public class Hittable
         }
     }
 
+    public void Heal(int value)
+    {
+        hp = Mathf.Min(hp + value, max_hp);
+    }
+
     public event Action OnDeath;
 
     public Hittable(int hp, Team team, GameObject owner)

@@ -81,17 +81,17 @@
             "amount": "9999"
         }
     },
-    "Mirror": {
-        "name" : "Mirror",
-        "sprite" : 12,
+    "Blood Red Night": {
+        "name" : "Blood Red Night",
+        "sprite" : 4,
         "trigger": {
-            "description": "",
-            "type": "something"
+            "description": "When you deal damage",
+            "type": "deal-damage"
         },
         "effect": {
-            "description": "",
-            "type": "a",
-            "amount":"100"
+            "description": "Heal 5 hp",
+            "type": "heal-damage",
+            "amount":"5"
         }
 
     }

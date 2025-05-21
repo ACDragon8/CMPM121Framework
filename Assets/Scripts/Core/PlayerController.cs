@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour
         hp.team = Hittable.Team.PLAYER;
 
         //testing relics
-        relics.Add(new Bread(this.spellcaster));
+        relics.Add(new Blood(this.spellcaster));
 
         // tell UI elements what to show
         healthui.SetHealth(hp);
