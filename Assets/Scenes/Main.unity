@@ -2045,6 +2045,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level_selector: {fileID: 1115058368}
   button: {fileID: 6791571272867747119, guid: 47865e4d0d1669541a3aa2992225a687, type: 3}
+  player_selector: {fileID: 6791571272867747119, guid: 1a23ace8b4f98244b8a8346b5b368660, type: 3}
   SpawnPoints:
   - {fileID: 956873992}
   - {fileID: 1677496371}
@@ -2055,6 +2056,7 @@ MonoBehaviour:
   - {fileID: 587991943}
   enemy: {fileID: 1832418719708313566, guid: bebfa21247182184d92ab200b93e6cf0, type: 3}
   level: 
+  character: 
   WaveCount: 0
   cancel: 0
 --- !u!1 &532755679
@@ -5754,7 +5756,10 @@ MonoBehaviour:
   manaui: {fileID: 71109453}
   spelluicontainer: {fileID: 1982188287}
   speed: 5
+  baseSpeed: 0
   unit: {fileID: 0}
+  lastMoved: 0
+  idleLock: 0
 --- !u!4 &1718273953
 Transform:
   m_ObjectHideFlags: 0

@@ -2,6 +2,9 @@ using UnityEngine;
 using System;
 using System.Collections;
 using System.Linq;
+using UnityEngine.Rendering;
+using NUnit.Framework;
+using System.Collections.Generic;
 
 public class ProjectileController : MonoBehaviour
 {
@@ -12,7 +15,7 @@ public class ProjectileController : MonoBehaviour
     public Vector3 moveDir;
     public bool knockback;
     public bool pierce;
-    public Queue past_hits;
+    public List<Collider2D> past_hits;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -23,7 +26,8 @@ public class ProjectileController : MonoBehaviour
             StartCoroutine(SampleDirection());
         }
         if (pierce) {
-            past_hits = new Queue();
+            past_hits = new List<Collider2D>();
+            this.GetComponent<CircleCollider2D>().isTrigger = true;
         }
     }
 
@@ -41,8 +45,32 @@ public class ProjectileController : MonoBehaviour
         if (collision.gameObject.CompareTag("projectile")) return;
         if (collision.gameObject.CompareTag("unit"))
         {
+            var ec = collision.gameObject.GetComponent<EnemyController>();
+            if (ec != null)
+            {
+                OnHit(ec.hp, transform.position);
+            }
+            else
+            {
+                var pc = collision.gameObject.GetComponent<PlayerController>();
+                if (pc != null)
+                {
+                    OnHit(pc.hp, transform.position);
+                }
+            }
+            if (knockback) { collision.gameObject.transform.Translate(moveDir); }
+        }
+        Destroy(gameObject);
+        
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("projectile")) return;
+        if (collision.gameObject.CompareTag("unit"))
+        {
             if (pierce && CheckInHits(collision))
             {
+                Debug.Log("I've seen this dude before");
                 return;
             }
             var ec = collision.gameObject.GetComponent<EnemyController>();
@@ -61,13 +89,17 @@ public class ProjectileController : MonoBehaviour
             if (knockback) { collision.gameObject.transform.Translate(moveDir); }
             if (pierce)
             {
-                past_hits.Enqueue(collision);
+                past_hits.Add(collision);
                 StartCoroutine(HitImmunity());
+                return;
             }
         }
-        Destroy(gameObject);
+        else
+        {
+            Destroy(gameObject);
+        }
     }
-    public bool CheckInHits(Collision2D fresh) {
+    public bool CheckInHits(Collider2D fresh) {
         foreach (var hit in past_hits) {
             if (fresh == hit) { return true; }
         }
@@ -77,7 +109,7 @@ public class ProjectileController : MonoBehaviour
     IEnumerator HitImmunity() 
     {
         yield return new WaitForSeconds(0.2f);
-        past_hits.Dequeue();
+        past_hits.RemoveAt(0);  
     }
     public void SetLifetime(float lifetime)
     {

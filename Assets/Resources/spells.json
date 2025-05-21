@@ -48,7 +48,7 @@
        "mana_cost": "20",
        "cooldown": "3",
        "pierce" : "1",
-       "projectile": {"trajectory": "homing", "speed": "10", "sprite": 0}
+       "projectile": {"trajectory": "straight", "speed": "10", "sprite": 0}
    },
    "damage_amp": {
        "name": "damage-amplified",

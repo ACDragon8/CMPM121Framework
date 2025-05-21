@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using System.Collections;
 using System;
+using System.Linq;
+using UnityEngine.Events;
 
 //test
 
@@ -13,14 +15,18 @@ public class EnemySpawner : MonoBehaviour
 {
     public Image level_selector;
     public GameObject button;
+    public GameObject player_selector;
     public SpawnPoint[] SpawnPoints; 
     public GameObject enemy;
     public Dictionary<string, EnemyType> enemy_list;
     public Dictionary<string, LevelData> level_list;
+    public Dictionary<string, CharacterStats> character_stats;
     public string level;
+    public string character;
     public int WaveCount;
     public bool cancel;
     public Dictionary<string, GameObject> level_buttons;
+    public Dictionary<string, GameObject> character_buttons;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -48,6 +54,18 @@ public class EnemySpawner : MonoBehaviour
             LevelData lv = l.ToObject<LevelData>();
             level_list[lv.name] = lv;
         }
+
+        character_stats = new Dictionary<string, CharacterStats>();
+        var charactertext = Resources.Load<TextAsset>("classes");
+        
+        
+        JObject juice = JObject.Parse(charactertext.text);
+        foreach (KeyValuePair<string, JToken> c in juice)
+        {
+            CharacterStats ch = c.Value.ToObject<CharacterStats>();
+            character_stats[c.Key] = ch;
+        }
+        
         //TODO figure out how to get the height of the menu and maybe create a separate class
         //for these UI things
         int spacing = 120/level_list.Count;
@@ -59,6 +77,19 @@ public class EnemySpawner : MonoBehaviour
             b.GetComponent<MenuSelectorController>().spawner = this;
             b.GetComponent<MenuSelectorController>().SetLevel(difficulty.Key);
             level_buttons[difficulty.Key] = b;
+            b.SetActive(false);
+            i--;
+        }
+
+        character_buttons = new Dictionary<string, GameObject>();
+        i = character_stats.Count;
+        foreach (var chara in character_stats) {
+            GameObject b = Instantiate(player_selector, level_selector.transform);
+            b.transform.localPosition = new Vector3(0, spacing * i - 50);
+            b.GetComponent<CharacterSelectorController>().spawner = this;
+            b.GetComponent<CharacterSelectorController>().SetCharacter(chara.Key);
+            character_buttons[chara.Key] = b;
+            //b.SetActive(false);
             i--;
         }
     }
@@ -90,19 +121,29 @@ public class EnemySpawner : MonoBehaviour
         cancel = false;
         level_selector.gameObject.SetActive(false);
         StatsManager.Instance.levelName = levelname;
-        // this is not nice: we should not have to be required to tell the player directly that the level is starting
-        GameManager.Instance.player.GetComponent<PlayerController>().StartLevel();
+        
         StartCoroutine(SpawnWave());
     }
+    public void SelectCharacter(string character_class) {
+        character = character_class;
+        Debug.Log("Character chosen is: " +character);
+        // this is not nice: we should not have to be required to tell the player directly that the level is starting
+        GameManager.Instance.player.GetComponent<PlayerController>().StartLevel();
+        UpdatePlayerStats();
+        foreach (var button in character_buttons) {
+            button.Value.SetActive(false);
+        }
+        foreach (var button in level_buttons) {
+            button.Value.SetActive(true);
+        }
 
-    public void NextWave() // absolutely turn to event ------------------------------
-    {
-        //this sucks but deadlines are deadlines
-        ReversePolishCalc calc = new ReversePolishCalc();
-        string a = "95 wave 5 * +";
+    }
+    public void UpdatePlayerStats() {
+        string a = character_stats[character].health;
         string[] b = a.Split(' ');
         int index = 0;
-        foreach (var item in b) {
+        foreach (var item in b)
+        {
             if (item == "wave")
             {
                 b[index] = WaveCount.ToString();
@@ -111,10 +152,11 @@ public class EnemySpawner : MonoBehaviour
         }
         int c = ReversePolishCalc.Calculate(b);
         GameManager.Instance.player.GetComponent<PlayerController>().hp.SetMaxHP(c);
-        a = "90 wave 10 * +";
+        a = character_stats[character].mana;
         b = a.Split();
         index = 0;
-        foreach (var item in b) {
+        foreach (var item in b)
+        {
             if (item == "wave")
             {
                 b[index] = WaveCount.ToString();
@@ -123,10 +165,11 @@ public class EnemySpawner : MonoBehaviour
         }
         c = ReversePolishCalc.Calculate(b);
         GameManager.Instance.player.GetComponent<PlayerController>().spellcaster.SetMaxMana(c);
-        a = "10 wave +";
+        a = character_stats[character].mana_regeneration;
         b = a.Split();
         index = 0;
-        foreach (var item in b) {
+        foreach (var item in b)
+        {
             if (item == "wave")
             {
                 b[index] = WaveCount.ToString();
@@ -135,10 +178,11 @@ public class EnemySpawner : MonoBehaviour
         }
         c = ReversePolishCalc.Calculate(b);
         GameManager.Instance.player.GetComponent<PlayerController>().spellcaster.SetManaRegen(c);
-        a = "wave 10 *";
+        a = character_stats[character].spellpower;
         b = a.Split();
         index = 0;
-        foreach (var item in b) {
+        foreach (var item in b)
+        {
             if (item == "wave")
             {
                 b[index] = WaveCount.ToString();
@@ -147,8 +191,23 @@ public class EnemySpawner : MonoBehaviour
         }
         c = ReversePolishCalc.Calculate(b);
         GameManager.Instance.player.GetComponent<PlayerController>().spellcaster.SetSpellPower(c);
-        GameManager.Instance.player.GetComponent<PlayerController>().SetSpeed(10);
-       
+        a = character_stats[character].speed;
+        b = a.Split();
+        index = 0;
+        foreach (var item in b)
+        {
+            if (item == "wave")
+            {
+                b[index] = WaveCount.ToString();
+            }
+            index++;
+        }
+        c = ReversePolishCalc.Calculate(b);
+        GameManager.Instance.player.GetComponent<PlayerController>().SetSpeed(c);
+    }
+    public void NextWave() // absolutely turn to event ------------------------------
+    {
+        UpdatePlayerStats();
         StartCoroutine(SpawnWave());
     }
 
@@ -310,4 +369,13 @@ public class SpawnData {
     public string delay;
     public int[] sequence;
     public string location;
+}
+
+public class CharacterStats {
+    public int sprite;
+    public string health;
+    public string mana;
+    public string mana_regeneration;
+    public string spellpower;
+    public string speed;
 }
