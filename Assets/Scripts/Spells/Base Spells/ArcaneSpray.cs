@@ -30,6 +30,7 @@ public class ArcaneSpray : Spell
         }
         string proj_life = spellAttributes["projectile"]["lifetime"].ToString();
         projectile_lifetime = ReversePolishCalc.CalculateFloat(ReplaceWithDigits(proj_life));
+        OnHitMethod.Add(OnHit);
         base.SetProperties(spellAttributes);
     }
     public override IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team)
@@ -43,7 +44,7 @@ public class ArcaneSpray : Spell
             GameManager.Instance.projectileManager.CreateProjectile(
                 projectile_icon, projectile_path, 
                 where, direction, projectile_speed, 
-                OnHit, pierce, knockback, projectile_lifetime);
+                OnHitMethod, pierce, knockback, projectile_lifetime);
         }
         yield return new WaitForEndOfFrame();
     }

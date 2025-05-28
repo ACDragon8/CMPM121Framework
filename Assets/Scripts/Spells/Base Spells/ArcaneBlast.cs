@@ -1,6 +1,8 @@
 using Newtonsoft.Json.Linq;
+using NUnit.Framework;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEditor.Search;
 using UnityEngine;
 
@@ -45,14 +47,14 @@ public class ArcaneBlast : Spell
         {
             secondary_projectile_icon = 0;
         }
-        OnHitMethod = OnFirstHit;
+        OnHitMethod.Add(OnFirstHit);
         base.SetProperties(spellAttributes);
     }
     
     public override IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team)
     {
         this.team = team;
-        GameManager.Instance.projectileManager.CreateProjectile(projectile_icon, projectile_path, where, target - where, projectile_speed, OnFirstHit, pierce, knockback);
+        GameManager.Instance.projectileManager.CreateProjectile(projectile_icon, projectile_path, where, target - where, projectile_speed, OnHitMethod, pierce, knockback);
         yield return new WaitForEndOfFrame();
     }
 
@@ -63,11 +65,13 @@ public class ArcaneBlast : Spell
             other.Damage(new Damage(GetDamage(), dmgType));
         }
         float degree_gap = 360f / n;
+        List<Action<Hittable, Vector3>> secondaryHitMethods = new List<Action<Hittable, Vector3>>();
+        secondaryHitMethods.Add(base.OnHit);
         for (int i = 0; i < (int) n; i++) {
             Vector3 direction = new Vector3(Mathf.Sin(degree_gap * i), Mathf.Cos(degree_gap * i), 0);
             GameManager.Instance.projectileManager.CreateProjectile(
                 secondary_projectile_icon, secondary_projectile_path, 
-                vector, direction, secondary_projectile_speed, base.OnHit, pierce, knockback, projectile_lifetime);
+                vector, direction, secondary_projectile_speed, secondaryHitMethods, pierce, knockback, projectile_lifetime);
         }
     }
 

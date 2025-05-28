@@ -20,17 +20,20 @@ public class StraightSlice : Spell
             projectile_icon = 0;
         }
 
-        string p = spellAttributes["pierce"].ToString();
+        /*string p = spellAttributes["pierce"].ToString();
         int res = 0;
         if (!int.TryParse(p, out res)) { Debug.Log("Failed to read pierce for StraightSlice"); }
         if (res == 1) { pierce = true; }
+        */
+        pierce = true;
+        OnHitMethod.Add(OnHit);
         base.SetProperties(spellAttributes);
     }
     
     public override IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team)
     {
         this.team = team;
-        GameManager.Instance.projectileManager.CreateProjectile(projectile_icon, projectile_path, where, target - where, projectile_speed, OnHit, pierce, knockback);
+        GameManager.Instance.projectileManager.CreateProjectile(projectile_icon, projectile_path, where, target - where, projectile_speed, OnHitMethod, pierce, knockback);
         yield return new WaitForEndOfFrame();
     }
 

@@ -33,7 +33,7 @@ public class Spell
     public float secondary_projectile_lifetime;
     public bool knockback;
     public bool pierce;
-    public Action<Hittable, Vector3> OnHitMethod;
+    public List<Action<Hittable, Vector3>> OnHitMethod;
 
     public Spell(SpellCaster owner)
     {
@@ -49,7 +49,7 @@ public class Spell
         projectile_path = "straight";
         projectile_speed = 10;
         projectile_icon = 0;
-        projectile_lifetime = 3f;
+        projectile_lifetime = 0;
         spray = 0.5f;
         n = 8;
         secondary_damage = 5;
@@ -59,6 +59,7 @@ public class Spell
         secondary_projectile_lifetime = 0.1f;
         pierce = false;
         knockback = false;
+        OnHitMethod = new List<Action<Hittable, Vector3>>();
     }
     public virtual void SetProperties(JObject spellAttributes) 
     {
@@ -79,6 +80,7 @@ public class Spell
         if (!float.TryParse(c, out cooldown)) {
             Debug.Log("Failed to parse cooldown");
         }
+        projectile_path = spellAttributes["projectile"]["trajectory"].ToString();
     }
     protected string[] ReplaceWithDigits(string sequence) 
     {
@@ -159,6 +161,8 @@ public class Spell
     public virtual bool GetKnockback() { return knockback; }
     public virtual void SetKnockback(bool newKnockback) { knockback = newKnockback; }
 
+    public virtual List<Action<Hittable, Vector3>> GetOnHitMethod() { return OnHitMethod; }
+    public virtual void SetOnHitMethod(Action<Hittable, Vector3> newOnHitMethod) { OnHitMethod.Add(newOnHitMethod); }
     public bool IsReady()
     {
         return (last_cast + GetCooldown() < Time.time);
@@ -167,7 +171,7 @@ public class Spell
     public virtual IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team)
     {
         this.team = team;
-        GameManager.Instance.projectileManager.CreateProjectile(0, "straight", where, target - where, 15f, OnHit);
+        GameManager.Instance.projectileManager.CreateProjectile(0, "straight", where, target - where, 15f, OnHitMethod);
         yield return new WaitForEndOfFrame();
     }
 

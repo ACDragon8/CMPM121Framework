@@ -1,5 +1,6 @@
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ModifierSpell : Spell
@@ -91,7 +92,8 @@ public class ModifierSpell : Spell
 
     public override bool GetKnockback() { return baseSpell.GetKnockback(); }
     public override void SetKnockback(bool newKnockback) { baseSpell.SetKnockback(newKnockback); }
-
+    public override List<Action<Hittable, Vector3>> GetOnHitMethod() { return baseSpell.OnHitMethod; }
+    public override void SetOnHitMethod(Action<Hittable, Vector3> newOnHitMethod) { baseSpell.SetOnHitMethod(newOnHitMethod); }
     public void SetBaseSpell(Spell spell)
     {
         baseSpell = spell;

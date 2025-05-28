@@ -15,15 +15,26 @@ public class ProjectileController : MonoBehaviour
     public Vector3 moveDir;
     public bool knockback;
     public bool pierce;
+    //public Dictionary<string, bool> OnHitExtra;
     public List<Collider2D> past_hits;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        /*if (OnHitExtra != null) {
+            foreach (var e in OnHitExtra) 
+            {
+                switch (e.Key) 
+                {
+                
+                }
+            }
+        }*/
         if (knockback)
         {
             prevPos = transform.position;
             StartCoroutine(SampleDirection());
+            OnHit += dealKnockback;
         }
         if (pierce) {
             past_hits = new List<Collider2D>();
@@ -38,8 +49,12 @@ public class ProjectileController : MonoBehaviour
         movement.Movement(transform);
         prevPos = transform.position;
     }
-
-
+    /*public void onHitMethods(Hittable target, Vector3 where) {
+        OnHit?.Invoke(target, where);
+    }*/
+    public void dealKnockback(Hittable target, Vector3 where) {
+        target.owner.transform.Translate(moveDir);
+    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("projectile")) return;
@@ -58,7 +73,6 @@ public class ProjectileController : MonoBehaviour
                     OnHit(pc.hp, transform.position);
                 }
             }
-            if (knockback) { collision.gameObject.transform.Translate(moveDir); }
         }
         Destroy(gameObject);
         
@@ -70,7 +84,6 @@ public class ProjectileController : MonoBehaviour
         {
             if (pierce && CheckInHits(collision))
             {
-                Debug.Log("I've seen this dude before");
                 return;
             }
             var ec = collision.gameObject.GetComponent<EnemyController>();
@@ -86,7 +99,6 @@ public class ProjectileController : MonoBehaviour
                     OnHit(pc.hp, transform.position);
                 }
             }
-            if (knockback) { collision.gameObject.transform.Translate(moveDir); }
             if (pierce)
             {
                 past_hits.Add(collision);

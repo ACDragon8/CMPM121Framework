@@ -23,12 +23,13 @@ public class MagicMissile : Spell
         {
             projectile_icon = 0;
         }
+        OnHitMethod.Add(OnHit);
         base.SetProperties(spellAttributes);
     }
     public override IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team)
     {
         this.team = team;
-        GameManager.Instance.projectileManager.CreateProjectile(projectile_icon, projectile_path, where, target - where, projectile_speed, OnHit, pierce, knockback);
+        GameManager.Instance.projectileManager.CreateProjectile(projectile_icon, projectile_path, where, target - where, projectile_speed, OnHitMethod, pierce, knockback);
         yield return new WaitForEndOfFrame();
     }
 

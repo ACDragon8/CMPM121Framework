@@ -33,6 +33,9 @@ public class SpellBuilder
             case "straight_slice":
                 s = new StraightSlice(owner);
                 break;
+            case "frost_nova":
+                s = new FrostNova(owner);
+                break;
             default:
                 s = new ArcaneBolt(owner);
                 break;
@@ -62,6 +65,12 @@ public class SpellBuilder
                 case "knockback":
                     m = new Knockback(owner);
                     break;
+                case "piercing":
+                    m = new Piercing(owner);
+                    break;
+                case "explosive":
+                    m = new Explosive(owner);
+                    break;
                 default:
                     break;
             }
@@ -84,7 +93,7 @@ public class SpellBuilder
     {
         string[] a = {"arcane_bolt", "magic_missile", "arcane_blast", "arcane_spray", "straight_slice"};
         spellTypes = a;
-        string[] b = {"damage_amp","speed_amp","doubler","splitter","chaos","homing","knockback",};
+        string[] b = {"damage_amp","speed_amp","doubler","splitter","chaos","homing","knockback","piercing"};
         modifierTypes = b;
 
         var spelltext = Resources.Load<TextAsset>("spells");

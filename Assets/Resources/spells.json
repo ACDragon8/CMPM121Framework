@@ -50,6 +50,19 @@
        "pierce" : "1",
        "projectile": {"trajectory": "straight", "speed": "10", "sprite": 0}
    },
+   "frost_nova": {
+       "name": "frost_nova",
+       "description": "A spray of slowing bolts in all directions.",
+       "icon": 11,
+       "N": "15 power 25 / +",
+       "spray": "0.3",
+       "damage": {"amount": "3 power 5 / +", "type": "frost"},
+       "mana_cost": "15",
+       "cooldown": "0.5",
+       "slow_duration": "2",
+       "slow_amount": "0.5",
+       "projectile": {"trajectory": "straight", "speed": "8", "sprite": 0, "lifetime": "0.1 power 100 / +"}
+   },
    "damage_amp": {
        "name": "damage-amplified",
        "description": "Increased damage and increased mana cost.",
@@ -96,6 +109,12 @@
        "name": "piercing",
        "description": "Piercing projectile that goes through enemies with increased mana cost",
        "mana_multiplier": "1.75"
+   },
+   "explosive": {
+       "name": "explosive",
+       "description": "Adds area damage when projectiles hit",
+       "damage_multiplier": "0.75",
+       "mana_adder": "10",
+       "type": "modifier"
    }
-
 }
