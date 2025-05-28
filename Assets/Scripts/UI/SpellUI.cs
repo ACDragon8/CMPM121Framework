@@ -19,6 +19,7 @@ public class SpellUI : MonoBehaviour
     void Start()
     {
         last_text_update = 0;
+        highlight.SetActive(false);
         EventBus.Instance.OnSpellSolo += HideDropButton;
         EventBus.Instance.OnSpellMultiple += ShowDropButton;
     }
@@ -27,6 +28,8 @@ public class SpellUI : MonoBehaviour
     {
         this.spell = spell;
         GameManager.Instance.spellIconManager.PlaceSprite(spell.GetIcon(), icon.GetComponent<Image>());
+        manacost.text = spell.GetManaCost().ToString();
+        damage.text = spell.GetDamage().ToString();
     }
     public void RemoveSpell() {
         this.spell = null;

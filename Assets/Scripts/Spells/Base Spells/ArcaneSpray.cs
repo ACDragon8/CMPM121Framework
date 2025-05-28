@@ -36,7 +36,6 @@ public class ArcaneSpray : Spell
     {
         this.team = team;
         float degree_gap = spray/2;
-        Debug.Log(spray);
         for (int i = 0; i < (int)n; i++)
         {
             float offset = UnityEngine.Random.Range(-degree_gap, degree_gap);
