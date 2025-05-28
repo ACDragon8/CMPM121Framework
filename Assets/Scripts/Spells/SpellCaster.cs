@@ -99,11 +99,14 @@ public class SpellCaster
     }
 
 
-    public void nextSpell() {
-        this.selectedSpell = (this.selectedSpell + 1 ) % this.maxSpells;
-        if(this.spell[selectedSpell] == null) {
+    public void nextSpell()
+    {
+        this.selectedSpell = (this.selectedSpell + 1) % this.maxSpells;
+        if (this.spell[selectedSpell] == null)
+        {
             nextSpell();
         }
+        EventBus.Instance.OnSwitchSpell();
     }
 
     public void gainMana(int val)

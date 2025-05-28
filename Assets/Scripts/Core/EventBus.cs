@@ -20,6 +20,8 @@ public class EventBus
     public event Action Cat;
     public event Action Idle;
     public event Action Move;
+
+    public event Action SwitchSpell;
     
     public void DoDamage(Vector3 where, Damage dmg, Hittable target)
     {
@@ -48,6 +50,11 @@ public class EventBus
     public void OnCast()
     {
         Cast?.Invoke();
+    }
+
+    public void OnSwitchSpell()
+    {
+        SwitchSpell?.Invoke();
     }
 
     /*
