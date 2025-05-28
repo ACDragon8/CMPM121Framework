@@ -17,15 +17,16 @@ public class Explosive : ModifierSpell
         {
             Debug.Log("Unable to read mana multiplier for Splitter");
         }
-        SetOnHitMethod(explosiveOnHit);
         base.SetProperties(spellAttributes);
     }
     public override void ModifySpell()
     {
         baseSpell.SetDamage((int)(baseSpell.GetDamage() * damage_multiplier));
         baseSpell.SetManaCost(baseSpell.GetManaCost() + mana_adder);
+        SetOnHitMethod(explosiveOnHit);
     }
     public void explosiveOnHit(Hittable hit, Vector3 where) {
+        //Debug.Log("Dealing additional explosion dmg");
         Collider2D[] colliders = Physics2D.OverlapCircleAll(where, 1);
         foreach (Collider2D collider in colliders)
         {
@@ -37,6 +38,10 @@ public class Explosive : ModifierSpell
                 target.Damage(new Damage(explosionDamage, Damage.Type.ARCANE));
             }
         }
+    }
+    public override IEnumerator Cast(Vector3 where, Vector3 target, Hittable.Team team)
+    {
+        return baseSpell.Cast(where, target, team);
     }
 
 }

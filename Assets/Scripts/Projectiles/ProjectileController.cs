@@ -63,14 +63,14 @@ public class ProjectileController : MonoBehaviour
             var ec = collision.gameObject.GetComponent<EnemyController>();
             if (ec != null)
             {
-                OnHit(ec.hp, transform.position);
+                OnHit?.Invoke(ec.hp, transform.position);
             }
             else
             {
                 var pc = collision.gameObject.GetComponent<PlayerController>();
                 if (pc != null)
                 {
-                    OnHit(pc.hp, transform.position);
+                    OnHit?.Invoke(pc.hp, transform.position);
                 }
             }
         }
@@ -89,14 +89,14 @@ public class ProjectileController : MonoBehaviour
             var ec = collision.gameObject.GetComponent<EnemyController>();
             if (ec != null)
             {
-                OnHit(ec.hp, transform.position);
+                OnHit?.Invoke(ec.hp, transform.position);
             }
             else
             {
                 var pc = collision.gameObject.GetComponent<PlayerController>();
                 if (pc != null)
                 {
-                    OnHit(pc.hp, transform.position);
+                    OnHit?.Invoke(pc.hp, transform.position);
                 }
             }
             if (pierce)

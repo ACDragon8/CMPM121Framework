@@ -11,7 +11,7 @@ public class SpellBuilder
     JObject spellList;
     public string[] spellTypes;
     public string[] modifierTypes;
-    public Spell Build(SpellCaster owner, string spellName= "arcane_bolt")
+    public Spell Build(SpellCaster owner, string spellName= "explosive arcane_bolt")
     { 
         string[] keywords = spellName.Split();
         int count = keywords.Length;

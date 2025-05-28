@@ -67,7 +67,7 @@ public class FrostNova : Spell
     {
         if (other.team != team)
         {
-            other.Damage(new Damage(1, GetDamageType()));
+            other.Damage(new Damage(GetDamage(), GetDamageType()));
             EnemyController enem = other.owner.GetComponent<EnemyController>();
             enem.ModifySpeed(slow_percent, slow_duration);
         }

@@ -162,7 +162,12 @@ public class Spell
     public virtual void SetKnockback(bool newKnockback) { knockback = newKnockback; }
 
     public virtual List<Action<Hittable, Vector3>> GetOnHitMethod() { return OnHitMethod; }
-    public virtual void SetOnHitMethod(Action<Hittable, Vector3> newOnHitMethod) { OnHitMethod.Add(newOnHitMethod); }
+    public virtual void SetOnHitMethod(Action<Hittable, Vector3> newOnHitMethod) 
+    { 
+        if (OnHitMethod == null) {
+            OnHitMethod = new List<Action<Hittable, Vector3>>();
+        }
+            OnHitMethod.Add(newOnHitMethod); }
     public bool IsReady()
     {
         return (last_cast + GetCooldown() < Time.time);

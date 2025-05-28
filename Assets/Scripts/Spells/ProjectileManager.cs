@@ -25,7 +25,7 @@ public class ProjectileManager : MonoBehaviour
     {
         GameObject new_projectile = Instantiate(projectiles[which], where + direction.normalized * 1.1f, Quaternion.Euler(0, 0, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg));
         new_projectile.GetComponent<ProjectileController>().movement = MakeMovement(trajectory, speed);
-        foreach(var hitMethod in onHit)
+        foreach(Action<Hittable, Vector3> hitMethod in onHit)
         {
             new_projectile.GetComponent<ProjectileController>().OnHit += hitMethod;
         }
@@ -37,7 +37,7 @@ public class ProjectileManager : MonoBehaviour
     {
         GameObject new_projectile = Instantiate(projectiles[which], where + direction.normalized * 1.1f, Quaternion.Euler(0, 0, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg));
         new_projectile.GetComponent<ProjectileController>().movement = MakeMovement(trajectory, speed);
-        foreach (var hitMethod in onHit)
+        foreach (Action<Hittable, Vector3> hitMethod in onHit)
         {
             new_projectile.GetComponent<ProjectileController>().OnHit += hitMethod;
         }
