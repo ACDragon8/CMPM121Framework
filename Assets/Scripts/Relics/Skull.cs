@@ -6,7 +6,7 @@ public class Skull : Relic
 {
 
 
-    public Skull(SpellCaster owner) : base(owner, "Golden Mask")
+    public Skull(SpellCaster owner) : base(owner, "Funny Skull")
     {
         EventBus.Instance.SwitchSpell += onTrigger;
         EventBus.Instance.Cast += onReset;
