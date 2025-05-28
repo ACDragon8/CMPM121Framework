@@ -2,14 +2,14 @@ using Newtonsoft.Json.Linq;
 using System.Collections;
 using UnityEngine;
 
-public class GoldenMask : Relic
+public class Shield : Relic
 {
 
 
-    public GoldenMask(SpellCaster owner) : base(owner, "Brittle Shield")
+    public Shield(SpellCaster owner) : base(owner, "Brittle Shield")
     {
         EventBus.Instance.OnDamage += onTrigger;
-        EventBus.Instance.OnSwitchSpell += onReset;
+        EventBus.Instance.SwitchSpell += onReset;
     }
 
     public void onTrigger(Vector3 where, Damage damage, Hittable target)
