@@ -6,7 +6,7 @@ public class GreenGem : Relic
 {
 
 
-    public GreenGem(SpellCaster owner) : base(owner, "Green Gem")
+    public GreenGem() : base("Green Gem")
     {
         
         EventBus.Instance.OnDamage += onTrigger;
@@ -18,7 +18,7 @@ public class GreenGem : Relic
             return;
         }
         var value = ReversePolishCalc.Calculate(this.effect["amount"].ToString().Split());
-       owner.gainMana(value);
+        GameManager.Instance.player.GetComponent<PlayerController>().spellcaster.gainMana(value);
         //Debug.Log("Gain mana");
     }
 }

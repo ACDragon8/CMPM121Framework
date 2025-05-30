@@ -59,9 +59,9 @@ public class EventBus
 
     /*
      * Everything below was just to help Cynthia
-     * coordinate the spell UI because UI sucks
+     * coordinate UI stuff because UI sucks
      */
-    //Index just tells it which slot it should be when looking at SpellCaster
+    //Spell UI stuff
     public event Action<Spell, int> OnSpellPickup;
     public event Action<Spell, int> OnSpellRemove;
     public event Action<SpellCaster> OnSpellSolo;
@@ -78,5 +78,14 @@ public class EventBus
     }
     public void OnSpellMultipleEffect(int amount) {
         OnSpellMultiple?.Invoke(amount);
+    }
+    /*
+     * And here are the events for dealing with Relic UI
+     * Dragon, curse you for not having the courage to mess with UI or do it properly >.<
+     */
+    public event Action<Relic> OnRelicPickup;
+    public void OnRelicPickupEffect(Relic r) 
+    {
+        OnRelicPickup?.Invoke(r);
     }
 }

@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 public class Medallion : Relic
 {
-    public Medallion (SpellCaster owner) : base(owner, "Blue Medallion")
+    public Medallion () : base("Blue Medallion")
     {
         EventBus.Instance.OnDeath += onTrigger;
         EventBus.Instance.Cast += onReset;
@@ -12,13 +12,13 @@ public class Medallion : Relic
     public void onTrigger(Vector3 where, Hittable target)
     {
         var value = ReversePolishCalc.Calculate(this.effect["amount"].ToString().Split());
-        owner.modifyPower(name,value);
+        GameManager.Instance.player.GetComponent<PlayerController>().spellcaster.modifyPower(name,value);
         //Debug.Log("gain mana 25");
     }
 
     public void onReset()
     {
-        owner.modifyPower(name, 0);
+        GameManager.Instance.player.GetComponent<PlayerController>().spellcaster.modifyPower(name, 0);
     }
 
 }

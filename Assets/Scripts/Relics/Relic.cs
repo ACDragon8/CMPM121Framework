@@ -17,9 +17,9 @@ public class Relic
 
 
 
-    public Relic(SpellCaster owner,string name)
+    public Relic(string name)
     {
-        this.owner = owner;
+        //this.owner = owner;
         this.name = name;
         this.sprite = RelicAttributes[name]["sprite"].ToObject<int>();
         this.trigger = RelicAttributes[name]["trigger"].ToObject<JObject>();

@@ -1,52 +1,38 @@
-using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
+using UnityEngine;
+using System;
 
 public class SpellRewardManager : MonoBehaviour
 {
-    public TextMeshProUGUI label;
-    public SpellCaster player;
-    public string spell;
-    public RewardScreenManager rsw;
-
-    const int modifierRange = 2;
-    
-
-    
-    // Start is called once before the first exeution of Update after the MonoBehaviour is created
-    void Start()
+    public GameObject icon;
+    public TextMeshProUGUI manacost;
+    public TextMeshProUGUI damage;
+    public Spell spell;
+    public TextMeshProUGUI spell_description_content;
+    public TextMeshProUGUI spell_name;
+    public Action nextRewardDisplay;
+    public void SetSpell(Spell spell)
     {
-        
+        this.spell = spell;
+        GameManager.Instance.spellIconManager.PlaceSprite(spell.GetIcon(), icon.GetComponent<Image>());
+        manacost.text = spell.GetManaCost().ToString();
+        damage.text = spell.GetDamage().ToString();
+        spell_name.text = spell.GetName().ToString();
+        spell_description_content.text = spell.GetDescription().ToString();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void DisplaySpellReward() {
+        SpellBuilder sb = new ();
+        Spell reward_spell = sb.RandomBuild(GameManager.Instance.player.GetComponent<PlayerController>().spellcaster);
+        SetSpell(reward_spell);
+        this.gameObject.SetActive(true);
     }
-
-    public void pickSpell() {
-        var sb =  new SpellBuilder();
-        spell = "";
-        //choose number of mods
-        int mods = (int) Mathf.Floor(Random.value * modifierRange);
-        //for every modifier, pick a random one and concat it to spell
-        for(int i = 0; i < mods; i++) {
-            int rnd = (int) Mathf.Floor(Random.value * sb.modifierTypes.Length);
-            spell = spell + sb.modifierTypes[rnd] + " ";
-        }
-        //concat spell type to spell
-        int s = (int) Mathf.Floor(Random.value* sb.spellTypes.Length);
-        spell = spell + sb.spellTypes[s];
-        label.text = spell;
+    public void AcceptSpell() {
+        GameManager.Instance.player.GetComponent<PlayerController>().spellcaster.addSpell(spell);
+        HideSpellReward();
     }
-
-    public void addSpell() {
-        if(spell == null) {
-            return;
-        }
-        var res = player.addSpell(spell);
-        rsw.DestroyButtons();
+    public void HideSpellReward() {
+        this.gameObject.SetActive(false);
+        nextRewardDisplay?.Invoke();
     }
-
-    
 }

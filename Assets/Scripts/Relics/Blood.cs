@@ -6,7 +6,7 @@ public class Blood : Relic
 {
 
 
-    public Blood(SpellCaster owner) : base(owner, "Blood Red Night")
+    public Blood() : base("Blood Red Night")
     {
         
         EventBus.Instance.OnDamage += onTrigger;

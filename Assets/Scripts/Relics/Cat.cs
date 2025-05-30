@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Cat : Relic
 {
-    public Cat(SpellCaster owner) : base(owner, "Cat the Kat")
+    public Cat() : base("Cat the Kat")
     {
         EventBus.Instance.Cat += onTrigger;
         EventBus.Instance.Cast += onReset;
@@ -17,13 +17,13 @@ public class Cat : Relic
         {
             var value = ReversePolishCalc.Calculate(this.effect["amount"].ToString().Split());
             //Debug.Log("MAXWELL!");
-            owner.modifyPower(this.name, value);
+            GameManager.Instance.player.GetComponent<PlayerController>().spellcaster.modifyPower(this.name, value);
         }
     }
 
     public void onReset()
     {
-        owner.modifyPower(this.name, 0);
+        GameManager.Instance.player.GetComponent<PlayerController>().spellcaster.modifyPower(this.name, 0);
         //Debug.Log("meow");
     }
 }

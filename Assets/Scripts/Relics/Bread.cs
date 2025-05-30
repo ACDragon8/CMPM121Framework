@@ -6,7 +6,7 @@ public class Bread : Relic
 {
     private float endTime;
     private bool active;
-    public Bread(SpellCaster owner) : base(owner, "Bread")
+    public Bread() : base("Bread")
     {
         active = false;
         endTime = Time.time;

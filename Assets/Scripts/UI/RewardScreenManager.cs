@@ -3,54 +3,32 @@ using UnityEngine;
 public class RewardScreenManager : MonoBehaviour
 {
     public GameObject rewardUI;
-    public GameObject SpellSelector;
-    public const int spacing = 50;
-    public bool gamelock;
-
-    public GameObject[] spellButtons;
-
-    
-    public const int rewardNumber = 3;
+    //These are children to the reward UI
+    public GameObject SpellRewardDisplay;
+    public GameObject RelicRewardDisplay;
+    public GameObject NextWaveButton;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        spellButtons = new GameObject[rewardNumber];
+        SpellRewardManager spell_reward_ui = SpellRewardDisplay.GetComponent<SpellRewardManager>();
+        spell_reward_ui.nextRewardDisplay += ShowNextWaveButton;  //TODO for now just but the next button for reward screen, in the future, change
+        //it to be the relic reward screen manager
+        GameManager.Instance.OnWaveEnd += ShowRewards;
     }
 
-    // Update is called once per frame
-    void Update()
+
+
+    public void ShowRewards()
     {
-        if (GameManager.Instance.state == GameManager.GameState.WAVEEND)
-        {
-            if(!gamelock) {
-            gamelock = true;
-            rewardUI.SetActive(true);
-            DestroyButtons();
-            
-            for(int i = 0; i < rewardNumber;i++) {
-                spellButtons[i] = Instantiate(SpellSelector, rewardUI.transform);
-                spellButtons[i].transform.localPosition = new Vector3(0, spacing*i - 50);
-                spellButtons[i].GetComponent<SpellRewardManager>().rsw = this;
-                spellButtons[i].GetComponent<SpellRewardManager>().player =  GameManager.Instance.player.GetComponent<PlayerController>().spellcaster;
-                spellButtons[i].GetComponent<SpellRewardManager>().pickSpell();
-            }
-            }
-        }
-        else
-        {
-            if(gamelock) {
-                gamelock = false;
-            }
-            rewardUI.SetActive(false);
-        }
+        rewardUI.SetActive(true);
+        SpellRewardManager spell_reward_ui = SpellRewardDisplay.GetComponent<SpellRewardManager>();
+        spell_reward_ui.DisplaySpellReward();
+        //Each reward manager acts like a node in a linked list that points to the next reward that supposed to be shown        
     }
-
-    public void DestroyButtons() {
-        for(int i = 0; i < rewardNumber;i++) {
-            if(spellButtons[i] != null) {
-                Destroy(spellButtons[i]);
-                spellButtons[i] = null;
-            }
-        }
+    public void HideRewardScreen() {
+        NextWaveButton.SetActive(false);
+        rewardUI.SetActive(false);
+        GameManager.Instance.OnRewardSelectionFinishedEffects();
     }
+    public void ShowNextWaveButton() { NextWaveButton.SetActive(true); }
 }

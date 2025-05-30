@@ -83,7 +83,8 @@ public class SpellBuilder
 
     public Spell RandomBuild(SpellCaster owner)
     {
-        return new Spell(owner);
+        //TODO have it randomly generate spell here
+        return Build(owner);
     }
 
    //So this function below is the creation function for object spell builder
@@ -91,7 +92,7 @@ public class SpellBuilder
    //Dunno if we want it to be singleton or not
     public SpellBuilder()
     {
-        string[] a = {"arcane_bolt", "magic_missile", "arcane_blast", "arcane_spray", "straight_slice"};
+        string[] a = {"arcane_bolt", "magic_missile", "arcane_blast", "arcane_spray", "straight_slice", "frost_nova"};
         spellTypes = a;
         string[] b = {"damage_amp","speed_amp","doubler","splitter","chaos","homing","knockback","piercing"};
         modifierTypes = b;

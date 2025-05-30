@@ -5,7 +5,7 @@ using UnityEngine;
 public class JadeElephant : Relic
 {
 
-    public JadeElephant(SpellCaster owner) : base(owner, "Jade Elephant")
+    public JadeElephant() : base("Jade Elephant")
     {
         //on stand still
         EventBus.Instance.Idle += onTrigger;
@@ -14,7 +14,7 @@ public class JadeElephant : Relic
 
     public void onTrigger()
     {
-        var s = this.effect["amount"].ToString().Split(' ');
+        var s = effect["amount"].ToString().Split(' ');
         int index = 0;
         foreach (string token in s) 
         {
@@ -25,15 +25,15 @@ public class JadeElephant : Relic
             else if (token == "power") 
             {
                 //We get the power value from the owner (spellcaster class passed in)
-                s[index] = this.owner.power.ToString();
+                s[index] = GameManager.Instance.player.GetComponent<PlayerController>().spellcaster.power.ToString();
             }
             index++;
         }
         int value = ReversePolishCalc.Calculate(s);
-        this.owner.modifyPower(this.name, value);
+        GameManager.Instance.player.GetComponent<PlayerController>().spellcaster.modifyPower(this.name, value);
     }
     public void onReset()
     {
-        this.owner.modifyPower(this.name,0);
+        GameManager.Instance.player.GetComponent<PlayerController>().spellcaster.modifyPower(this.name,0);
     }
 }

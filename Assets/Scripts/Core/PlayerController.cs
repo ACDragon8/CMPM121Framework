@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     public int speed;
     public int baseSpeed;
     public Dictionary<string, int> speedModifiers;
+    
 
     public Unit unit;
 
@@ -51,7 +52,7 @@ public class PlayerController : MonoBehaviour
         hp.team = Hittable.Team.PLAYER;
 
         //testing relics
-        relics.Add(new Blood(this.spellcaster));
+        relics.Add(new Blood());
 
         // tell UI elements what to show
         healthui.SetHealth(hp);

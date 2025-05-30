@@ -43,8 +43,7 @@ public class SpellCaster
         this.maxSpells = 4;
         this.sb = new SpellBuilder();
         this.spell[0] = sb.Build(this);
-        this.spell[1] = sb.Build(this, "magic_missile");
-        this.spellCount = 2;
+        this.spellCount = 1;
         this.powerModifiers = new Dictionary<string, int>();
     }
 
@@ -116,11 +115,28 @@ public class SpellCaster
 
     public bool addSpell(string spellName = "arcane_bolt")
     {
+        //TODO change this take a spell object and add it to the array
         for (int i = 0; i < this.maxSpells; i++)
         {
             if (spell[i] == null)
             {
                 this.spell[i] = sb.Build(this, spellName);
+                this.spellCount += 1;
+                EventBus.Instance.OnSpellPickupEffect(this.spell[i], i);
+                if (spellCount > 1) { EventBus.Instance.OnSpellMultipleEffect(spellCount); }
+                return true;
+            }
+        }
+        Debug.Log("Unable to add spell, all spell inventory slots full");
+        return false;
+    }
+    public bool addSpell(Spell new_spell)
+    {
+        for (int i = 0; i < this.maxSpells; i++)
+        {
+            if (spell[i] == null)
+            {
+                this.spell[i] = new_spell;
                 this.spellCount += 1;
                 EventBus.Instance.OnSpellPickupEffect(this.spell[i], i);
                 if (spellCount > 1) { EventBus.Instance.OnSpellMultipleEffect(spellCount); }

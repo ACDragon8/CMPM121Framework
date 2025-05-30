@@ -66,8 +66,6 @@ public class EnemySpawner : MonoBehaviour
             character_stats[c.Key] = ch;
         }
         
-        //TODO figure out how to get the height of the menu and maybe create a separate class
-        //for these UI things
         int spacing = 120/level_list.Count;
         int i = level_list.Count;
         level_buttons = new Dictionary<string, GameObject>();
@@ -92,6 +90,8 @@ public class EnemySpawner : MonoBehaviour
             //b.SetActive(false);
             i--;
         }
+        //Setting up event alerts here
+        GameManager.Instance.OnRewardSelectionFinished += NextWave;
     }
 
     // Update is called once per frame
@@ -227,7 +227,7 @@ public class EnemySpawner : MonoBehaviour
                 GameManager.Instance.countdown--;
             }
             
-                GameManager.Instance.state = GameManager.GameState.INWAVE;
+         GameManager.Instance.state = GameManager.GameState.INWAVE;
 
         //This step parses the info in the JSON
         foreach (var spawn in lvl.spawns) {
@@ -304,23 +304,9 @@ public class EnemySpawner : MonoBehaviour
         yield return new WaitWhile(() => GameManager.Instance.enemy_count > 0);
         if (GameManager.Instance.state != GameManager.GameState.GAMEOVER) {
             GameManager.Instance.state = GameManager.GameState.WAVEEND;
+            GameManager.Instance.OnWaveEndEffects();
         }
     }
-    /*IEnumerator SpawnZombie()
-    {
-        SpawnPoint spawn_point = SpawnPoints[Random.Range(0, SpawnPoints.Length)];
-        Vector2 offset = Random.insideUnitCircle * 1.8f;
-                
-        Vector3 initial_position = spawn_point.transform.position + new Vector3(offset.x, offset.y, 0);
-        GameObject new_enemy = Instantiate(enemy, initial_position, Quaternion.identity);
-
-        new_enemy.GetComponent<SpriteRenderer>().sprite = GameManager.Instance.enemySpriteManager.Get(0);
-        EnemyController en = new_enemy.GetComponent<EnemyController>();
-        en.hp = new Hittable(50, Hittable.Team.MONSTERS, new_enemy);
-        en.speed = 10;
-        GameManager.Instance.AddEnemy(new_enemy);
-        yield return new WaitForSeconds(0.5f);
-    }*/
 
     IEnumerator Spawn(string enemy_name, int new_hp)
     {

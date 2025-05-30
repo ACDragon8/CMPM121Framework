@@ -11,7 +11,8 @@ public class GameManager
         INWAVE,
         WAVEEND,
         COUNTDOWN,
-        GAMEOVER
+        GAMEOVER,
+        GAMEWIN
     }
     public GameState state;
 
@@ -37,12 +38,19 @@ public class GameManager
     public int enemy_count { get { return enemies.Count; } }
 
     public event Action<GameState> StartPregame;
+    public event Action OnWaveEnd;
+    public event Action OnRewardSelectionFinished;
 
+    public void OnWaveEndEffects() {
+        OnWaveEnd?.Invoke();
+    }
     public void ShiftPregame() {
         this.state = GameState.PREGAME;
         StartPregame?.Invoke(this.state);
     }
-
+    public void OnRewardSelectionFinishedEffects() {
+        OnRewardSelectionFinished?.Invoke();
+    }
     public void AddEnemy(GameObject enemy)
     {
         enemies.Add(enemy);

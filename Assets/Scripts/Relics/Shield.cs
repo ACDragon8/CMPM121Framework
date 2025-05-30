@@ -6,7 +6,7 @@ public class Shield : Relic
 {
 
 
-    public Shield(SpellCaster owner) : base(owner, "Brittle Shield")
+    public Shield() : base("Brittle Shield")
     {
         EventBus.Instance.OnDamage += onTrigger;
         EventBus.Instance.SwitchSpell += onReset;
