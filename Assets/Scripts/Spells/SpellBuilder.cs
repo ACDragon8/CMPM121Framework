@@ -11,13 +11,15 @@ public class SpellBuilder
     JObject spellList;
     public string[] spellTypes;
     public string[] modifierTypes;
-    public Spell Build(SpellCaster owner, string spellName= "arcane_bolt")
-    { 
+    public int modifierRange;
+    public Spell Build(SpellCaster owner, string spellName = "arcane_bolt")
+    {
         string[] keywords = spellName.Split();
         int count = keywords.Length;
         Spell s;
-        
-        switch (keywords[count -1]) {
+
+        switch (keywords[count - 1])
+        {
             case "arcane_bolt":
                 s = new ArcaneBolt(owner);
                 break;
@@ -40,10 +42,12 @@ public class SpellBuilder
                 s = new ArcaneBolt(owner);
                 break;
         }
-        s.SetProperties((JObject) spellList[keywords[count - 1]]);
-        for(int i = 0; i < count-1; i++) {
+        s.SetProperties((JObject)spellList[keywords[count - 1]]);
+        for (int i = 0; i < count - 1; i++)
+        {
             ModifierSpell m = null;
-            switch (keywords[i]) {
+            switch (keywords[i])
+            {
                 case "damage_amp":
                     m = new DamageAmp(owner);
                     break;
@@ -74,7 +78,7 @@ public class SpellBuilder
                 default:
                     break;
             }
-            m.SetProperties((JObject) spellList[keywords[i]]);
+            m.SetProperties((JObject)spellList[keywords[i]]);
             m.SetBaseSpell(s);
             s = m;
         }
@@ -83,8 +87,20 @@ public class SpellBuilder
 
     public Spell RandomBuild(SpellCaster owner)
     {
+        var spell = "";
+        //choose number of mods
+        int mods = (int) Mathf.Floor(Random.value * modifierRange);
+        //for every modifier, pick a random one and concat it to spell
+        for(int i = 0; i < mods; i++) {
+            int rnd = (int) Mathf.Floor(Random.value * this.modifierTypes.Length);
+            spell = spell + this.modifierTypes[rnd] + " ";
+        }
+        //concat spell type to spell
+        int s = (int) Mathf.Floor(Random.value* this.spellTypes.Length);
+        spell = spell + this.spellTypes[s];
+
         //TODO have it randomly generate spell here
-        return Build(owner);
+        return Build(owner, spell);
     }
 
    //So this function below is the creation function for object spell builder
@@ -96,6 +112,7 @@ public class SpellBuilder
         spellTypes = a;
         string[] b = {"damage_amp","speed_amp","doubler","splitter","chaos","homing","knockback","piercing"};
         modifierTypes = b;
+        modifierRange = 2;
 
         var spelltext = Resources.Load<TextAsset>("spells");
         JObject jo = JObject.Parse(spelltext.text);
