@@ -18,8 +18,8 @@ public class SpellRewardManager : MonoBehaviour
         GameManager.Instance.spellIconManager.PlaceSprite(spell.GetIcon(), icon.GetComponent<Image>());
         manacost.text = spell.GetManaCost().ToString();
         damage.text = spell.GetDamage().ToString();
-        spell_name.text = spell.GetName().ToString();
-        spell_description_content.text = spell.GetDescription().ToString();
+        spell_name.text = spell.GetName();
+        spell_description_content.text = spell.GetDescription();
     }
     public void DisplaySpellReward() {
         SpellBuilder sb = new ();

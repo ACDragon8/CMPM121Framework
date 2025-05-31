@@ -5150,7 +5150,7 @@ MonoBehaviour:
   icon: {fileID: 631427673}
   manacost: {fileID: 1358993882}
   damage: {fileID: 1109861152}
-  spell_description_content: {fileID: 0}
+  spell_description_content: {fileID: 906274310}
   spell_name: {fileID: 2055915787}
 --- !u!114 &1245015121
 MonoBehaviour:
