@@ -49,6 +49,7 @@ public class PlayerController : MonoBehaviour
         
         hp = new Hittable(100, Hittable.Team.PLAYER, gameObject);
         hp.OnDeath += Die;
+        hp.OnDeath += GameManager.Instance.OnPlayerDeathEffects;
         hp.team = Hittable.Team.PLAYER;
 
         //testing relics
@@ -140,7 +141,8 @@ public class PlayerController : MonoBehaviour
     void Die()
     {
         GameManager.Instance.state = GameManager.GameState.GAMEOVER;
-        foreach (Relic r in relics) {
+        while (relics.Count > 0) {
+            Relic r = (Relic) relics[0];
             r.Deactivate();
             relics.Remove(r);
         }

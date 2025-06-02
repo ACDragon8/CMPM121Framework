@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
 
 public class RelicUI : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class RelicUI : MonoBehaviour
         Relic r = player.relics[index];
         GameManager.Instance.relicIconManager.PlaceSprite(r.sprite, icon);
         */
+        GameManager.Instance.OnPlayerDeath += DeleteSelf;
     }
 
     // Update is called once per frame
@@ -30,5 +32,9 @@ public class RelicUI : MonoBehaviour
         label.text = r.GetLabel();
         highlight.SetActive(r.IsActive());
         */
+    }
+
+    public void DeleteSelf() {
+        Destroy(this.gameObject);
     }
 }

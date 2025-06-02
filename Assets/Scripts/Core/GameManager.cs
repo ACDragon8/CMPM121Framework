@@ -40,7 +40,11 @@ public class GameManager
     public event Action LevelStart;
     public event Action OnWaveEnd;
     public event Action OnRewardSelectionFinished;
+    public event Action OnPlayerDeath;
 
+    public void OnPlayerDeathEffects() {
+        OnPlayerDeath?.Invoke();
+    }
     public void OnWaveEndEffects() {
         OnWaveEnd?.Invoke();
     }

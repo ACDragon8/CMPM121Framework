@@ -25,6 +25,6 @@ public class RelicUIManager : MonoBehaviour
         RelicUI ruic = rui.GetComponent<RelicUI>();
         ruic.player = player;
         ruic.index = player.relics.Count - 1;
-        
+        GameManager.Instance.relicIconManager.PlaceSprite(r.GetIcon(), ruic.icon);
     }
 }

@@ -14,7 +14,6 @@ public class RelicRewardDisplay : MonoBehaviour
     public int relic_index;
     public void SetRelic(Relic r)
     {
-        Debug.Log("Relic reward display set for" + relic_index);
         relic = r;
         GameManager.Instance.relicIconManager.PlaceSprite(r.GetIcon(), icon.GetComponent<Image>());
         relic_name.text = r.GetName();
