@@ -121,7 +121,7 @@ public class EnemySpawner : MonoBehaviour
         cancel = false;
         level_selector.gameObject.SetActive(false);
         StatsManager.Instance.levelName = levelname;
-        
+        GameManager.Instance.LevelStartEffects();
         StartCoroutine(SpawnWave());
     }
     public void SelectCharacter(string character_class) {

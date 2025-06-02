@@ -12,12 +12,6 @@ public class SpellUIContainer : MonoBehaviour
     {
         EventBus.Instance.OnSpellPickup += DisplayNewSpell;
         EventBus.Instance.OnSpellRemove += RemoveSpell;
-        //I couldn't figure out how to find out the child's index as a child soo this bit below is my bandaid solution
-        /*for (int i = 0; i < spellUIs.Length; i++) {
-            spellUIs[i].GetComponent<SpellUI>().selfindex = i;
-        }
-
-        */
     }
 
     // Update is called once per frame
@@ -31,7 +25,6 @@ public class SpellUIContainer : MonoBehaviour
     }
     public void RemoveSpell(Spell spell, int index) {
         spellUIs[index].SetActive(false);
-        //spellUIs[index].GetComponent<SpellUI>().RemoveSpell();
         //TODO if extra time, make the spell UI slide over instead of leaving gaps where there used to be spells
     }
     public void HighlightCurrSpell(int index) {

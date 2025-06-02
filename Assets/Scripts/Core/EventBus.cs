@@ -83,9 +83,9 @@ public class EventBus
      * And here are the events for dealing with Relic UI
      * Dragon, curse you for not having the courage to mess with UI or do it properly >.<
      */
-    public event Action<Relic> OnRelicPickup;
-    public void OnRelicPickupEffect(Relic r) 
+    public event Action<Relic, int> OnRelicPickup;
+    public void OnRelicPickupEffect(Relic r, int index) 
     {
-        OnRelicPickup?.Invoke(r);
+        OnRelicPickup?.Invoke(r, index);
     }
 }

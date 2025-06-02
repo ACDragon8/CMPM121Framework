@@ -5,14 +5,16 @@ public class RewardScreenManager : MonoBehaviour
     public GameObject rewardUI;
     //These are children to the reward UI
     public GameObject SpellRewardDisplay;
-    public GameObject RelicRewardDisplay;
+    public GameObject RelicRewardManager;
     public GameObject NextWaveButton;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         SpellRewardManager spell_reward_ui = SpellRewardDisplay.GetComponent<SpellRewardManager>();
-        spell_reward_ui.nextRewardDisplay += ShowNextWaveButton;  //TODO for now just but the next button for reward screen, in the future, change
-        //it to be the relic reward screen manager
+        RelicRewardManager relic_reward_ui = RelicRewardManager.GetComponent<RelicRewardManager>();
+        spell_reward_ui.nextRewardDisplay += relic_reward_ui.DisplayRelicOptions;
+        relic_reward_ui.nextRewardDisplay += ShowNextWaveButton;
+        relic_reward_ui.Instantiate();
         GameManager.Instance.OnWaveEnd += ShowRewards;
     }
 
@@ -23,7 +25,8 @@ public class RewardScreenManager : MonoBehaviour
         rewardUI.SetActive(true);
         SpellRewardManager spell_reward_ui = SpellRewardDisplay.GetComponent<SpellRewardManager>();
         spell_reward_ui.DisplaySpellReward();
-        //Each reward manager acts like a node in a linked list that points to the next reward that supposed to be shown        
+        //Each reward manager acts like a node in a linked list that points to the next reward that supposed to be shown
+        RelicRewardManager.SetActive(false);
     }
     public void HideRewardScreen() {
         NextWaveButton.SetActive(false);

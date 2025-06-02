@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using UnityEngine;
 using System;
 
-public class SpellRewardManager : MonoBehaviour
+public class SpellRewardManager : MonoBehaviour 
 {
     public GameObject icon;
     public TextMeshProUGUI manacost;

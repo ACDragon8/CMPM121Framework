@@ -5,20 +5,26 @@ public class Medallion : Relic
 {
     public Medallion () : base("Blue Medallion")
     {
+    }
+    public override void Activate() {
+        base.Activate();
         EventBus.Instance.OnDeath += onTrigger;
         EventBus.Instance.Cast += onReset;
     }
-
+    public override void Deactivate() {
+        EventBus.Instance.OnDeath -= onTrigger;
+        EventBus.Instance.Cast -= onReset;
+    }
     public void onTrigger(Vector3 where, Hittable target)
     {
         var value = ReversePolishCalc.Calculate(this.effect["amount"].ToString().Split());
-        GameManager.Instance.player.GetComponent<PlayerController>().spellcaster.modifyPower(name,value);
+        owner.modifyPower(name,value);
         //Debug.Log("gain mana 25");
     }
 
     public void onReset()
     {
-        GameManager.Instance.player.GetComponent<PlayerController>().spellcaster.modifyPower(name, 0);
+        owner.modifyPower(name, 0);
     }
 
 }

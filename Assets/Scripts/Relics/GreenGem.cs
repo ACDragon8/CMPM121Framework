@@ -6,11 +6,11 @@ public class GreenGem : Relic
 {
 
 
-    public GreenGem() : base("Green Gem")
-    {
-        
-        EventBus.Instance.OnDamage += onTrigger;
-    }
+    public GreenGem() : base("Green Gem"){ }
+    public override void Activate() { 
+        base.Activate();
+        EventBus.Instance.OnDamage += onTrigger; }
+    public override void Deactivate() { EventBus.Instance.OnDamage -= onTrigger; }
     public void onTrigger(Vector3 where, Damage damage, Hittable target)
     {
         if (target != GameManager.Instance.player.GetComponent<PlayerController>().hp)
@@ -18,7 +18,7 @@ public class GreenGem : Relic
             return;
         }
         var value = ReversePolishCalc.Calculate(this.effect["amount"].ToString().Split());
-        GameManager.Instance.player.GetComponent<PlayerController>().spellcaster.gainMana(value);
+        owner.gainMana(value);
         //Debug.Log("Gain mana");
     }
 }

@@ -17,7 +17,7 @@ public class RelicUIManager : MonoBehaviour
         
     }
 
-    public void OnRelicPickup(Relic r)
+    public void OnRelicPickup(Relic r, int index)
     {
         // make a new Relic UI representation
         GameObject rui = Instantiate(relicUIPrefab, transform);

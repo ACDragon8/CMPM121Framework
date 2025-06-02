@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6821571549427939416}
   - component: {fileID: 3711922461900209974}
   m_Layer: 5
-  m_Name: label
+  m_Name: name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -148,7 +148,7 @@ GameObject:
   - component: {fileID: 1629918357521101581}
   - component: {fileID: 1355771761905592642}
   - component: {fileID: 1949700200616903927}
-  - component: {fileID: 3369599937030140041}
+  - component: {fileID: 4134978804156896427}
   m_Layer: 5
   m_Name: SpellSelector
   m_TagString: Untagged
@@ -258,7 +258,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3369599937030140041}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SpellRewardManager, Assembly-CSharp
         m_MethodName: addSpell
         m_Mode: 1
@@ -270,7 +270,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &3369599937030140041
+--- !u!114 &4134978804156896427
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -279,8 +279,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6791571272867747119}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb47f481ae3952445a10ec5b0090b235, type: 3}
+  m_Script: {fileID: 11500000, guid: e4118a7c4b0635141ae4bd6fff1bcc05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  label: {fileID: 3711922461900209974}
-  spell: 
+  icon: {fileID: 0}
+  relic_name: {fileID: 0}
+  relic_description: {fileID: 0}
+  relic_index: 0

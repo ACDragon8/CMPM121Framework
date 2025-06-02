@@ -1,5 +1,6 @@
 using Newtonsoft.Json.Linq;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Relic
@@ -19,27 +20,35 @@ public class Relic
 
     public Relic(string name)
     {
-        //this.owner = owner;
         this.name = name;
         this.sprite = RelicAttributes[name]["sprite"].ToObject<int>();
         this.trigger = RelicAttributes[name]["trigger"].ToObject<JObject>();
         this.effect = RelicAttributes[name]["effect"].ToObject<JObject>();
+        //owner = GameManager.Instance.player.GetComponent<PlayerController>().spellcaster;
     }
 
-
-
-    private class Trigger
+    public string GetName() { return name; }
+    public int GetIcon() { return sprite; }
+    public string GetDescription() 
     {
-        string description;
+        return trigger["description"] + ", " + effect["description"];
+    }
+    public virtual void Activate() {
+        owner = GameManager.Instance.player.GetComponent<PlayerController>().spellcaster;
+    }
+    public virtual void Deactivate() { }
+    public class Trigger
+    {
+        public string description;
         string type;
         int amount;
 
 
     }
 
-    private class Effect
+    public class Effect
     {
-        string description;
+        public string description;
         string type;
         int amount;
         int until;

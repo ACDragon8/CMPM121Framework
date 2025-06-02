@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
         hp.team = Hittable.Team.PLAYER;
 
         //testing relics
-        relics.Add(new Blood());
+        //relics.Add(new Blood(spellcaster));
 
         // tell UI elements what to show
         healthui.SetHealth(hp);
@@ -77,7 +77,6 @@ public class PlayerController : MonoBehaviour
             {
                 this.idleLock = true;
                 EventBus.Instance.OnIdle();
-                Debug.Log("player idle");
             }
         }
     }
@@ -141,6 +140,10 @@ public class PlayerController : MonoBehaviour
     void Die()
     {
         GameManager.Instance.state = GameManager.GameState.GAMEOVER;
+        foreach (Relic r in relics) {
+            r.Deactivate();
+            relics.Remove(r);
+        }
         Debug.Log("You Lost");
     }
     

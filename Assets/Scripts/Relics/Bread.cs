@@ -10,10 +10,15 @@ public class Bread : Relic
     {
         active = false;
         endTime = Time.time;
+    }
+    public override void Activate() {
         EventBus.Instance.OnDamage += onTrigger;
         EventBus.Instance.Move += onReset;
     }
-
+    public override void Deactivate() {
+        EventBus.Instance.OnDamage -= onTrigger;
+        EventBus.Instance.Move -= onReset;
+    }
     public void onTrigger(Vector3 where, Damage damage, Hittable target)
     {
 
