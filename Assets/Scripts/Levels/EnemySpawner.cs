@@ -24,7 +24,7 @@ public class EnemySpawner : MonoBehaviour
     public string level;
     public string character;
     public int WaveCount;
-    public bool cancel;
+    public static bool cancel;
     public Dictionary<string, GameObject> level_buttons;
     public Dictionary<string, GameObject> character_buttons;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -98,6 +98,7 @@ public class EnemySpawner : MonoBehaviour
     void Update()
     {
         if (GameManager.Instance.state == GameManager.GameState.GAMEOVER) {
+            GameManager.Instance.RemoveAllEnemies();
             this.Cancel();
             WaveCount = 0;
         }

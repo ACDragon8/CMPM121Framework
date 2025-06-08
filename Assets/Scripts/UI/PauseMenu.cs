@@ -6,7 +6,8 @@ public class PauseMenu : MonoBehaviour
 {
 
     public GameObject pauseMenu;
-    public static bool isPaused = false;
+    public EnemySpawner spawner;
+    
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -19,7 +20,7 @@ public class PauseMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (isPaused)
+            if (GameManager.Instance.state == GameManager.GameState.PAUSED)
             {
                 ResumeGame();
             }
@@ -34,13 +35,25 @@ public class PauseMenu : MonoBehaviour
     {
         pauseMenu.SetActive(true);
         Time.timeScale = 0;
-        isPaused = true;
+        GameManager.Instance.state = GameManager.GameState.PAUSED;
     }
 
     public void ResumeGame()
     {
         pauseMenu.SetActive(false);
+        Time.timeScale = 1; 
+        GameManager.Instance.state = GameManager.GameState.INWAVE;
+    }
+
+    public void MainMenu()
+    {
+        Debug.Log("MainMenu");
+        StatsManager.Instance.ResetEnemyKills();
+        StatsManager.Instance.ResetWaveNum();
+        GameManager.Instance.state = GameManager.GameState.GAMEOVER;
+        GameManager.Instance.RemoveAllEnemies();
+        pauseMenu.SetActive(false);
         Time.timeScale = 1;
-        isPaused = false;
+        spawner.Restart();
     }
 }
