@@ -93,7 +93,7 @@ public class PlayerController : MonoBehaviour
         EventBus.Instance.OnCast();
     }
     
-    void getSpeed()
+    public void getSpeed()
     {
         this.speed = this.baseSpeed;
         foreach(var (key,value) in this.speedModifiers)
