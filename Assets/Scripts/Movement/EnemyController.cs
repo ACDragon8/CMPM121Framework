@@ -83,12 +83,12 @@ public class EnemyController : MonoBehaviour
         yield break;
     }
 
-    //Drop item on death with a 20% chance
+    //Drop item on death with a 35% chance
     void TryDropItem()
     {
         float chance = UnityEngine.Random.value; // Returns 0.0 to 1.0
 
-        if (chance <= 0.2f) // 20% chance
+        if (chance <= 0.35f) // 35% chance
         {
             int index = UnityEngine.Random.Range(0, dropItemPrefabs.Length);
             GameObject item = Instantiate(dropItemPrefabs[index], transform.position, Quaternion.identity);
