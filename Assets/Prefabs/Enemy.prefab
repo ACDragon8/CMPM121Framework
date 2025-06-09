@@ -107,8 +107,14 @@ MonoBehaviour:
   target: {fileID: 0}
   speed: 5
   healthui: {fileID: 7326907792581316403}
+  damage: 0
   dead: 0
+  slow_immunity: 0
   last_attack: 0
+  dropItemPrefabs:
+  - {fileID: 1352071656315586992, guid: 3b9f98563a055431d99eeb3abab69741, type: 3}
+  - {fileID: 5785463172373370050, guid: 191dafa0349254915afc6964f02d825d, type: 3}
+  - {fileID: 5191109917465616023, guid: 45025312aab7647a3939681c92447ccd, type: 3}
 --- !u!61 &6121702002466829456
 BoxCollider2D:
   m_ObjectHideFlags: 0
