@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class PauseMenu : MonoBehaviour
     public EnemySpawner spawner;
     public GameObject spellPanel;
     public SpellUIContainer spellUIContainer;
+    public TextMeshProUGUI[] spellTexts;
     
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -35,20 +37,37 @@ public class PauseMenu : MonoBehaviour
 
     private void UpdateSpellPanel()
     {
-        // Clear existing spell UI elements
-        foreach (Transform child in spellPanel.transform)
+        // Clear all text elements
+        foreach (var text in spellTexts)
         {
-            Destroy(child.gameObject);
+            text.text = "";
         }
 
-        // Display only active spells
-        for (int i = 0; i < spellUIContainer.spellUIs.Length; i++)
+        // Clear only the spell-specific UI elements
+        foreach (Transform child in spellPanel.transform)
+        {
+            SpellUI spellUIComponent = child.GetComponent<SpellUI>();
+            if (spellUIComponent != null)
+            {
+                Destroy(child.gameObject);
+            }
+        }
+
+        // Display active spells
+        for (int i = 0; i < spellUIContainer.spellUIs.Length && i < spellTexts.Length; i++)
         {
             SpellUI spellUIComponent = spellUIContainer.spellUIs[i].GetComponent<SpellUI>();
             if (spellUIComponent.spell != null) // Check if the spell is active
             {
+                // Instantiate spell UI
                 GameObject spellUI = Instantiate(spellUIContainer.spellUIs[i], spellPanel.transform);
                 spellUI.SetActive(true);
+
+                // Set text description
+                spellTexts[i].text = $"{spellUIComponent.spell.GetName()}\n" +
+                                     $"Mana Cost: {spellUIComponent.spell.GetManaCost()}\n" +
+                                     $"Damage: {spellUIComponent.spell.GetDamage()}\n" +
+                                     $"{spellUIComponent.spell.GetDescription()}";
             }
         }
     }
