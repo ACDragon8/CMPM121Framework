@@ -9,6 +9,7 @@ public class GameManager
     {
         PREGAME,
         INWAVE,
+        PAUSED,
         WAVEEND,
         COUNTDOWN,
         GAMEOVER,
@@ -61,6 +62,16 @@ public class GameManager
     public void RemoveEnemy(GameObject enemy)
     {
         enemies.Remove(enemy);
+    }
+
+    public void RemoveAllEnemies()
+    {
+        GameObject[] enemyArray = enemies.ToArray();
+        foreach (GameObject enemy in enemyArray)
+        {
+            GameObject.Destroy(enemy);
+        }
+        enemies.Clear();
     }
 
     public GameObject GetClosestEnemy(Vector3 point)
