@@ -11,6 +11,7 @@ public class PauseMenu : MonoBehaviour
     public GameObject spellPanel;
     public SpellUIContainer spellUIContainer;
     public TextMeshProUGUI[] spellTexts;
+    public HorizontalLayoutGroup spellLayoutGroup;
     
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -32,6 +33,32 @@ public class PauseMenu : MonoBehaviour
             {
                 PauseGame();
             }
+        }
+
+        // Count active spells
+        int activeSpells = 0;
+        for (int i = 0; i < spellUIContainer.spellUIs.Length; i++)
+        {
+            SpellUI spellUIComponent = spellUIContainer.spellUIs[i].GetComponent<SpellUI>();
+            if (spellUIComponent.spell != null)
+            {
+                activeSpells++;
+            }
+        }
+
+        // Adjust spacing based on active spells
+        if (activeSpells == 2)
+        {
+
+            spellLayoutGroup.spacing = -650;
+        }
+        else if (activeSpells == 3)
+        {
+            spellLayoutGroup.spacing = -300;
+        }
+        else if (activeSpells == 4)
+        {
+            spellLayoutGroup.spacing = 40;
         }
     }
 
@@ -83,7 +110,7 @@ public class PauseMenu : MonoBehaviour
     public void ResumeGame()
     {
         pauseMenu.SetActive(false);
-        Time.timeScale = 1; 
+        Time.timeScale = 1;
         GameManager.Instance.state = GameManager.GameState.INWAVE;
     }
 
