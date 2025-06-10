@@ -7,6 +7,8 @@ public class PauseMenu : MonoBehaviour
 
     public GameObject pauseMenu;
     public EnemySpawner spawner;
+    public GameObject spellPanel;
+    public SpellUIContainer spellUIContainer;
     
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -31,9 +33,30 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
+    private void UpdateSpellPanel()
+    {
+        // Clear existing spell UI elements
+        foreach (Transform child in spellPanel.transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+        // Display only active spells
+        for (int i = 0; i < spellUIContainer.spellUIs.Length; i++)
+        {
+            SpellUI spellUIComponent = spellUIContainer.spellUIs[i].GetComponent<SpellUI>();
+            if (spellUIComponent.spell != null) // Check if the spell is active
+            {
+                GameObject spellUI = Instantiate(spellUIContainer.spellUIs[i], spellPanel.transform);
+                spellUI.SetActive(true);
+            }
+        }
+    }
+
     public void PauseGame()
     {
         pauseMenu.SetActive(true);
+        UpdateSpellPanel();
         Time.timeScale = 0;
         GameManager.Instance.state = GameManager.GameState.PAUSED;
     }
