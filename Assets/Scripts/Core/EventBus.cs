@@ -89,9 +89,13 @@ public class EventBus
         OnRelicPickup?.Invoke(r, index);
     }
     public event Action<Spell> OnSpellCrafted;
+    public event Action<Relic> OnRelicCrafted;
     public event Action<SpellCaster> OnSpellCasterInitialized;
     public void OnSpellCraftedEffect(Spell sp) {
         OnSpellCrafted?.Invoke(sp);
+    }
+    public void OnRelicCraftedEffect(Relic r) {
+        OnRelicCrafted?.Invoke(r);
     }
     public void OnSpellCasterInitializedEffect(SpellCaster sc){
         OnSpellCasterInitialized?.Invoke(sc);
