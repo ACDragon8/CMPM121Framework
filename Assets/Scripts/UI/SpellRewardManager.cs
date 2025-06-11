@@ -46,6 +46,7 @@ public class SpellRewardManager : MonoBehaviour
     public void BroadcastSelectedSpell() {
         //Have this broadcast what base spell was selected
         TrainingRoomEventbus.Instance.onSelectBaseSpell(spell);
+        EventBus.Instance.OnSpellCraftedEffect(spell);
     }
     private void Start()
     {

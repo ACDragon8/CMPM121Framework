@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 public class TrainingRoomEventbus 
 {
     public RoomState state;
@@ -18,6 +19,9 @@ public class TrainingRoomEventbus
             return theInstance; 
         }
     }
+    private TrainingRoomEventbus() {
+        enemies = new List<GameObject>();
+    }
     public GameObject player;
 
     //This just works to keep track of how many enemies are out there
@@ -31,8 +35,10 @@ public class TrainingRoomEventbus
         enemies.Remove(enemy);
     }
     public void RemoveAllEnemies() {
-        foreach (GameObject enemy in enemies) {
+        while (enemies.Count > 0) {
+            GameObject enemy = enemies[0];
             enemy.GetComponent<EnemyController>().Die();
+            RemoveEnemy(enemy);
         }
     }
 

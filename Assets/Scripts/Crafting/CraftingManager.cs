@@ -120,6 +120,7 @@ public class CraftingManager : MonoBehaviour
         bool res = GameManager.Instance.player.GetComponent<PlayerController>().spellcaster.addSpell(name);
         if (!res)
         {
+            Debug.Log("Error, no avaliable spell slots to equip");
             return;
         }
 

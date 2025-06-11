@@ -11,6 +11,7 @@ public class TrainingDummySpawner : MonoBehaviour
     void Start()
     {
         TrainingRoomEventbus.Instance.CloseMenu += Spawn;
+        TrainingRoomEventbus.Instance.OpenMenu += TrainingRoomEventbus.Instance.RemoveAllEnemies;
     }
 
     // Update is called once per frame
@@ -36,7 +37,7 @@ public class TrainingDummySpawner : MonoBehaviour
             en.hp = new Hittable(hp, Hittable.Team.MONSTERS, new_enemy);
             en.speed = 0;
             en.damage = 1;
-            GameManager.Instance.AddEnemy(new_enemy);
+            TrainingRoomEventbus.Instance.AddEnemy(new_enemy);
             if (i % 2 == 0)
             {
                 x *= -1;

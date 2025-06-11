@@ -88,4 +88,8 @@ public class EventBus
     {
         OnRelicPickup?.Invoke(r, index);
     }
+    public event Action<Spell> OnSpellCrafted;
+    public void OnSpellCraftedEffect(Spell sp) {
+        OnSpellCrafted?.Invoke(sp);
+    }
 }
