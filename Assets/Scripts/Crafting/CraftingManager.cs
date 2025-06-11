@@ -34,12 +34,14 @@ public class CraftingManager : MonoBehaviour
 
     public void OpenCraftMenu()
     {
+        toggle = true;
         craftUI.SetActive(true);
 
     }
 
     public void CloseCraftMenu()
     {
+        toggle = false;
         craftUI.SetActive(false);
     }
 
