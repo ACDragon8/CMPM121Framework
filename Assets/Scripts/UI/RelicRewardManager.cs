@@ -81,6 +81,10 @@ public class RelicRewardManager : MonoBehaviour
     }
     public void HideRelicRewards() {
         this.gameObject.SetActive(false);
+        foreach (var display in relic_rewards)
+        {
+            display.SetActive(false);
+        }
         nextRewardDisplay?.Invoke();
     }
     public void EquipRelic(Relic r, int index) {
