@@ -7,10 +7,11 @@ public class RelicRewardManager : MonoBehaviour
 {
     // It is up to the RelicRewardManager to pick relics using the Relic builder and assign them to the UI elements 
     public GameObject[] relic_rewards;
+    public GameObject craftingManager;
     public Action nextRewardDisplay;
     private RelicBuilder rb;
     public int relic_amount = 3;
-    public int spacing = 500;
+    public int spacing = 200;
     public void Instantiate()
     {
         GameManager.Instance.LevelStart += GenerateRelics;
@@ -47,7 +48,7 @@ public class RelicRewardManager : MonoBehaviour
                     Relic r = rb.GetRelic(relic_index);
                     relic_rewards[displays_set].GetComponent<RelicRewardDisplay>().SetRelic(r);
                     relic_rewards[displays_set].GetComponent<RelicRewardDisplay>().relic_index = relic_index;
-                    relic_rewards[displays_set].transform.localPosition = new Vector3(spacing * displays_set - 200, 0);
+                    relic_rewards[displays_set].transform.localPosition = new Vector3((spacing * displays_set) - 200, 0);
                     relic_rewards[displays_set].SetActive(true);
                     already_seen[displays_set] = relic_index;
                     displays_set++;
@@ -55,11 +56,7 @@ public class RelicRewardManager : MonoBehaviour
             }
             else 
             {
-                Debug.Log("b");
-                //TODO figure out why its lying to me
-                if (rb.GetNumAvaliableRelics() == 0)
-                {
-                    Debug.Log("No relics left for rewards");
+                if (rb.GetNumAvaliableRelics() == 0) {
                     HideRelicRewards();
                 }
                 for (int i = 0; i < rb.GetNumAvaliableRelics(); i++) 
@@ -69,7 +66,7 @@ public class RelicRewardManager : MonoBehaviour
                     relic_rewards[i].GetComponent<RelicRewardDisplay>().relic_index = i;
                     relic_rewards[i].SetActive(true);
                     //TODO make the spacing nicer if less than 3 relic rewards avaliable    
-                    relic_rewards[i].transform.localPosition = new Vector3(spacing * i - 200, 0);
+                    relic_rewards[i].transform.localPosition = new Vector3((spacing * i) - 200, 0);
                 }
             }
         }
@@ -93,8 +90,11 @@ public class RelicRewardManager : MonoBehaviour
         r.Activate();
         HideRelicRewards();
     }
-    public void GenerateRelics() { 
+    public void GenerateRelics()
+    {
         SpellCaster spellcaster = GameManager.Instance.player.GetComponent<PlayerController>().spellcaster;
-        rb = new RelicBuilder(spellcaster); 
+        rb = new RelicBuilder(spellcaster);
+        //such spaghetti    
+        craftingManager.GetComponent<CraftingManager>().relicBuilder = rb;
     }
 }
