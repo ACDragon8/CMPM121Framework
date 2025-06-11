@@ -25,6 +25,7 @@ public class CraftingManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        EventBus.Instance.OnDeath += DropMaterials;
         toggle = false;
         relic = null;
         index = -1;
@@ -71,9 +72,6 @@ public class CraftingManager : MonoBehaviour
             toggle = true;
         }
         craftUI.SetActive(toggle);
-        //temp testing stuff-------------------------------------------DELETE-----------
-        Debug.Log(materials["coin"]);
-        Craft("magic_missile");
 
     }
 
@@ -147,10 +145,11 @@ public class CraftingManager : MonoBehaviour
             this.index = relicBuilder.ChooseRandomRelic();
             this.relic = relicBuilder.GetRelic(index);
         }
-       
+
 
     }
-    public void EquipRelic(Relic r, int index) {
+    public void EquipRelic(Relic r, int index)
+    {
         if (relicBuilder != null)
         {
             relicBuilder.RemoveRelic(index);
@@ -159,6 +158,14 @@ public class CraftingManager : MonoBehaviour
             relic = null;
         }
 
+    }
+
+    void DropMaterials(Vector3 where, Hittable hp)
+    {
+        foreach(var item in materialList)
+        {
+            materials[item] += Random.Range(0, 3);
+        }
     }
 
 
