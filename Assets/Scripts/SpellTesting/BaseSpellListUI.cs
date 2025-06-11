@@ -59,6 +59,7 @@ public class BaseSpellListUI : MonoBehaviour
     }
     public void GenerateBaseSpells(SpellCaster spellcaster, int Spells_per_page)
     {
+        Debug.Log("Generate spells for base spell list called!");
         sc = spellcaster;
         //This is the spacing for the crafting menu
         //It won't have double columns like spell tester
@@ -71,13 +72,14 @@ public class BaseSpellListUI : MonoBehaviour
             {
                 total_pages += 1;
             }
-            int half_page = (spells_per_page / 2);
+            Debug.Log(base_spell);
             GameObject spell_ui = Instantiate(SpellRewardUI, this.transform);
             int x = -170;
-            int y = 140 - 100 * (y_offset % half_page);
+            int y = 80 - 100 * (y_offset % spells_per_page);
             spell_ui.transform.position = this.transform.position + new Vector3(x, y, 0);
             Spell speel = spellBuilder.Build(spellcaster, base_spell);
             spell_ui.GetComponent<SpellRewardManager>().ShowSpecificSpell(speel);
+            spell_ui.SetActive(false);
             BaseSpellList.Add(spell_ui);
             y_offset++;
         }
@@ -91,10 +93,8 @@ public class BaseSpellListUI : MonoBehaviour
         page_num.text = current_page.ToString() + "/" + total_pages.ToString();
     }
     public void ShowFirstPage() {
-        for (int i = 0; i < total_pages; i++) {
-            if (i < BaseSpellList.Count) {
-                BaseSpellList[i].SetActive(true);
-            }
+        for (int i = 0; i < spells_per_page; i++) {
+            BaseSpellList[i].SetActive(true);    
         }
         SetPageNum();
     }
@@ -107,8 +107,8 @@ public class BaseSpellListUI : MonoBehaviour
         //Debug.Log("Next page called!");
         if (current_page == total_pages) return;
         current_page++;
-        int curr_spell_index = total_pages * (current_page - 1);
-        int prev_spell_index = curr_spell_index - total_pages;
+        int curr_spell_index = spells_per_page * (current_page - 1);
+        int prev_spell_index = curr_spell_index - spells_per_page;
         for (int i = 0; i < spells_per_page; i++) {
             if (prev_spell_index >= 0) {
                 BaseSpellList[prev_spell_index].SetActive(false);
@@ -125,8 +125,8 @@ public class BaseSpellListUI : MonoBehaviour
         //Debug.Log("Previous page called!");
         if (current_page == 1) { return; }
         current_page--;
-        int curr_spell_index = total_pages * (current_page - 1);
-        int prev_spell_index = curr_spell_index + total_pages;
+        int curr_spell_index = spells_per_page * (current_page - 1);
+        int prev_spell_index = curr_spell_index + spells_per_page;
         for (int i = 0; i < spells_per_page; i++)
         {
             if (prev_spell_index < BaseSpellList.Count)

@@ -1,7 +1,7 @@
 using UnityEngine;
 using System;
 
-public class EventBus 
+public class EventBus
 {
     private static EventBus theInstance;
     public static EventBus Instance
@@ -22,12 +22,12 @@ public class EventBus
     public event Action Move;
 
     public event Action SwitchSpell;
-    
+
     public void DoDamage(Vector3 where, Damage dmg, Hittable target)
     {
         OnDamage?.Invoke(where, dmg, target);
     }
-    
+
     public void OnDeathEffect(Vector3 where, Hittable target)
     {
         OnDeath?.Invoke(where, target);
@@ -84,12 +84,16 @@ public class EventBus
      * Dragon, curse you for not having the courage to mess with UI or do it properly >.<
      */
     public event Action<Relic, int> OnRelicPickup;
-    public void OnRelicPickupEffect(Relic r, int index) 
+    public void OnRelicPickupEffect(Relic r, int index)
     {
         OnRelicPickup?.Invoke(r, index);
     }
     public event Action<Spell> OnSpellCrafted;
+    public event Action<SpellCaster> OnSpellCasterInitialized;
     public void OnSpellCraftedEffect(Spell sp) {
         OnSpellCrafted?.Invoke(sp);
+    }
+    public void OnSpellCasterInitializedEffect(SpellCaster sc){
+        OnSpellCasterInitialized?.Invoke(sc);
     }
 }
