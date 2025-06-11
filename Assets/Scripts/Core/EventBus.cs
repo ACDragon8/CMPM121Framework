@@ -16,6 +16,7 @@ public class EventBus
 
     public event Action<Vector3, Damage, Hittable> OnDamage;
     public event Action<Vector3, Hittable> OnDeath;
+
     public event Action Cast;
     public event Action Cat;
     public event Action Idle;
@@ -66,17 +67,21 @@ public class EventBus
     public event Action<Spell, int> OnSpellRemove;
     public event Action<SpellCaster> OnSpellSolo;
     public event Action<int> OnSpellMultiple;
-    public void OnSpellPickupEffect(Spell spell, int index) {
+    public void OnSpellPickupEffect(Spell spell, int index)
+    {
         OnSpellPickup?.Invoke(spell, index);
     }
 
-    public void OnSpellRemoveEffect(Spell spell, int index) {
+    public void OnSpellRemoveEffect(Spell spell, int index)
+    {
         OnSpellRemove?.Invoke(spell, index);
     }
-    public void OnSpellSoloEffect(SpellCaster singleSpell) {
+    public void OnSpellSoloEffect(SpellCaster singleSpell)
+    {
         OnSpellSolo?.Invoke(singleSpell);
     }
-    public void OnSpellMultipleEffect(int amount) {
+    public void OnSpellMultipleEffect(int amount)
+    {
         OnSpellMultiple?.Invoke(amount);
     }
     /*
@@ -89,15 +94,25 @@ public class EventBus
         OnRelicPickup?.Invoke(r, index);
     }
     public event Action<Spell> OnSpellCrafted;
-    public event Action<Relic> OnRelicCrafted;
+    public event Action OnRelicCrafted;
     public event Action<SpellCaster> OnSpellCasterInitialized;
-    public void OnSpellCraftedEffect(Spell sp) {
+    public void OnSpellCraftedEffect(Spell sp)
+    {
         OnSpellCrafted?.Invoke(sp);
     }
-    public void OnRelicCraftedEffect(Relic r) {
-        OnRelicCrafted?.Invoke(r);
+    public void OnRelicCraftedEffect()
+    {
+        OnRelicCrafted?.Invoke();
     }
-    public void OnSpellCasterInitializedEffect(SpellCaster sc){
+    public void OnSpellCasterInitializedEffect(SpellCaster sc)
+    {
         OnSpellCasterInitialized?.Invoke(sc);
+    }
+
+    public event Action<int> GainMoney;
+
+    public void OnGainMoney(int amt)
+    {
+        GainMoney?.Invoke(amt);
     }
 }

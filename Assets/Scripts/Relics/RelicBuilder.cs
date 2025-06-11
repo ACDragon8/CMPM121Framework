@@ -28,6 +28,7 @@ public class RelicBuilder
         return avaliable_relics.Count;
     }
     public int ChooseRandomRelic() {
+        Debug.Log("available relics " + avaliable_relics.Count);
         return Random.Range(0, avaliable_relics.Count);
     }
     public Relic GetRelic(int relic_index) {

@@ -14,7 +14,7 @@ public class CraftingManager : MonoBehaviour
     public Dictionary<string, int> materials;
     private bool toggle;
     public Relic relic;
-    private int index;
+    public int index;
 
     public static string[] materialList = { "coin" };
 
@@ -38,7 +38,7 @@ public class CraftingManager : MonoBehaviour
         }
 
         //DEBUG
-        materials["coin"] += 11;
+        materials["coin"] += 10;
 
 
         //load spell list
@@ -52,9 +52,10 @@ public class CraftingManager : MonoBehaviour
         {
             Debug.Log("Missing spells.json");
         }
-        
+
         EventBus.Instance.OnSpellCasterInitialized += InstantiateSpellCraftMenu;
         EventBus.Instance.OnSpellCrafted += CraftWithSpell;
+        EventBus.Instance.OnRelicCrafted += ResetRelic;
     }
 
     // Update is called once per frame
@@ -75,7 +76,8 @@ public class CraftingManager : MonoBehaviour
         craftUI.SetActive(toggle);
 
     }
-    public void InstantiateSpellCraftMenu(SpellCaster sc) {
+    public void InstantiateSpellCraftMenu(SpellCaster sc)
+    {
         craftUI.GetComponent<BaseSpellListUI>().Instantiate();
         craftUI.GetComponent<BaseSpellListUI>().GenerateBaseSpells(sc, 2);
     }
@@ -153,7 +155,8 @@ public class CraftingManager : MonoBehaviour
         return;
     }
 
-    public void CraftWithSpell(Spell sp) {
+    public void CraftWithSpell(Spell sp)
+    {
         Craft(jsonify(sp.GetName()));
     }
     public void ShowGachaMenu() { gachaMenu.SetActive(true); menuBackground.SetActive(true); }
@@ -167,8 +170,8 @@ public class CraftingManager : MonoBehaviour
                 return;
             }
             materials["coin"] -= 10;
-            this.index = relicBuilder.ChooseRandomRelic();
-            this.relic = relicBuilder.GetRelic(index);
+            index = relicBuilder.ChooseRandomRelic();
+            relic = relicBuilder.GetRelic(index);
         }
 
 
@@ -187,10 +190,16 @@ public class CraftingManager : MonoBehaviour
 
     void DropMaterials(Vector3 where, Hittable hp)
     {
-        foreach(var item in materialList)
+        foreach (var item in materialList)
         {
             materials[item] += Random.Range(0, 3);
         }
+    }
+
+    void ResetRelic()
+    {
+        relic = null;
+        index = -1;
     }
 
 

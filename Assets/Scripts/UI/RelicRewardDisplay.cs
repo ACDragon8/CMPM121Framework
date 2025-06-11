@@ -12,6 +12,7 @@ public class RelicRewardDisplay : MonoBehaviour
     public TextMeshProUGUI relic_description;
     public Relic relic;
     public int relic_index;
+
     public void SetRelic(Relic r)
     {
         relic = r;
@@ -19,7 +20,13 @@ public class RelicRewardDisplay : MonoBehaviour
         relic_name.text = r.GetName();
         relic_description.text = r.GetDescription();
     }
-    public void AcceptRelic() {
+
+    public void SetIndex(int i)
+    {
+        relic_index = i;
+    }
+    public void AcceptRelic()
+    {
         EventBus.Instance.OnRelicPickupEffect(relic, relic_index);
     }
 }

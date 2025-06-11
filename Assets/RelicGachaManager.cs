@@ -10,7 +10,6 @@ public class RelicGachaManager : MonoBehaviour
     void Start()
     {
         EventBus.Instance.OnRelicCrafted += DisplayRelicResult;
-        EventBus.Instance.OnRelicPickup += RelicPickup;
     }
 
     // Update is called once per frame
@@ -23,11 +22,23 @@ public class RelicGachaManager : MonoBehaviour
     }
     public void Gamble() {
         CraftingManager.GetComponent<CraftingManager>().GachaRelic();
-        DisplayRelicResult(CraftingManager.GetComponent<CraftingManager>().relic);
+        DisplayRelicResult();
     }
-    public void DisplayRelicResult(Relic r) {
+    public void DisplayRelicResult()
+    {
+        
+        if (CraftingManager.GetComponent<CraftingManager>().relic == null)
+        {
+            return;
+        }
+        RelicDisplay.GetComponent<RelicRewardDisplay>().SetRelic(CraftingManager.GetComponent<CraftingManager>().relic);
+        RelicDisplay.GetComponent<RelicRewardDisplay>().SetIndex(CraftingManager.GetComponent<CraftingManager>().index);
         RelicDisplay.SetActive(true);
-        RelicDisplay.GetComponent<RelicRewardDisplay>().SetRelic(r);
     }
-    public void RelicPickup(Relic r, int index) { RelicDisplay.SetActive(false); }
+    public void RelicPickup()
+    {
+        RelicDisplay.GetComponent<RelicRewardDisplay>().AcceptRelic();
+        EventBus.Instance.OnRelicCraftedEffect();
+        RelicDisplay.SetActive(false);
+    }
 }
