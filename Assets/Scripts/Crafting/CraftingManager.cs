@@ -104,6 +104,11 @@ public class CraftingManager : MonoBehaviour
         return spellList[name]["name"].ToString();
     }
 
+    public string jsonify(string name)
+    {
+        return name.ToLower().Replace(" ", "_");
+    }
+
     public string GetDescription(string name)
     {
         return spellList[name]["description"].ToString();
