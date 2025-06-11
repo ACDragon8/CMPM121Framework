@@ -15,6 +15,7 @@ public class EnemySpawner : MonoBehaviour
 {
     public Image level_selector;
     public GameObject main_menu;
+    public GameObject credits_menu;
     public GameObject button;
     public GameObject player_selector;
     public SpawnPoint[] SpawnPoints; 
@@ -98,6 +99,7 @@ public class EnemySpawner : MonoBehaviour
         level_selector.gameObject.SetActive(false);
 
         // make main menu elements
+        credits_menu.gameObject.SetActive(false);
         main_menu.gameObject.SetActive(true);
 
         //Setting up event alerts here
@@ -117,13 +119,22 @@ public class EnemySpawner : MonoBehaviour
     public void Restart() //turn to event -------------------------------------------------------------------
     {
         //level_selector.gameObject.SetActive(true);
+        credits_menu.gameObject.SetActive(false);
         main_menu.gameObject.SetActive(true);
+    }
+
+    public void ViewCredits()
+    {
+        credits_menu.gameObject.SetActive(true);
+        main_menu.gameObject.SetActive(false);
     }
 
     public void NewGame()
     {
         level_selector.gameObject.SetActive(true);
         main_menu.gameObject.SetActive(false);
+        credits_menu.gameObject.SetActive(false);
+        Debug.Log("New Game");
     }
 
     public void Cancel() //turn to event??
