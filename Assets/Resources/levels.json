@@ -60,7 +60,7 @@
             },
             {
                 "enemy": "reindeer",
-                "count": "wave 4 / ",
+                "count": "wave 4 /",
                 "hp": "40 wave * 150 +",
                 "location": "random bone"
             }

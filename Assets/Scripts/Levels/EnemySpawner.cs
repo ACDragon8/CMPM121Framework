@@ -261,6 +261,7 @@ public class EnemySpawner : MonoBehaviour
 
         //This step parses the info in the JSON
         foreach (var spawn in lvl.spawns) {
+            //Debug.Log(spawn.enemy);
             //Enemy, count, hp and location are always there but delay & sequence might not be
             //The catch portions show the default values if missing
             try { delay = Int32.Parse(spawn.delay); } catch { delay = 1; }
@@ -296,13 +297,21 @@ public class EnemySpawner : MonoBehaviour
             //This is for total amount of enemies to spawn
             string[] count_split = spawn.count.Split(' ');
             index = 0;
-            foreach (var item in count_split) {
+            
+            foreach (var item in count_split)
+            {
                 if (item == "wave")
                 {
                     count_split[index] = WaveCount.ToString();
                 }
                 index++;
             }
+            /*
+            foreach (string s in count_split)
+            {
+                Debug.Log(s);
+            }
+            */
             int total_count = ReversePolishCalc.Calculate(count_split);
             int curr_spawned = 0;
             bool has_sequence = false;
