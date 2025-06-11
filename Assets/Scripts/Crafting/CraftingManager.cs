@@ -154,7 +154,7 @@ public class CraftingManager : MonoBehaviour
     }
 
     public void CraftWithSpell(Spell sp) {
-        Craft(GetName(sp.GetName()));
+        Craft(jsonify(sp.GetName()));
     }
     public void ShowGachaMenu() { gachaMenu.SetActive(true); menuBackground.SetActive(true); }
     public void HideGachaMenu() { gachaMenu.SetActive(false); menuBackground.SetActive(false); }
