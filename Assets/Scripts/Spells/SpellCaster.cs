@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public class SpellCaster
 {
@@ -42,8 +43,7 @@ public class SpellCaster
         this.selectedSpell = 0;
         this.maxSpells = 4;
         this.sb = new SpellBuilder();
-        this.spell[0] = sb.Build(this);
-        this.spellCount = 1;
+        addSpell();
         this.powerModifiers = new Dictionary<string, int>();
     }
 
@@ -168,6 +168,13 @@ public class SpellCaster
             {
                 nextSpell();
             }
+        }
+    }
+
+    public void RemoveAllSpells() {
+        while (spellCount > 0) {
+            this.spell[spellCount-1] = null;
+            this.spellCount--;
         }
     }
     public void RefillMana()
