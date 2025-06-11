@@ -141,8 +141,10 @@ public class PlayerController : MonoBehaviour
     void Die()
     {
         GameManager.Instance.state = GameManager.GameState.GAMEOVER;
-        while (relics.Count > 0) {
-            Relic r = (Relic) relics[0];
+        unit.movement = Vector2.zero;
+        while (relics.Count > 0)
+        {
+            Relic r = (Relic)relics[0];
             r.Deactivate();
             relics.Remove(r);
         }

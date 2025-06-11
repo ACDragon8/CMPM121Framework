@@ -28,14 +28,21 @@ public class RelicRewardManager : MonoBehaviour
                 while (displays_set < 3) 
                 {
                     bool seen = false;
-                    int relic_index = UnityEngine.Random.Range(0, relic_amount);
+                    int relic_index = rb.ChooseRandomRelic();
                     for (int i = 0; i < displays_set; i++) {
-                        if (i == relic_index) {
+                        if (already_seen[i] == relic_index) {
                             seen = true;
                             break;
                         }
                     }
-                    if (seen) { continue; }
+                    if (seen)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        already_seen[displays_set] = relic_index;
+                    }
                     Relic r = rb.GetRelic(relic_index);
                     relic_rewards[displays_set].GetComponent<RelicRewardDisplay>().SetRelic(r);
                     relic_rewards[displays_set].GetComponent<RelicRewardDisplay>().relic_index = relic_index;
