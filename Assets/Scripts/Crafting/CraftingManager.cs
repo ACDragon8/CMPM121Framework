@@ -8,8 +8,9 @@ using Unity.VisualScripting;
 
 public class CraftingManager : MonoBehaviour
 {
-
+    public GameObject menuBackground;
     public GameObject craftUI;
+    public GameObject gachaMenu;
     public Dictionary<string, int> materials;
     private bool toggle;
     public Relic relic;
@@ -51,8 +52,7 @@ public class CraftingManager : MonoBehaviour
         {
             Debug.Log("Missing spells.json");
         }
-
-
+        EventBus.Instance.OnSpellCasterInitialized += InstantiateSpellCraftMenu;
 
     }
 
@@ -74,18 +74,22 @@ public class CraftingManager : MonoBehaviour
         craftUI.SetActive(toggle);
 
     }
-
+    public void InstantiateSpellCraftMenu(SpellCaster sc) {
+        craftUI.GetComponent<BaseSpellListUI>().Instantiate();
+        craftUI.GetComponent<BaseSpellListUI>().GenerateBaseSpells(sc, 2);
+    }
     public void OpenCraftMenu()
     {
         toggle = true;
         craftUI.SetActive(true);
-
+        menuBackground.SetActive(true);
     }
 
     public void CloseCraftMenu()
     {
         toggle = false;
         craftUI.SetActive(false);
+        menuBackground.SetActive(false);
     }
 
     public Dictionary<string, int> GetRecipe(string name)
@@ -144,6 +148,8 @@ public class CraftingManager : MonoBehaviour
 
     }
 
+    public void ShowGachaMenu() { gachaMenu.SetActive(true); menuBackground.SetActive(true); }
+    public void HideGachaMenu() { gachaMenu.SetActive(false); menuBackground.SetActive(false); }
     public void GachaRelic()
     {
         if (relicBuilder != null)
