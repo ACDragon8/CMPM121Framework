@@ -28,8 +28,11 @@ public class SpellRewardManager : MonoBehaviour
         this.gameObject.SetActive(true);
     }
     public void AcceptSpell() {
-        GameManager.Instance.player.GetComponent<PlayerController>().spellcaster.addSpell(spell);
-        HideSpellReward();
+        var res = GameManager.Instance.player.GetComponent<PlayerController>().spellcaster.addSpell(spell);
+        if (res)
+        {
+            HideSpellReward();
+        }
     }
     public void HideSpellReward() {
         this.gameObject.SetActive(false);

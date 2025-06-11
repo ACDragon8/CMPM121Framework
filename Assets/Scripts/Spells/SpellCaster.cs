@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
-public class SpellCaster 
+public class SpellCaster
 {
     public int mana;
     public int max_mana;
@@ -43,8 +43,7 @@ public class SpellCaster
         this.selectedSpell = 0;
         this.maxSpells = 4;
         this.sb = new SpellBuilder();
-        this.spell[0] = sb.Build(this);
-        this.spellCount = 1;
+        addSpell();
         this.powerModifiers = new Dictionary<string, int>();
     }
 
@@ -56,10 +55,11 @@ public class SpellCaster
             mana -= spell[selectedSpell].GetManaCost();
             yield return spell[selectedSpell].Cast(where, target, team);
         }
-            yield break;
+        yield break;
     }
 
-    public Spell getSpell() {
+    public Spell getSpell()
+    {
         return spell[selectedSpell];
     }
 
@@ -73,13 +73,13 @@ public class SpellCaster
         {
             this.powerModifiers.Add(s, val);
         }
-        
+
     }
 
     public int getPower()
     {
         this.power = this.basePower;
-        foreach(var (key,value) in this.powerModifiers)
+        foreach (var (key, value) in this.powerModifiers)
         {
             this.power += value;
         }
@@ -90,11 +90,13 @@ public class SpellCaster
     {
         this.max_mana = val;
     }
-    public void SetManaRegen(int val) {
+    public void SetManaRegen(int val)
+    {
         this.mana_reg = val;
     }
 
-    public void SetSpellPower(int val) {
+    public void SetSpellPower(int val)
+    {
         this.basePower = val;
     }
 
@@ -171,9 +173,12 @@ public class SpellCaster
 
     public void RemoveAllSpells() {
         while (spellCount > 0) {
-            EventBus.Instance.OnSpellRemoveEffect(null, spellCount - 1);
             this.spell[spellCount-1] = null;
             this.spellCount--;
         }
+    }
+    public void RefillMana()
+    {
+        this.mana = this.max_mana;
     }
 }

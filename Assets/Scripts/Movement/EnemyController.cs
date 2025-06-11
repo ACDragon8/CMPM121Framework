@@ -15,6 +15,7 @@ public class EnemyController : MonoBehaviour
     public bool slow_immunity;
 
     public float last_attack;
+    public GameObject[] dropItemPrefabs;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -22,6 +23,8 @@ public class EnemyController : MonoBehaviour
         hp.OnDeath += Die;
         healthui.SetHealth(hp);
         slow_immunity = false;
+
+        hp.OnDeath += TryDropItem;
     }
 
     // Update is called once per frame
@@ -41,7 +44,7 @@ public class EnemyController : MonoBehaviour
             GetComponent<Unit>().movement = direction.normalized * speed;
         }
     }
-    
+
     void DoAttack()
     {
         if (last_attack + 2 < Time.time)
@@ -52,7 +55,7 @@ public class EnemyController : MonoBehaviour
     }
 
 
-    public void Die()
+    void Die()
     {
         if (!dead)
         {
@@ -62,10 +65,12 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    public void ModifySpeed(float percent, int duration) {
+    public void ModifySpeed(float percent, int duration)
+    {
         CoroutineManager.Instance.StartCoroutine(SetSpeed(percent, duration));
     }
-    public IEnumerator SetSpeed(float percent, int duration) {
+    public IEnumerator SetSpeed(float percent, int duration)
+    {
         if (!slow_immunity)
         {
             slow_immunity = true;
@@ -76,5 +81,17 @@ public class EnemyController : MonoBehaviour
             speed = old_speed;
         }
         yield break;
+    }
+
+    //Drop item on death with a 35% chance
+    void TryDropItem()
+    {
+        float chance = UnityEngine.Random.value; // Returns 0.0 to 1.0
+
+        if (chance <= 0.35f) // 35% chance
+        {
+            int index = UnityEngine.Random.Range(0, dropItemPrefabs.Length);
+            GameObject item = Instantiate(dropItemPrefabs[index], transform.position, Quaternion.identity);
+        }
     }
 }

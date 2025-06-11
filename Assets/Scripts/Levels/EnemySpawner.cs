@@ -14,6 +14,8 @@ using UnityEngine.Events;
 public class EnemySpawner : MonoBehaviour
 {
     public Image level_selector;
+    public GameObject main_menu;
+    public GameObject credits_menu;
     public GameObject button;
     public GameObject player_selector;
     public SpawnPoint[] SpawnPoints; 
@@ -24,7 +26,7 @@ public class EnemySpawner : MonoBehaviour
     public string level;
     public string character;
     public int WaveCount;
-    public bool cancel;
+    public static bool cancel;
     public Dictionary<string, GameObject> level_buttons;
     public Dictionary<string, GameObject> character_buttons;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -66,6 +68,8 @@ public class EnemySpawner : MonoBehaviour
             character_stats[c.Key] = ch;
         }
         
+
+        // make difficulty buttons
         int spacing = 120/level_list.Count;
         int i = level_list.Count;
         level_buttons = new Dictionary<string, GameObject>();
@@ -79,6 +83,7 @@ public class EnemySpawner : MonoBehaviour
             i--;
         }
 
+        // make character select buttons
         character_buttons = new Dictionary<string, GameObject>();
         i = character_stats.Count;
         foreach (var chara in character_stats) {
@@ -90,6 +95,13 @@ public class EnemySpawner : MonoBehaviour
             //b.SetActive(false);
             i--;
         }
+
+        level_selector.gameObject.SetActive(false);
+
+        // make main menu elements
+        credits_menu.gameObject.SetActive(false);
+        main_menu.gameObject.SetActive(true);
+
         //Setting up event alerts here
         GameManager.Instance.OnRewardSelectionFinished += NextWave;
     }
@@ -98,6 +110,7 @@ public class EnemySpawner : MonoBehaviour
     void Update()
     {
         if (GameManager.Instance.state == GameManager.GameState.GAMEOVER) {
+            GameManager.Instance.RemoveAllEnemies();
             this.Cancel();
             WaveCount = 0;
         }
@@ -105,8 +118,25 @@ public class EnemySpawner : MonoBehaviour
 
     public void Restart() //turn to event -------------------------------------------------------------------
     {
-        level_selector.gameObject.SetActive(true);
+        //level_selector.gameObject.SetActive(true);
+        credits_menu.gameObject.SetActive(false);
+        main_menu.gameObject.SetActive(true);
     }
+
+    public void ViewCredits()
+    {
+        credits_menu.gameObject.SetActive(true);
+        main_menu.gameObject.SetActive(false);
+    }
+
+    public void NewGame()
+    {
+        level_selector.gameObject.SetActive(true);
+        main_menu.gameObject.SetActive(false);
+        credits_menu.gameObject.SetActive(false);
+        Debug.Log("New Game");
+    }
+
     public void Cancel() //turn to event??
     {
         cancel = true;
@@ -231,6 +261,7 @@ public class EnemySpawner : MonoBehaviour
 
         //This step parses the info in the JSON
         foreach (var spawn in lvl.spawns) {
+            //Debug.Log(spawn.enemy);
             //Enemy, count, hp and location are always there but delay & sequence might not be
             //The catch portions show the default values if missing
             try { delay = Int32.Parse(spawn.delay); } catch { delay = 1; }
@@ -266,13 +297,21 @@ public class EnemySpawner : MonoBehaviour
             //This is for total amount of enemies to spawn
             string[] count_split = spawn.count.Split(' ');
             index = 0;
-            foreach (var item in count_split) {
+            
+            foreach (var item in count_split)
+            {
                 if (item == "wave")
                 {
                     count_split[index] = WaveCount.ToString();
                 }
                 index++;
             }
+            /*
+            foreach (string s in count_split)
+            {
+                Debug.Log(s);
+            }
+            */
             int total_count = ReversePolishCalc.Calculate(count_split);
             int curr_spawned = 0;
             bool has_sequence = false;

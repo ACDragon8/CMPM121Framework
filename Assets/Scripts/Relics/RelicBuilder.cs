@@ -21,10 +21,10 @@ public class RelicBuilder
         avaliable_relics.Add(new Medallion());
         avaliable_relics.Add(new Shield());
         avaliable_relics.Add(new Skull());
-        
     }
     public int GetNumAvaliableRelics() {
         //Debug.Log("Giving the list length which is " + avaliable_relics.Count);
+        Debug.Log(avaliable_relics.Count);
         return avaliable_relics.Count;
     }
     public int ChooseRandomRelic() {

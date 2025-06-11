@@ -19,6 +19,14 @@
                 "location": "random red"
             },
             {
+                "enemy": "eyeball",
+                "count": "wave 2 /",
+                "sequence": [1],
+                "hp": "25 wave *",
+                "delay": "5",
+                "location": "random"
+            },
+            {
                 "enemy": "warlock",
                 "count": "wave 5 / 1 wave 5 % - *",
                 "hp": "100 25 wave * +",
@@ -59,8 +67,16 @@
                 "location": "random"
             },
             {
+                "enemy": "eyeball",
+                "count": "wave",
+                "sequence": [1],
+                "hp": "25 wave *",
+                "delay": "5",
+                "location": "random"
+            },
+            {
                 "enemy": "reindeer",
-                "count": "wave 4 / ",
+                "count": "wave 4 /",
                 "hp": "40 wave * 150 +",
                 "location": "random bone"
             }
@@ -92,11 +108,19 @@
                 "location": "random bone"
             },
             {
+                "enemy": "eyeball",
+                "count": "wave",
+                "sequence": [1],
+                "hp": "25 wave *",
+                "delay": "5",
+                "location": "random"
+            },
+            {
                 "enemy": "reindeer",
                 "count": "wave",
                 "hp": "50 wave * 200 +",
                 "location": "random bone"
-            }       
+            }    
         ]
    },
    {   

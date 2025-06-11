@@ -85,7 +85,7 @@ public class PlayerController : MonoBehaviour
 
     void OnAttack(InputValue value)
     {
-        if (GameManager.Instance.state == GameManager.GameState.PREGAME || GameManager.Instance.state == GameManager.GameState.GAMEOVER) return;
+        if (GameManager.Instance.state == GameManager.GameState.PREGAME || GameManager.Instance.state == GameManager.GameState.GAMEOVER || GameManager.Instance.state == GameManager.GameState.PAUSED) return;
         Vector2 mouseScreen = Mouse.current.position.value;
         Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(mouseScreen);
         mouseWorld.z = 0;
@@ -94,7 +94,7 @@ public class PlayerController : MonoBehaviour
         EventBus.Instance.OnCast();
     }
     
-    void getSpeed()
+    public void getSpeed()
     {
         this.speed = this.baseSpeed;
         foreach(var (key,value) in this.speedModifiers)
@@ -142,8 +142,10 @@ public class PlayerController : MonoBehaviour
     void Die()
     {
         GameManager.Instance.state = GameManager.GameState.GAMEOVER;
-        while (relics.Count > 0) {
-            Relic r = (Relic) relics[0];
+        unit.movement = Vector2.zero;
+        while (relics.Count > 0)
+        {
+            Relic r = (Relic)relics[0];
             r.Deactivate();
             relics.Remove(r);
         }
