@@ -59,7 +59,6 @@ public class BaseSpellListUI : MonoBehaviour
     }
     public void GenerateBaseSpells(SpellCaster spellcaster, int Spells_per_page)
     {
-        Debug.Log("Generate spells for base spell list called!");
         sc = spellcaster;
         //This is the spacing for the crafting menu
         //It won't have double columns like spell tester
@@ -72,7 +71,6 @@ public class BaseSpellListUI : MonoBehaviour
             {
                 total_pages += 1;
             }
-            Debug.Log(base_spell);
             GameObject spell_ui = Instantiate(SpellRewardUI, this.transform);
             int x = -170;
             int y = 80 - 100 * (y_offset % spells_per_page);

@@ -52,8 +52,9 @@ public class CraftingManager : MonoBehaviour
         {
             Debug.Log("Missing spells.json");
         }
+        
         EventBus.Instance.OnSpellCasterInitialized += InstantiateSpellCraftMenu;
-
+        EventBus.Instance.OnSpellCrafted += CraftWithSpell;
     }
 
     // Update is called once per frame
@@ -145,9 +146,11 @@ public class CraftingManager : MonoBehaviour
             materials[item] -= cost;
         }
         return;
-
     }
 
+    public void CraftWithSpell(Spell sp) {
+        Craft(GetName(sp.GetName()));
+    }
     public void ShowGachaMenu() { gachaMenu.SetActive(true); menuBackground.SetActive(true); }
     public void HideGachaMenu() { gachaMenu.SetActive(false); menuBackground.SetActive(false); }
     public void GachaRelic()

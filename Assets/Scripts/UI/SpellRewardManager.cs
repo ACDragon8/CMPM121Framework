@@ -58,7 +58,7 @@ public class SpellRewardManager : MonoBehaviour
         if (picked_spell == spell)
         {
             select_button.SetActive(false);
-            selected_confirmation.gameObject.SetActive(true);
+            //selected_confirmation.gameObject.SetActive(true);
         }
         else {
             ShowSelectButton();
