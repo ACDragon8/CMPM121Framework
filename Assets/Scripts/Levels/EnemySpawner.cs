@@ -14,6 +14,8 @@ using UnityEngine.Events;
 public class EnemySpawner : MonoBehaviour
 {
     public Image level_selector;
+    public GameObject main_menu;
+    public GameObject credits_menu;
     public GameObject button;
     public GameObject player_selector;
     public SpawnPoint[] SpawnPoints; 
@@ -66,6 +68,8 @@ public class EnemySpawner : MonoBehaviour
             character_stats[c.Key] = ch;
         }
         
+
+        // make difficulty buttons
         int spacing = 120/level_list.Count;
         int i = level_list.Count;
         level_buttons = new Dictionary<string, GameObject>();
@@ -79,6 +83,7 @@ public class EnemySpawner : MonoBehaviour
             i--;
         }
 
+        // make character select buttons
         character_buttons = new Dictionary<string, GameObject>();
         i = character_stats.Count;
         foreach (var chara in character_stats) {
@@ -90,6 +95,13 @@ public class EnemySpawner : MonoBehaviour
             //b.SetActive(false);
             i--;
         }
+
+        level_selector.gameObject.SetActive(false);
+
+        // make main menu elements
+        credits_menu.gameObject.SetActive(false);
+        main_menu.gameObject.SetActive(true);
+
         //Setting up event alerts here
         GameManager.Instance.OnRewardSelectionFinished += NextWave;
     }
@@ -106,8 +118,25 @@ public class EnemySpawner : MonoBehaviour
 
     public void Restart() //turn to event -------------------------------------------------------------------
     {
-        level_selector.gameObject.SetActive(true);
+        //level_selector.gameObject.SetActive(true);
+        credits_menu.gameObject.SetActive(false);
+        main_menu.gameObject.SetActive(true);
     }
+
+    public void ViewCredits()
+    {
+        credits_menu.gameObject.SetActive(true);
+        main_menu.gameObject.SetActive(false);
+    }
+
+    public void NewGame()
+    {
+        level_selector.gameObject.SetActive(true);
+        main_menu.gameObject.SetActive(false);
+        credits_menu.gameObject.SetActive(false);
+        Debug.Log("New Game");
+    }
+
     public void Cancel() //turn to event??
     {
         cancel = true;
