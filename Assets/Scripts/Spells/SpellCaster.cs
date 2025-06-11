@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public class SpellCaster 
 {
@@ -165,6 +166,14 @@ public class SpellCaster
             {
                 nextSpell();
             }
+        }
+    }
+
+    public void RemoveAllSpells() {
+        while (spellCount > 0) {
+            EventBus.Instance.OnSpellRemoveEffect(null, spellCount - 1);
+            this.spell[spellCount-1] = null;
+            this.spellCount--;
         }
     }
 }
