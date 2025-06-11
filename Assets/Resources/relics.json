@@ -10,8 +10,7 @@
             "description": "you gain 5 mana",
             "type": "gain-mana",
             "amount": "5"
-        },
-        "recipe":{"coin":10}
+        }
     },
     "Jade Elephant": {
         "name": "Jade Elephant",
@@ -26,8 +25,7 @@
             "type": "gain-spellpower",
             "amount": "10 wave 5 * +",
             "until": "move"
-        },
-        "recipe":{"coin":10}
+        }
     },
     "Golden Mask": {
         "name": "Golden Mask",
@@ -41,8 +39,7 @@
             "type": "gain-spellpower",
             "amount": "100",
             "until": "cast-spell"
-        },
-        "recipe":{"coin":10}
+        }
     },
     "Cursed Scroll": {
         "name": "Cursed Scroll",
@@ -55,12 +52,11 @@
             "description": "you gain 25 mana.",
             "type": "gain-mana",
             "amount": "25"
-        },
-        "recipe":{"coin":10}
+        }
     },
     "Bread": {
         "name": "Bread",
-        "sprite": 11,
+        "sprite": 5,
         "trigger": {
             "description":"When you deal damage",
             "type": "deal-damage"
@@ -70,8 +66,7 @@
             "type": "gain-speed",
             "amount": "10",
             "duration": "1"
-        },
-        "recipe":{"coin":10}
+        }
     },
     "Cat the Kat": {
         "name": "Cat the Kat",
@@ -84,8 +79,7 @@
             "description": "0.01 percent chance to give 9999 spell power for that spell cast",
             "type": "gain-power",
             "amount": "9999"
-        },
-        "recipe":{"coin":10}
+        }
     },
     "Blood Red Night": {
         "name" : "Blood Red Night",
@@ -98,8 +92,7 @@
             "description": "Heal 5 hp",
             "type": "heal-damage",
             "amount":"5"
-        },
-        "recipe":{"coin":10}
+        }
 
     },
     "Funny Skull":{
@@ -114,8 +107,7 @@
             "type": "gain-spellpower",
             "amount": "10",
             "until": "cast-spell"
-        },
-        "recipe":{"coin":10}
+        }
     },
     "Brittle Shield": {
         "name": "Brittle Shield",
@@ -129,8 +121,7 @@
             "type": "gain-speed",
             "amount": "5",
             "until": "spell-switch"
-        },
-        "recipe":{"coin":10}
+        }
     },
     "Blue Medallion": {
         "name": "Blue Medallion",
@@ -144,7 +135,6 @@
             "type": "gain-spellpower",
             "amount": "10",
             "until": "cast-spell"
-        },
-        "recipe":{"coin":10}
+        }
     }
 }

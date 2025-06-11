@@ -103,6 +103,9 @@ public class SpellBuilder
         return Build(owner, spell);
     }
 
+   //So this function below is the creation function for object spell builder
+   //This might be a good place to put the Json reading.
+   //Dunno if we want it to be singleton or not
     public SpellBuilder()
     {
         string[] a = {"arcane_bolt", "magic_missile", "arcane_blast", "arcane_spray", "straight_slice", "frost_nova"};
@@ -123,43 +126,4 @@ public class SpellBuilder
         }
     }
 
-    //This is to help with my spell crafting system
-    //It should only be used to generate 1 modifier at a time
-    public Spell BuildModifierSpell(SpellCaster owner, string mod_name) {
-        ModifierSpell m = null;
-        switch (mod_name)
-        {
-            case "damage_amp":
-                m = new DamageAmp(owner);
-                break;
-            case "speed_amp":
-                m = new SpeedAmp(owner);
-                break;
-            case "doubler":
-                m = new Doubler(owner);
-                break;
-            case "splitter":
-                m = new Splitter(owner);
-                break;
-            case "chaos":
-                m = new Chaos(owner);
-                break;
-            case "homing":
-                m = new Homing(owner);
-                break;
-            case "knockback":
-                m = new Knockback(owner);
-                break;
-            case "piercing":
-                m = new Piercing(owner);
-                break;
-            case "explosive":
-                m = new Explosive(owner);
-                break;
-            default:
-                break;
-        }
-        m.SetProperties((JObject)spellList[mod_name]);
-        return m;
-    }
 }

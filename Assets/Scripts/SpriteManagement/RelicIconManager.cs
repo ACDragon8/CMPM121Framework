@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class RelicIconManager : IconManager
 {
-    void Awake()
+    void Start()
     {
         GameManager.Instance.relicIconManager = this;
     }
