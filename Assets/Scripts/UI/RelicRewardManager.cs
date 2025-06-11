@@ -7,6 +7,7 @@ public class RelicRewardManager : MonoBehaviour
 {
     // It is up to the RelicRewardManager to pick relics using the Relic builder and assign them to the UI elements 
     public GameObject[] relic_rewards;
+    public GameObject craftingManager;
     public Action nextRewardDisplay;
     private RelicBuilder rb;
     public int relic_amount = 3;
@@ -77,8 +78,11 @@ public class RelicRewardManager : MonoBehaviour
         r.Activate();
         HideRelicRewards();
     }
-    public void GenerateRelics() { 
+    public void GenerateRelics()
+    {
         SpellCaster spellcaster = GameManager.Instance.player.GetComponent<PlayerController>().spellcaster;
-        rb = new RelicBuilder(spellcaster); 
+        rb = new RelicBuilder(spellcaster);
+        //such spaghetti    
+        craftingManager.GetComponent<CraftingManager>().relicBuilder = rb;
     }
 }

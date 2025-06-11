@@ -60,7 +60,7 @@
     },
     "Bread": {
         "name": "Bread",
-        "sprite": 5,
+        "sprite": 11,
         "trigger": {
             "description":"When you deal damage",
             "type": "deal-damage"

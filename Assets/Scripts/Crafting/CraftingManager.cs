@@ -12,17 +12,22 @@ public class CraftingManager : MonoBehaviour
     public GameObject craftUI;
     public Dictionary<string, int> materials;
     private bool toggle;
+    public Relic relic;
+    private int index;
 
     public static string[] materialList = { "coin" };
 
+    public RelicBuilder relicBuilder; //SPAGHETTI CODE NOTICE: THIS IS SET IN RelicRewardManger GenerateRelics
+
     JObject spellList;
-    JObject relicList;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         toggle = false;
+        relic = null;
+        index = -1;
 
         materials = new Dictionary<string, int>();
         foreach (string item in materialList)
@@ -30,6 +35,7 @@ public class CraftingManager : MonoBehaviour
             materials.Add(item, 0);
         }
 
+        //DEBUG
         materials["coin"] += 11;
 
 
@@ -44,19 +50,6 @@ public class CraftingManager : MonoBehaviour
         {
             Debug.Log("Missing spells.json");
         }
-        //load relic list
-        var relictext = Resources.Load<TextAsset>("relics");
-        jo = JObject.Parse(relictext.text);
-        if (jo != null)
-        {
-            relicList = jo;
-        }
-        else
-        {
-            Debug.Log("Missing relics.json");
-        }
-
-        //
 
 
 
@@ -80,7 +73,7 @@ public class CraftingManager : MonoBehaviour
         craftUI.SetActive(toggle);
         //temp testing stuff-------------------------------------------DELETE-----------
         Debug.Log(materials["coin"]);
-        Craft("magic_issile");
+        Craft("magic_missile");
 
     }
 
@@ -107,7 +100,7 @@ public class CraftingManager : MonoBehaviour
     {
         Dictionary<string, int> recipe;
         //load recipe from json
-            recipe = spellList[name]["recipe"].ToObject<Dictionary<string, int>>();
+        recipe = spellList[name]["recipe"].ToObject<Dictionary<string, int>>();
         foreach (var (item, cost) in recipe)
         {
             if (materials[item] < cost)
@@ -117,7 +110,6 @@ public class CraftingManager : MonoBehaviour
         }
         return true;
     }
-
 
     public void Craft(string name)
     {
@@ -140,6 +132,31 @@ public class CraftingManager : MonoBehaviour
             materials[item] -= cost;
         }
         return;
+
+    }
+
+    public void GachaRelic()
+    {
+        if (relicBuilder != null)
+        {
+            if (materials["coin"] < 10)
+            {
+                return;
+            }
+            materials["coin"] -= 10;
+            this.index = relicBuilder.ChooseRandomRelic();
+            this.relic = relicBuilder.GetRelic(index);
+        }
+       
+
+    }
+    public void EquipRelic(Relic r, int index) {
+        if (relicBuilder != null)
+        {
+            relicBuilder.RemoveRelic(index);
+            GameManager.Instance.player.GetComponent<PlayerController>().relics.Add(r);
+            r.Activate();
+        }
 
     }
 

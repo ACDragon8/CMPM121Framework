@@ -696,6 +696,7 @@ MonoBehaviour:
   - {fileID: 1033498318}
   - {fileID: 1318776167}
   - {fileID: 1511533187}
+  craftingManager: {fileID: 308937343}
   relic_amount: 3
   spacing: 120
 --- !u!1 &179578124
@@ -1686,6 +1687,7 @@ MonoBehaviour:
   - {fileID: 1189418239}
   - {fileID: 106020756}
   - {fileID: 1099566537}
+  craftingManager: {fileID: 0}
   relic_amount: 3
   spacing: 120
 --- !u!1 &334187433
@@ -1827,6 +1829,8 @@ MonoBehaviour:
   damage: {fileID: 1107629001}
   spell_description_content: {fileID: 179578125}
   spell_name: {fileID: 619789184}
+  selected_confirmation: {fileID: 0}
+  select_button: {fileID: 0}
 --- !u!114 &335878155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7132,6 +7136,8 @@ MonoBehaviour:
   damage: {fileID: 1109861152}
   spell_description_content: {fileID: 906274310}
   spell_name: {fileID: 2055915787}
+  selected_confirmation: {fileID: 0}
+  select_button: {fileID: 0}
 --- !u!114 &1245015121
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60965,7 +60971,6 @@ MonoBehaviour:
   - {fileID: 96316927}
   - {fileID: 457295002}
   - {fileID: 797691353}
-  player: {fileID: 1718273952}
 --- !u!1 &2007398911
 GameObject:
   m_ObjectHideFlags: 0
