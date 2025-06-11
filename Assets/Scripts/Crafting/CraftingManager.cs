@@ -156,6 +156,7 @@ public class CraftingManager : MonoBehaviour
             relicBuilder.RemoveRelic(index);
             GameManager.Instance.player.GetComponent<PlayerController>().relics.Add(r);
             r.Activate();
+            relic = null;
         }
 
     }
