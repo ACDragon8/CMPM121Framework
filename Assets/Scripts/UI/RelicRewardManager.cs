@@ -23,6 +23,7 @@ public class RelicRewardManager : MonoBehaviour
             //int display_amount = relic_amount > rb.GetNumAvaliableRelics() ? rb.GetNumAvaliableRelics() : relic_amount;
             if (relic_amount < rb.GetNumAvaliableRelics())
             {
+                Debug.Log("a");
                 int[] already_seen = new int[relic_amount];
                 int displays_set = 0;
                 while (displays_set < 3) 
@@ -54,8 +55,10 @@ public class RelicRewardManager : MonoBehaviour
             }
             else 
             {
+                Debug.Log("b");
                 //TODO figure out why its lying to me
-                if (rb.GetNumAvaliableRelics() == 0) {
+                if (rb.GetNumAvaliableRelics() == 0)
+                {
                     Debug.Log("No relics left for rewards");
                     HideRelicRewards();
                 }
