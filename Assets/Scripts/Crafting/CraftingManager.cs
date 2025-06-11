@@ -78,10 +78,9 @@ public class CraftingManager : MonoBehaviour
             toggle = true;
         }
         craftUI.SetActive(toggle);
-        //temp testing stuff-------------------------------------------DELETE LATER-----------
+        //temp testing stuff-------------------------------------------DELETE-----------
         Debug.Log(materials["coin"]);
-        Debug.Log(CheckCraftable("relic", "Bread"));
-        Craft("spell", "magic_missile");
+        Craft("magic_issile");
 
     }
 
@@ -98,23 +97,17 @@ public class CraftingManager : MonoBehaviour
         craftUI.SetActive(false);
     }
 
-    public bool CheckCraftable(string type, string name)
+    public Dictionary<string, int> GetRecipe(string name)
+    {
+        var recipe = spellList[name]["recipe"].ToObject<Dictionary<string, int>>();
+        return recipe;
+    }
+
+    public bool CheckCraftable(string name)
     {
         Dictionary<string, int> recipe;
         //load recipe from json
-        if (type == "relic")
-        {
-            recipe = relicList[name]["recipe"].ToObject<Dictionary<string, int>>();
-        }
-        else if (type == "spell")
-        {
             recipe = spellList[name]["recipe"].ToObject<Dictionary<string, int>>();
-        }
-        else
-        {
-            return false;
-        }
-
         foreach (var (item, cost) in recipe)
         {
             if (materials[item] < cost)
@@ -125,36 +118,31 @@ public class CraftingManager : MonoBehaviour
         return true;
     }
 
-    public void Craft(string type, string name)
+
+    public void Craft(string name)
     {
         //check if craftble, if not then do nothing, otherwise continue
-        if (!CheckCraftable(type, name))
+        if (!CheckCraftable(name))
         {
             return;
         }
-        if (type == "relic")
+        //add the spell if possible, otherwise do nothing
+        bool res = GameManager.Instance.player.GetComponent<PlayerController>().spellcaster.addSpell(name);
+        if (!res)
         {
+            return;
+        }
 
-            return;
-        }
-        else if (type == "spell")
+        //pay the price
+        Dictionary<string, int> recipe = spellList[name]["recipe"].ToObject<Dictionary<string, int>>();
+        foreach (var (item, cost) in recipe)
         {
-            //add the spell if possible, otherwise do nothing
-            bool res = GameManager.Instance.player.GetComponent<PlayerController>().spellcaster.addSpell(name);
-            if (!res)
-            {
-                return;
-            }
-
-            //pay the price
-            Dictionary<string, int> recipe = spellList[name]["recipe"].ToObject<Dictionary<string, int>>();
-            foreach (var (item, cost) in recipe)
-            {
-                materials[item] -= cost;
-            }
-            return;
+            materials[item] -= cost;
         }
+        return;
+
     }
+
 
 
 }
