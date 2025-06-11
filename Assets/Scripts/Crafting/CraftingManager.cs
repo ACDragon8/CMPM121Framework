@@ -94,6 +94,16 @@ public class CraftingManager : MonoBehaviour
         return recipe;
     }
 
+    public string GetName(string name)
+    {
+        return spellList[name]["name"].ToString();
+    }
+
+    public string GetDescription(string name)
+    {
+        return spellList[name]["description"].ToString();
+    }
+
     public bool CheckCraftable(string name)
     {
         Dictionary<string, int> recipe;
