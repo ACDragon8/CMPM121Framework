@@ -5,7 +5,6 @@ using UnityEngine;
 public class SpellUIContainer : MonoBehaviour
 {
     public GameObject[] spellUIs;
-    public PlayerController player;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -35,5 +34,12 @@ public class SpellUIContainer : MonoBehaviour
                 spellUIs[i].GetComponent<SpellUI>().UnHighlight();
             }
         }
+    }
+
+    public void HideSpellUI() {
+        this.gameObject.SetActive(false);
+    }
+    public void ShowSpellUI() {
+        this.gameObject.SetActive(true);
     }
 }
