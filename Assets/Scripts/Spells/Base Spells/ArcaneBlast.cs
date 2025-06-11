@@ -13,8 +13,12 @@ public class ArcaneBlast : Spell
     public override void SetProperties(JObject spellAttributes)
     {
         //Read and parse extra fields Json object here
+        string mana = spellAttributes["mana_cost"].ToString();
+        manaCost = ReversePolishCalc.Calculate(ReplaceWithDigits(mana));
+
         string N = spellAttributes["N"].ToString();
         n = ReversePolishCalc.CalculateFloat(ReplaceWithDigits(N));
+
 
         string sDmg = spellAttributes["secondary_damage"].ToString();
         secondary_damage = ReversePolishCalc.Calculate((ReplaceWithDigits(sDmg)));

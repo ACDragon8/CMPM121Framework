@@ -35,4 +35,36 @@ public class SpellRewardManager : MonoBehaviour
         this.gameObject.SetActive(false);
         nextRewardDisplay?.Invoke();
     }
+
+    //These functions below are only used for the spell testing scene
+    public TextMeshProUGUI selected_confirmation;
+    public GameObject select_button;
+    public void ShowSpecificSpell(Spell spell) {
+        SetSpell(spell);
+        this.gameObject.SetActive(true);
+    }
+    public void BroadcastSelectedSpell() {
+        //Have this broadcast what base spell was selected
+        TrainingRoomEventbus.Instance.onSelectBaseSpell(spell);
+    }
+    private void Start()
+    {
+        TrainingRoomEventbus.Instance.SelectBaseSpell += SelectedConfirmation;
+        TrainingRoomEventbus.Instance.SpellCrafted += ShowSelectButton;
+    }
+    public void SelectedConfirmation(Spell picked_spell)
+    {
+        if (picked_spell == spell)
+        {
+            select_button.SetActive(false);
+            selected_confirmation.gameObject.SetActive(true);
+        }
+        else {
+            ShowSelectButton();
+        }
+    }
+    public void ShowSelectButton() {
+        select_button.SetActive(true);
+        selected_confirmation.gameObject.SetActive(false);
+    }
 }
