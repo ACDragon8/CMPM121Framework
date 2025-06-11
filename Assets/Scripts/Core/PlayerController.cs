@@ -45,6 +45,7 @@ public class PlayerController : MonoBehaviour
     {
         int power = 5;
         spellcaster = new SpellCaster(125, 8, power, Hittable.Team.PLAYER);
+        EventBus.Instance.OnSpellCasterInitializedEffect(spellcaster);
         StartCoroutine(spellcaster.ManaRegeneration());
         
         hp = new Hittable(100, Hittable.Team.PLAYER, gameObject);
