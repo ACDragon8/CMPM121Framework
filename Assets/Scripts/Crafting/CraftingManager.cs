@@ -15,6 +15,7 @@ public class CraftingManager : MonoBehaviour
     private bool toggle;
     public Relic relic;
     public int index;
+    private int relicCost;
 
     public static string[] materialList = { "coin" };
 
@@ -30,6 +31,7 @@ public class CraftingManager : MonoBehaviour
         toggle = false;
         relic = null;
         index = -1;
+        relicCost = 10;
 
         materials = new Dictionary<string, int>();
         foreach (string item in materialList)
@@ -39,6 +41,7 @@ public class CraftingManager : MonoBehaviour
 
         //DEBUG
         materials["coin"] += 10;
+        EventBus.Instance.OnChangeMoney(10);
 
 
         //load spell list
@@ -152,6 +155,7 @@ public class CraftingManager : MonoBehaviour
         {
             materials[item] -= cost;
         }
+        EventBus.Instance.OnChangeMoney(0);
         return;
     }
 
@@ -165,11 +169,12 @@ public class CraftingManager : MonoBehaviour
     {
         if (relicBuilder != null)
         {
-            if (materials["coin"] < 10)
+            if (materials["coin"] < relicCost)
             {
                 return;
             }
-            materials["coin"] -= 10;
+            materials["coin"] -= relicCost;
+            EventBus.Instance.OnChangeMoney(relicCost);
             index = relicBuilder.ChooseRandomRelic();
             relic = relicBuilder.GetRelic(index);
         }
@@ -190,10 +195,17 @@ public class CraftingManager : MonoBehaviour
 
     void DropMaterials(Vector3 where, Hittable hp)
     {
+        int coins = 0;
         foreach (var item in materialList)
         {
-            materials[item] += Random.Range(0, 3);
+            int amt = Random.Range(0, 3);
+            if(item == "coin")
+            {
+                coins = amt;
+            }
+            materials[item] += amt;
         }
+        EventBus.Instance.OnChangeMoney(coins);
     }
 
     void ResetRelic()

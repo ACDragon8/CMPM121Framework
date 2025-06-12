@@ -109,10 +109,10 @@ public class EventBus
         OnSpellCasterInitialized?.Invoke(sc);
     }
 
-    public event Action<int> GainMoney;
+    public event Action<int> ChangeMoney;
 
-    public void OnGainMoney(int amt)
+    public void OnChangeMoney(int amt)
     {
-        GainMoney?.Invoke(amt);
+        ChangeMoney?.Invoke(amt);
     }
 }
